@@ -1,0 +1,4 @@
+- **HAL-REQ-014** Every booking says how many guests are expected. · Source: HAL-SRC-006 · Status: active
+- **HAL-REQ-015** A booking for more than 120 guests cannot be made. · Source: HAL-SRC-006 · Status: active
+- **HAL-REQ-016** A hirer agrees to the hall hire terms online before paying the deposit. · Source: HAL-SRC-006 · Status: active
+- **HAL-REQ-017** A hirer can ask, when booking, for the tables and chairs to be set out before the booking starts, for a $20 fee. · Source: HAL-SRC-006 · Status: active

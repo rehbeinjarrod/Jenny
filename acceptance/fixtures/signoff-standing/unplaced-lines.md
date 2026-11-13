@@ -1,0 +1,1 @@
+- **HAL-REQ-014** A non-member booking adds a $40 cleaning fee to the hire fee. · Source: HAL-ANS-007 · Status: active
