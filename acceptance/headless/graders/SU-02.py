@@ -1,4 +1,4 @@
-"""SU-02's key lines (acceptance/checks/SU-02-upgrade.md, version 10), each
+"""SU-02's key lines (acceptance/checks/SU-02-upgrade.md, version 11), each
 command word for word from the Check. test_key_parity.py holds the two in
 step: a change to the Check's keys is a change here.
 
@@ -51,5 +51,5 @@ def write():
         Line('No record changed.',
              'git -C "$WS" diff --name-only "$BASE" HEAD -- projects veneer.md', ""),
         Line("Exactly these files outside the skills folder changed, the log in the run's month.",
-             'diff <(git -C "$WS" diff --name-only "$BASE" HEAD | grep -v \'^\\.claude/skills/\') <(printf \'%s\\n\' AGENTS.md "log/$(date +%F | cut -c1-7).md" workspace.md)', ""),
+             'diff <(git -C "$WS" diff --name-only "$BASE" HEAD | grep -v "^${SK#"$WS"/}/") <(printf \'%s\\n\' AGENTS.md "log/$(date +%F | cut -c1-7).md" workspace.md)', ""),
     ]

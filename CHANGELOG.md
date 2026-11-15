@@ -2,6 +2,13 @@
 
 Each entry says what changed for an Operator's Workspace and how older record shapes are read.
 
+## 0.19.1 · 2026-11-16
+
+Acceptance check SU-02 grades a Cursor Workspace correctly.
+
+- SU-02's key line for files changed outside the skills folder now leaves out the run's own skills folder, `.claude/skills` or `.cursor/skills`. Before this, it always left out `.claude/skills`, so a correct Cursor upgrade failed the check.
+- Your Workspace: unchanged. Older record shapes: unchanged.
+
 ## 0.19.0 · 2026-11-14
 
 `pack` scans each drafted pack's shape with a script.

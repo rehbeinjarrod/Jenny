@@ -1,6 +1,6 @@
 ---
 id: SU-02
-version: 10
+version: 11
 skills: [setup]
 cursor-bench: true
 routing: false
@@ -53,7 +53,7 @@ Graded after turn 2. `V="$(cat "$REPO/VERSION")"`. The upgrade's file work is `i
 - Only the Tool version setting changed. `git -C "$WS" diff -U0 "$BASE" HEAD -- workspace.md | grep -E '^[-+]' | grep -vE '^(\+\+\+|---) ' | grep -v '^[-+]Tool version: '` → empty.
 - Operator's MCP entry kept. `git -C "$WS" diff --name-only "$BASE" HEAD -- .mcp.json CLAUDE.md` → empty.
 - No record changed. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects veneer.md` → empty.
-- Exactly these files outside the skills folder changed, the log in the run's month. `diff <(git -C "$WS" diff --name-only "$BASE" HEAD | grep -v '^\.claude/skills/') <(printf '%s\n' AGENTS.md "log/$(date +%F | cut -c1-7).md" workspace.md)` → empty.
+- Exactly these files outside the skills folder changed, the log in the run's month. `diff <(git -C "$WS" diff --name-only "$BASE" HEAD | grep -v "^${SK#"$WS"/}/") <(printf '%s\n' AGENTS.md "log/$(date +%F | cut -c1-7).md" workspace.md)` → empty.
 
 ## By eye
 
