@@ -1,14 +1,18 @@
 ---
 id: CP-04
-version: 5
+version: 6
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # CP-04 · A Confluence page read through the MCP, kept as the parts used
 
 The Operator gives Jenny the URL of the hall committee's Confluence page of hire terms and says to capture it. Jenny reads it through the Atlassian MCP and proposes a batch as for any Capture: one point says again what an active Requirement says, four are new. On confirm, the Source holds the parts used word for word, with the page's URL, its version and the date read; the page's contact line stays out.
+
+Grader: `acceptance/headless/graders/CP-04.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -33,7 +37,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Read the page: its points are in the batch. Each → 1 or more: `grep -c '120' "$TURNS/1.md"`, `grep -cF '$20' "$TURNS/1.md"`, `grep -ci 'guests' "$TURNS/1.md"`.
 - Labels the duplicate against `HAL-REQ-001`. `grep -ciw 'duplicate' "$TURNS/1.md"` → 1 or more; `grep -c 'HAL-REQ-001' "$TURNS/1.md"` → 1 or more.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -48,7 +51,6 @@ Graded after turn 2. `H="$WS/projects/hall-bookings"`, `U='https://riverbend-hal
 - No Feature created. `git -C "$WS" diff --name-only --diff-filter=A "$BASE" HEAD -- 'projects/hall-bookings/features'` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
 - Other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/court-bookings veneer.md workspace.md outbox` → empty.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/2.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

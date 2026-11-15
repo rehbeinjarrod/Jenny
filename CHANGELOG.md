@@ -2,6 +2,48 @@
 
 Each entry says what changed for an Operator's Workspace and how older record shapes are read.
 
+## 0.19.0 · 2026-11-14
+
+`pack` scans each drafted pack's shape with a script.
+
+- Before proposing a pack, and again after each amend, Jenny runs the pack shape scan (`<skills>/pack/scripts/pack_shape.py`) on her draft. It names each section missing, out of order, repeated or not in the template, and a draft over the 300-line cap, one per line. Jenny fixes the sections and scans again; a draft over the cap still ends in a re-slice proposal. Before this, she counted the draft's lines and checked its sections by reading it over, and a pack could reach you with a section dropped or in the wrong place.
+- Older record shapes: unchanged. Packs already written are frozen and are not scanned again.
+
+## 0.18.0 · 2026-11-14
+
+`setup` installs and upgrades through one script.
+
+- `setup`'s Install and Upgrade still propose a batch, wait for your yes and report, but the file work after your yes is one script, `<clone>/skills/setup/scripts/install.sh`: copying the skills and `VERSION`, writing the Tool-owned block of `AGENTS.md`, `CLAUDE.md`'s `@AGENTS.md` line, `git init` and the Guard. It runs the Python check first, checks everything before it writes anything, and stops with one line saying why when it can't go on. Before this, Jenny ran each of those commands by hand, and could miss one.
+- An upgrade's batch retells each CHANGELOG entry in your Veneer's shown names, filled in. Before this, it could show the skill's placeholder, such as "<shown name for Epic>", word for word.
+- The Guard no longer leaves a `__pycache__/` folder in your skills folder after each commit, which left the Workspace with uncommitted files.
+- Older record shapes: unchanged.
+
+## 0.17.0 · 2026-11-14
+
+A Guard checks every commit in the Workspace.
+
+- `setup` installs the Guard: a git pre-commit hook that runs `<skills>/jenny/scripts/guard.py` on every commit, whichever runtime you use, Claude Code or Cursor. It rejects a commit that holds a malformed record (a missing title or required header line, an ID that is not the Project code and three digits, an ID defined twice, a log heading out of shape, or a Veneer shown name where a record's structure needs the canonical term), a `veneer.md` the Veneer scan can't read, or a canonical word the Veneer renames in `outbox/` text outside code. It names each file and problem, and Jenny fixes them and commits again. A clean commit passes with no output. Before this, those rules held only as far as Jenny followed them.
+- `setup`'s Upgrade adds the Guard to an existing Workspace, and replaces it on each later upgrade. If your Workspace's git already has a pre-commit hook of your own, or sets `core.hooksPath`, your hook is kept and the Guard is not added; `setup` says so.
+- **Every write: confirm, then write** in the Tool-owned block of `AGENTS.md` says a rejected commit is fixed and committed again, never bypassed with `--no-verify`. `setup`'s Upgrade replaces the block as usual.
+- Older record shapes: unchanged, and read as they are. The Guard checks only the files a commit adds or changes, and in a log only the lines it adds, so an older log slip never blocks an upgrade or a later operation.
+
+## 0.16.1 · 2026-11-14
+
+Jenny's report after a write goes through the Veneer scan.
+
+- **Every write: confirm, then write** in the Tool-owned block of `AGENTS.md` has a sixth step, **Report**: one reply after the commit, holding what the skill's own steps say to tell the Operator and the commit message, with every file it names as a full path in a code span. With a `veneer.md`, it goes through the Veneer scan before it is sent, and the operation is not done until it has been sent that way. Before this, the operation ended at the commit, so the short reply after it was often sent unscanned, and words such as "the questions index" reached the Operator. `setup`'s Upgrade replaces the block as usual.
+- Older record shapes: unchanged.
+
+## 0.16.0 · 2026-11-13
+
+Jenny scans her own replies for Veneer slips, and needs Python 3.9 or later.
+
+- Step to do first: install Python 3.9 or later, so that `python3 --version` prints it. `setup` refuses to install or upgrade without it.
+- With a `veneer.md`, Jenny runs every draft reply through the Veneer scan (`<skills>/jenny/scripts/veneer_scan.py`) before sending it, the version-mismatch warning included, and rewords each canonical word it names outside a code span. Before this, she read the reply over once herself, and words such as "the deposit question" or a bare `Question:` label still reached the Operator.
+- The Veneer section of the Tool-owned block of `AGENTS.md` is new: its **Veneer scan** paragraph replaces the read-through, and the section is now the one statement of the Veneer rule. The skills no longer restate it. `setup`'s Upgrade replaces the block as usual.
+- If `veneer.md` can't be read, Jenny's reply opens with one line saying so and why, so the Operator can fix it.
+- Older record shapes: unchanged. A `veneer.md` keeps its table header, `| Canonical term | Shown as | Also understood as |`, which the scan reads.
+
 ## 0.15.8 · 2026-11-13
 
 A new pack version is linked from the Project's `index.md`.

@@ -16,7 +16,7 @@ Checks, keys, variables and the results shape are those in [claude-code.md](clau
 
 ## 1. Prepare (grading chat)
 
-1. Pick the checks: scope `bench` is every check whose front matter says `cursor-bench: true`, each run once (`repeat-at-gate` is ignored). The Operator may name a narrower scope instead, a bench check's ID or one of its skills, which picks from those same flagged checks only. Name the run `<YYYY-MM-DD-HHMM>-<scope>` and make `$RUN` as in claude-code.md **Pick the checks**. EN-01 runs once, in a plain Agent chat with no Jenny skills (below).
+1. Pick the checks: scope `bench` is every check whose front matter says `cursor-bench: true`, each run once. The Operator may name a narrower scope instead, a bench check's ID or one of its skills, which picks from those same flagged checks only. Name the run `<YYYY-MM-DD-HHMM>-<scope>` and make `$RUN` as in claude-code.md **Pick the checks**. EN-01 runs once, in a plain Agent chat with no Jenny skills (below).
 2. For each check run, do claude-code.md **Copy the sample**, with `SK="$WS/.cursor/skills"`, and save `$SAMPLE` to `$D/sample-sha`.
 3. Write `$D/steps.md` for the Operator, with every path filled in:
    - the folder to open: `$WS`;
@@ -49,14 +49,15 @@ In the check run's window, start a new chat in the Jenny mode. Type turn 1 word 
 
 ## 5. Grade the script (grading chat)
 
-1. For any turn without a `$TURNS/<n>.md`, take that reply from `$D/transcript.md`, word for word, without the Operator's turns, tool calls or thinking, and note in the results that it came from the transcript.
+1. For any turn without a `$TURNS/<n>.md`, take that reply from `$D/transcript.md`, word for word, without the Operator's turns, tool calls or thinking, save it as `$TURNS/<n>.md`, and note in the results that it came from the transcript.
 2. Grade **Key at proposal** and **Key at write** as claude-code.md **Grade**. A "Nothing written" line at proposal passes when `$TURNS/<n>.state` is exactly one line, equal to `$BASE`.
-3. Write `$REPO/acceptance/runs/<run>/results.md` in the shape claude-code.md **Write the results file** shows, with `Runtime: cursor · Model: sonnet · Prompt: Jenny mode`. Type it from your grades; the section files and the run rules there are for Claude Code runs.
-4. After the summary and the results file's path, print the **results block** below in a fenced block, as the last thing in the reply.
+3. Record every saved turn's **Veneer scan line** as claude-code.md says, running the scan in your terminal from the check run's `$WS` so it reads that Workspace's `veneer.md`, and put it in the results file. It is not a key line: none of these fails a check run. As there, a turn with no `$WS/veneer.md` has no Veneer scan line, so an **Engineer repo** check has none.
+4. Write `$REPO/acceptance/runs/<run>/results.md` in the shape claude-code.md **Write the results file** shows, with `Runtime: cursor · Model: sonnet · Prompt: Jenny mode`. Type it from your grades; the section files and the run rules there are for Claude Code runs.
+5. After the summary and the results file's path, print the **results block** below in a fenced block, as the last thing in the reply.
 
-A check run passes, with or without soft failures, as claude-code.md step 2 says. The bench passes when no row is `fail`. Each soft failure is ticketed and doesn't count against the bench; each hard failure is ticketed and means a new Tool version: land the fix, run the Claude Code gate again, publish again.
+A check run passes when every Install key line (when it installs) and every key line passes, as claude-code.md step 2 says. The bench passes only when no row is `fail`. Each failure is ticketed and means a new Tool version: land the fix, run the Claude Code gate again, publish again.
 
-Done when: every check run has a pass, `pass · soft <n>` or fail with its graded lines recorded, and the Operator has the summary, the results file's path and the results block.
+Done when: every check run has a pass or fail with its graded lines and Veneer scan lines recorded, and the Operator has the summary, the results file's path and the results block.
 
 ### Results block
 
@@ -66,14 +67,15 @@ A few lines short enough for the Operator to retype by hand elsewhere, exactly i
 jenny cursor bench 2026-11-20-1430
 tool 0.15.0 sample 7
 runs 5 pass 3
-fail MD-02 P3 P4
+fail MD-02 P3 W2
 fail SU-01 I5
-soft SU-02 P5
 ```
 
 - Line 1: `jenny cursor <scope> <run date-time>`, the run's name split at its scope.
 - Line 2: `tool <$REPO/VERSION> sample <sample version>`.
-- Line 3: `runs <check runs> pass <passing check runs>`, a `pass · soft <n>` run counted as passing.
-- One line per check run with any failed key line, in check ID order: `fail` when a hard line failed, `soft` when only `(soft)` lines failed; then the check ID; then each failed key line, hard and soft, as its section letter and its position in that section, counting key bullets from 1: `I` Install key (claude-code.md's numbering), `P` Key at proposal, `W` Key at write. A failed `I` line is an install failure, so its `fail` line holds only `I` lines.
+- Line 3: `runs <check runs> pass <passing check runs>`.
+- One `fail` line per failed check run, in check ID order: `fail`, then the check ID, then each failed key line, as its section letter and its position in that section, counting key bullets from 1: `I` Install key (claude-code.md's numbering), `P` Key at proposal, `W` Key at write. A Veneer scan line never fails a check run, so it has no entry here: its hits stay in the results file.
 
-A run with no failed line is the three header lines alone. Every other fact (check versions, actual outputs, By eye notes, transcript-sourced replies) stays in the results file.
+  A failed `I` line is an install failure, so its `fail` line holds only `I` lines.
+
+A run with no failed line is the three header lines alone. Every other fact (check versions, actual outputs, Veneer scan lines, By eye notes, transcript-sourced replies) stays in the results file.

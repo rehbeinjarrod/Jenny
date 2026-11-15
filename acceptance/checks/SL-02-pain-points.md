@@ -1,14 +1,18 @@
 ---
 id: SL-02
-version: 3
+version: 4
 skills: [slice]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # SL-02 · A second Epic and a horizontal Feature flagged, with a re-slice suggested
 
 The Operator asks Jenny to slice the hall Project with two shapes Jenny pushes back on: a Feature holding only the phone-screen Requirement (horizontal: nothing a Stakeholder can see on its own) and a second Epic in Book and pay for the door code email. Jenny flags each as a pain point, suggests a re-slice for each, and asks the Operator's reason before writing either. The Operator gives a reason for the second Epic and drops the horizontal Feature. After confirm, Book and pay has two Epics, the second records the pain point with the Operator's reason, the handed-off Epic is not touched, the phone-screen Requirement sits in a vertical Feature, and everything lands in one commit.
+
+Grader: `acceptance/headless/graders/SL-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -35,7 +39,6 @@ Graded after turn 1 on `$TURNS/1.md`, and after turn 2 on `$TURNS/2.md` where a 
 - Turn 1, a re-slice suggested. `grep -ciE 're-?slice' "$TURNS/1.md"` → 1 or more.
 - Turn 1, asks for the reason. `grep -ciE 'reason|why' "$TURNS/1.md"` → 1 or more.
 - Turn 2, the second Epic is still a pain point, in a batch. `grep -ci 'pain point' "$TURNS/2.md"` → 1 or more; `grep -c 'HAL-REQ-008' "$TURNS/2.md"` → 1 or more; `grep -ci 'nothing is written yet' "$TURNS/2.md"` → 1 or more.
-- (soft) After each turn, never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/<n>.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -55,7 +58,6 @@ Graded after turn 3. `P="$WS/projects/hall-bookings"`, `E1="$P/epics/HAL-EPC-001
 - No horizontal Feature: the phone-screen Requirement shares its Feature, and no Feature is about phones. `grep -cE '^- \*\*HAL-REQ-' $(grep -l '^- \*\*HAL-REQ-013\*\*' "$P"/features/HAL-FEA-*.md) </dev/null` → 2 or more; `grep -liE '^# HAL-FEA-[0-9]{3} · .*(phone|mobile|screen)' "$P"/features/*.md | wc -l` → `0`.
 - No Requirement covered by two Epics. `cov "$P"/epics/*/epic.md | sort | uniq -d` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiative|open item|spec'` → `0`.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/3.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

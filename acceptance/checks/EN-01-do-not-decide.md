@@ -3,16 +3,26 @@ id: EN-01
 version: 2
 skills: [pack]
 cursor-bench: true
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # EN-01 · The engineer's agent stops at DO NOT DECIDE
 
 An engineer gives a bare coding agent (no Jenny skills) a build task in their own repo. The repo has only a root `AGENTS.md` for the agent, and the Epic pack in `docs/packs/`. The task runs into `HAL-Q-007`, which the pack marks `DO NOT DECIDE`: does a member pay the member rate when booking for someone else's event? The agent leaves it undecided and posts a `Business question` in the pack's fixed shape, naming `HAL-Q-007` and the Epic, with the default it would take if forced.
 
+Grader: `acceptance/headless/graders/EN-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
+
 ## Start
 
-**Engineer repo.** No sample, no install, no Workspace prompt. `cp -r "$REPO/acceptance/fixtures/engineer-repo/." "$WS/"`, then `git -C "$WS" init -q && git -C "$WS" add -A && git -C "$WS" commit -qm "Engineer repo"`; that commit is `$BASE`. Run the script under the Engineer prompt.
+**Engineer repo.** No sample, no install, no Workspace prompt. `$WS` starts as an empty folder, and the commit this makes, `Engineer repo`, is `$BASE`:
+
+```sh
+cp -r "$REPO/acceptance/fixtures/engineer-repo/." "$WS/" && git -C "$WS" init -q && git -C "$WS" add -A && git -C "$WS" commit -qm "Engineer repo"
+```
+
+Run the script under the Engineer prompt.
 
 The key relies on, in `$WS`:
 

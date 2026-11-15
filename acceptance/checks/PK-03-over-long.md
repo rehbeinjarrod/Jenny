@@ -1,20 +1,24 @@
 ---
 id: PK-03
-version: 2
+version: 3
 skills: [pack]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # PK-03 · An over-long pack is refused with a re-slice proposal
 
 The Operator asks for the pack of an Epic covering 55 Requirements. The pack would pass 300 lines, and packs are never split, so Jenny stops before proposing anything, writes nothing, and proposes re-slicing the Feature instead.
 
+Grader: `acceptance/headless/graders/PK-03.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
+
 ## Start
 
 Sample v7. Fixture: `acceptance/fixtures/pack/coaching/` (`CRT-FEA-003` Run coaching sessions with 55 Requirements, `CRT-REQ-009` to `CRT-REQ-063`, and its one Epic `CRT-EPC-002`, covering all 55). After install, lay it into the court Project and commit:
 
-```
+```sh
 cd "$WS/projects/court-bookings" && F="$REPO/acceptance/fixtures/pack/coaching" && cp -r "$F/features" "$F/epics" . && sed -i "/CRT-FEA-002-see-which-courts-are-free.md) |/r $F/features-index-row.md" features/index.md && sed -i "/^- \[log\/\]/i $(cat "$F/index-line.md")" index.md && git -C "$WS" add -A && git -C "$WS" commit -qm "Add CRT-FEA-003 and CRT-EPC-002"
 ```
 
@@ -33,7 +37,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Proposes a re-slice. `grep -ciE 're-?slic' "$TURNS/1.md"` → 1 or more.
 - No batch. `grep -ci 'nothing is written yet' "$TURNS/1.md"` → `0`.
 - No hall items. `grep -c 'HAL-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 

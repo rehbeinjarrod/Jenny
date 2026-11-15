@@ -5,7 +5,7 @@ description: Group a Project's Requirements into Features, each with one Epic. U
 
 # Slice
 
-Two operations: **Unplaced**, which writes nothing, and **Slice**, one confirm-then-write operation following the rules in the Tool-owned block of `AGENTS.md`. Every reply uses Veneer names. Today is `date +%F`.
+Two operations: **Unplaced**, which writes nothing, and **Slice**, one confirm-then-write operation following the rules in the Tool-owned block of `AGENTS.md`. Today is `date +%F`.
 
 ## Words used here
 

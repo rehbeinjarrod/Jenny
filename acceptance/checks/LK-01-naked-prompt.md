@@ -1,14 +1,18 @@
 ---
 id: LK-01
-version: 6
+version: 7
 skills: [lookup]
 cursor-bench: false
-repeat-at-gate: true
+routing: true
+inputs: []
+promise: false
 ---
 
 # LK-01 · A plain-words question about deposits
 
 The Operator asks a question in plain words, with no `/lookup`. Jenny works out the answer from two Requirements in one Feature, cites the IDs and the file, stays inside the hall Project, writes nothing, and speaks in Veneer names.
+
+Grader: `acceptance/headless/graders/LK-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -32,7 +36,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Cites both Requirements. `grep -c 'HAL-REQ-002' "$TURNS/1.md"` → 1 or more; `grep -c 'HAL-REQ-003' "$TURNS/1.md"` → 1 or more.
 - Cites the file. `grep -c 'features/HAL-FEA-001-book-and-pay.md' "$TURNS/1.md"` → 1 or more.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 

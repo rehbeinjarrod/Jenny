@@ -1,14 +1,18 @@
 ---
 id: SO-01
-version: 4
+version: 6
 skills: [signoff]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: true
 ---
 
 # SO-01 · Sign-off view: the order, addressed by name, checkboxes only on Decisions, published after confirm
 
 The Operator asks for Margaret's Sign-off view of the hall's book-and-pay Epic, whose latest pack is `pack-v2.md`. Jenny proposes a frozen `signoff-view-v1-margaret.md` and writes it only after the yes. Then the Operator says "publish it": under `Outbound: outbox` Jenny proposes the page body in `outbox/` and writes it only after a second yes. The view runs 🔴 being built on a guess → 🟠 your calls → ✅ did we get these right → ⚪ we think these don't matter → flow diagrams → also worth knowing, and only the Decisions Margaret has not yet agreed carry a checkbox.
+
+Grader: `acceptance/headless/graders/SO-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -45,18 +49,16 @@ After turn 1:
 - The view is a new file for Margaret. `grep -c 'signoff-view-v1-margaret.md' "$TURNS/1.md"` → 1 or more.
 - A batch. `grep -ci 'nothing is written yet' "$TURNS/1.md"` → 1 or more.
 - No court items. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 After turn 3:
 
 - The view is written; nothing posted or put in the outbox yet. `git -C "$WS" rev-list --count "$BASE"..HEAD` → `1`; `git -C "$WS" status --porcelain --untracked-files=all` → empty; `test -e "$WS/outbox" && echo yes` → empty.
 - The proposal names the outbox file. `grep -c 'outbox/HAL-EPC-001-signoff-view-v1-margaret.html' "$TURNS/3.md"` → 1 or more.
 - A batch. `grep -ci 'nothing is written yet' "$TURNS/3.md"` → 1 or more.
-- (soft) Never says a renamed canonical term outside code spans. `sed 's/`[^`]*`//g' "$TURNS/3.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
-Graded after turn 4. `P="$WS/projects/hall-bookings"`, `V="$P/epics/HAL-EPC-001-book-and-pay/signoff-view-v1-margaret.md"`, `O="$WS/outbox/HAL-EPC-001-signoff-view-v1-margaret.html"`, `sec() { awk -v h="^## $1" '$0 ~ h {f=1; next} /^## /{f=0} f' "$V"; }` (one section of the view), `prose() { awk '/^```/{f=!f;next} !f' "$V" | sed 's/`[^`]*`//g'; }`, and `nodes() { awk '/^```mermaid/{f=1; split("", s); next} f && /^```/{f=0; c=0; for (k in s) c++; print c; next} f { t=$0; while (match(t, /[A-Za-z0-9_]+(\[|\{|\(\()/)) { id=substr(t, RSTART, RLENGTH); sub(/[\[{(]+$/, "", id); s[id]=1; t=substr(t, RSTART+RLENGTH) } }' "$V"; }` (the non-start/stop node count of each Mermaid block; start and stop nodes are stadium-shaped `id([…])`, which the pattern skips).
+Graded after turn 4. `P="$WS/projects/hall-bookings"`, `V="$P/epics/HAL-EPC-001-book-and-pay/signoff-view-v1-margaret.md"`, `O="$WS/outbox/HAL-EPC-001-signoff-view-v1-margaret.html"`, `sec() { awk -v h="^## $1" '$0 ~ h {f=1; next} /^## /{f=0} f' "$V"; }` (one section of the view), `` prose() { awk '/^```/{f=!f;next} !f' "$V" | sed 's/`[^`]*`//g'; } ``, and `` nodes() { awk '/^```mermaid/{f=1; split("", s); next} f && /^```/{f=0; c=0; for (k in s) c++; print c; next} f { t=$0; while (match(t, /[A-Za-z0-9_]+(\[|\{|\(\()/)) { id=substr(t, RSTART, RLENGTH); sub(/[\[{(]+$/, "", id); s[id]=1; t=substr(t, RSTART+RLENGTH) } }' "$V"; } `` (the non-start/stop node count of each Mermaid block; start and stop nodes are stadium-shaped `id([…])`, which the pattern skips).
 
 Commits:
 
@@ -93,7 +95,6 @@ The outbox page body:
 Records:
 
 - Records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/court-bookings veneer.md workspace.md projects/hall-bookings/questions projects/hall-bookings/project.md` → empty.
-- (soft) Reply after publishing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/4.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

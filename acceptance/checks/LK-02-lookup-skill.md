@@ -1,14 +1,18 @@
 ---
 id: LK-02
-version: 6
+version: 7
 skills: [lookup]
 cursor-bench: false
-repeat-at-gate: true
+routing: true
+inputs: []
+promise: false
 ---
 
 # LK-02 · The same question through `/lookup`
 
 LK-01's question, asked through `/lookup`. Same answer and citations as LK-01, laid out in the fixed answer shape: in short, what it is based on, and what is not known yet.
+
+Grader: `acceptance/headless/graders/LK-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -34,7 +38,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Cites both Requirements. `grep -c 'HAL-REQ-002' "$TURNS/1.md"` → 1 or more; `grep -c 'HAL-REQ-003' "$TURNS/1.md"` → 1 or more.
 - Cites the file. `grep -c 'features/HAL-FEA-001-book-and-pay.md' "$TURNS/1.md"` → 1 or more.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 

@@ -13,7 +13,7 @@ Two confirm-then-write operations, following the rules in the Tool-owned block o
 
 A Stakeholder's ticks and pushback come back through `capture` (its **Sign-off read-back**), which adds each Sign-off to the Epic's `signoffs.md`.
 
-Every reply uses Veneer names. Today is `date +%F`.
+Today is `date +%F`.
 
 ## View
 
@@ -129,7 +129,7 @@ Where an Epic's Sign-off stands, worked out from `signoffs.md` against the Decis
 
    Done when: every Stakeholder has every Decision in force in exactly one of the three.
 
-3. **Reply** in this shape, in shown names, the three line labels exactly as written:
+3. **Reply** in this shape, the three line labels exactly as written:
 
    ```markdown
    **<shown name for Epic> <ID> <title>**: <shown name for Epic pack> v<N>, <d> Decisions. <First name> agreed <a> of <d>; <first name> agreed <a> of <d>.

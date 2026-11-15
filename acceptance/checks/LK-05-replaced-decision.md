@@ -1,14 +1,18 @@
 ---
 id: LK-05
-version: 6
+version: 7
 skills: [lookup]
 cursor-bench: false
-repeat-at-gate: true
+routing: true
+inputs: []
+promise: false
 ---
 
 # LK-05 · A replaced Decision returns the current one
 
 The rule for late cancellation was decided once (the hirer forfeits the deposit) and later replaced (half the deposit comes back). Jenny answers with the current Decision and notes that it replaced the earlier one.
+
+Grader: `acceptance/headless/graders/LK-05.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -33,7 +37,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Names the current Decision's owner. `grep -c 'Margaret Osei' "$TURNS/1.md"` → 1 or more.
 - Notes the replacement. `grep -c 'HAL-ANS-002' "$TURNS/1.md"` → 1 or more; `grep -ciE 'replac|supersed|withdr' "$TURNS/1.md"` → 1 or more.
 - Stays in one Project. `grep -ciE 'CRT-|24 hours' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 

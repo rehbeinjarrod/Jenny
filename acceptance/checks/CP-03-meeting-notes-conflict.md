@@ -1,14 +1,18 @@
 ---
 id: CP-03
-version: 8
+version: 9
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # CP-03 · Meeting notes: the planted conflict becomes a Question
 
 The Operator drops in committee meeting notes. One point contradicts an active Requirement (non-members booking six months ahead, not three): Jenny raises a Question citing both Sources and leaves the Requirement as it is. Another point answers an open Question with a Decision that rests on a third-party code of practice: Jenny asks or confirms its owner, keeps the code's location and its own words, and copies none of the code's text.
+
+Grader: `acceptance/headless/graders/CP-03.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -36,7 +40,6 @@ Graded after turn 1 (on `$TURNS/1.md`) and again after turn 2 (on `$TURNS/2.md`)
 - Labels the conflict against `HAL-REQ-004`. `grep -ci 'conflict' "$TURNS/<n>.md"` → 1 or more; `grep -c 'HAL-REQ-004' "$TURNS/<n>.md"` → 1 or more.
 - Matches the open Question. `grep -c 'HAL-Q-003' "$TURNS/<n>.md"` → 1 or more.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/<n>.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/<n>.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 - After turn 2 only: the owner is in the batch. `grep -c 'Margaret Osei' "$TURNS/2.md"` → 1 or more.
 
 ## Key at write
@@ -55,7 +58,6 @@ Graded after turn 3. `H="$WS/projects/hall-bookings"`.
 - No Feature created. `git -C "$WS" diff --name-only --diff-filter=A "$BASE" HEAD -- 'projects/hall-bookings/features'` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
 - Other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/court-bookings veneer.md workspace.md outbox` → empty.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/3.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

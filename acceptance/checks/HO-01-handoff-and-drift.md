@@ -1,14 +1,18 @@
 ---
 id: HO-01
-version: 2
+version: 4
 skills: [handoff]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # HO-01 · Handoff: the drift report writes nothing; the Tech face line records the pack version given
 
 The hall's book-and-pay Epic was handed off with `pack-v1.md` on tech face `HALL-12`, and `pack-v2.md` has been written since. The Operator asks what has changed since handoff: Jenny reports the drift against v1 (two Decisions since, one decided during build, three N/A marks, one Sign-off, and v2 written but not handed over) and writes nothing. Then the Operator hands off v2: Jenny proposes the new `Tech face:` line and writes it only after the yes, changing that one line of `epic.md`, in one commit. Asked again, the drift now counts from v2 and finds nothing new.
+
+Grader: `acceptance/headless/graders/HO-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -37,9 +41,9 @@ And `projects/court-bookings/` (untouched), and `veneer.md` (Project shown as In
 
 ## Key at proposal
 
-Graded after turn 1 on `$TURNS/1.md`, and after turn 2 on `$TURNS/2.md`, each before the next turn is sent.
+Graded after turn 1 on `$TURNS/1.md` (the drift report), and after turn 2 on `$TURNS/2.md` (the Handoff proposal), each before the next turn is sent.
 
-After turn 1 (the drift report):
+After turn 1:
 
 - Nothing written. `git -C "$WS" status --porcelain --untracked-files=all` → empty; `git -C "$WS" rev-parse HEAD` → `$BASE`.
 - Counts from the handed-off v1, through its tech face. `grep -cE 'v1|pack-v1' "$TURNS/1.md"` → 1 or more; `grep -c 'HALL-12' "$TURNS/1.md"` → 1 or more.
@@ -51,14 +55,12 @@ After turn 1 (the drift report):
 - The newer pack, not yet handed over, is named. `grep -cE 'v2|pack-v2' "$TURNS/1.md"` → 1 or more.
 - Only this Epic's records: the other Feature's Decision stays out. `grep -c 'HAL-ANS-003' "$TURNS/1.md"` → `0`.
 - No court items, no Source IDs. `grep -c 'CRT-' "$TURNS/1.md"` → `0`; `grep -c 'HAL-SRC-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
-After turn 2 (the Handoff proposal):
+After turn 2:
 
 - Nothing written. `git -C "$WS" status --porcelain --untracked-files=all` → empty; `git -C "$WS" rev-parse HEAD` → `$BASE`.
 - The proposal names the version and the tech face. `grep -c 'pack-v2.md' "$TURNS/2.md"` → 1 or more; `grep -c 'HALL-12' "$TURNS/2.md"` → 1 or more.
 - A batch. `grep -ci 'nothing is written yet' "$TURNS/2.md"` → 1 or more.
-- (soft) Never says a renamed canonical term outside code spans. `sed 's/`[^`]*`//g' "$TURNS/2.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -78,7 +80,6 @@ The Handoff:
 The second drift report:
 
 - Counts from v2, which already carries both Decisions. `grep -cE 'v2|pack-v2' "$TURNS/4.md"` → 1 or more; `grep -cE 'HAL-ANS-00[45]' "$TURNS/4.md"` → `0`.
-- (soft) Never says a renamed canonical term outside code spans. `for t in 3 4; do sed 's/`[^`]*`//g' "$TURNS/$t.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l; done | sort -u` → `0`.
 
 ## By eye
 

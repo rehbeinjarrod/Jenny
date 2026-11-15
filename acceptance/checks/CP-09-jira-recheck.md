@@ -1,14 +1,18 @@
 ---
 id: CP-09
-version: 3
+version: 4
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # CP-09 · A re-check of a handed-off Epic proposes only what changed, and engineer pushback leaves the Decision in force
 
 `HALL-12` was checked on 2026-11-12, as CP-06 leaves it: the log names comments 10231, 10235 and 10238 as read. Since then Priya has posted one new comment on `HALL-14`, the same day: a `Business question` pushing back on the deposit Decision `HAL-ANS-001` ($50 minimum, more than a one-hour member booking's fee). The Operator checks again. Jenny proposes only the new comment: a new Source holding it alone, and a Question with `Affects: HAL-ANS-001`, building on a guess. `HAL-ANS-001` stays in force, and no reply goes out, because nothing was answered.
+
+Grader: `acceptance/headless/graders/CP-09.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -46,7 +50,6 @@ Graded after turn 1 on `$TURNS/1.md`.
 - Only what changed: the comments seen at the last check are not proposed again. `grep -ciE 'same day|twice' "$TURNS/1.md"` → `0`; `grep -ci '30 minutes' "$TURNS/1.md"` → `0`.
 - No reply: nothing is answered. `grep -ciE 'outbox/|-reply-' "$TURNS/1.md"` → `0`.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term outside code spans. `awk '/^ *```/{f=!f;next} !f' "$TURNS/1.md" | sed 's/`[^`]*`//g' | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -62,7 +65,6 @@ Graded after turn 2. `H="$WS/projects/hall-bookings"`.
 - This check's log entry names the new comment. `git -C "$WS" diff "$BASE" HEAD -- projects/hall-bookings/log | grep '^+' | grep -c '10247'` → 1 or more.
 - Other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/hall-bookings/epics projects/hall-bookings/features projects/court-bookings veneer.md workspace.md` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep '^+' | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
-- (soft) Reply after writing never says a renamed canonical term. `awk '/^ *```/{f=!f;next} !f' "$TURNS/2.md" | sed 's/`[^`]*`//g' | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

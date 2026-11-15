@@ -1,14 +1,18 @@
 ---
 id: CP-02
-version: 7
+version: 8
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # CP-02 · A pasted email: one duplicate, one refines, kept word for word
 
 The Operator pastes an email from the hall committee chair. One point says again what an active Requirement already says; the other narrows the door-code Requirement. Jenny labels them duplicate and refines. On confirm, the duplicate writes only a log note, the refined Requirement is withdrawn and replaced under a new ID, and the email is kept word for word.
+
+Grader: `acceptance/headless/graders/CP-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -35,7 +39,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Labels the refinement against `HAL-REQ-008`. `grep -ciw 'refines' "$TURNS/1.md"` → 1 or more; `grep -c 'HAL-REQ-008' "$TURNS/1.md"` → 1 or more.
 - Weighs the chasing Question that affects `HAL-REQ-008`. `grep -c 'HAL-Q-012' "$TURNS/1.md"` → 1 or more.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -52,7 +55,6 @@ Graded after turn 2. `H="$WS/projects/hall-bookings"`.
 - No Feature created. `git -C "$WS" diff --name-only --diff-filter=A "$BASE" HEAD -- 'projects/hall-bookings/features'` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
 - Other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/court-bookings veneer.md workspace.md outbox` → empty.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/2.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

@@ -5,7 +5,7 @@ description: What to chase next in one Project, and shaping a Question's ask. Us
 
 # Up next
 
-Three operations: **The list**, which writes nothing; **Shape** and **Asked**, each one confirm-then-write operation following the rules in the Tool-owned block of `AGENTS.md`. Every reply uses Veneer names. Today is `date +%F`; every date is shown as `YYYY-MM-DD`.
+Three operations: **The list**, which writes nothing; **Shape** and **Asked**, each one confirm-then-write operation following the rules in the Tool-owned block of `AGENTS.md`. Today is `date +%F`; every date is shown as `YYYY-MM-DD`.
 
 ## The list
 
@@ -54,18 +54,18 @@ Runs on "shape <n>" (item n of the last Shape next list), "shape `<ID>`", or a y
    Done when: you hold an Ask from People, a Technique and a Chase by, each with a one-line reason.
 
 2. **Propose** under the heading "Shape <shown name for Question> `<ID>`":
-   1. `questions/<file>`: `Status: chasing`, and `Ask:`, `Technique:`, `Chase by:` set, each with its reason. Every other line stays as it is.
+   1. `questions/<file>`: `Status: chasing`, `Ask: <name>`, `Technique: <one of the six above>` and `Chase by: <YYYY-MM-DD>`, each followed, in chat only, by its reason: the file gets the value only. Every other line stays as it is.
    2. `questions/index.md`: that row's Status becomes `chasing`.
    3. Log entry `## [<date>] up-next | Shape <ID> <short title>`, one line per file written: the Question file with its four new values, and `questions/index.md`.
    4. One commit.
 
-   Then **Draft ask**: the wording of the ask, addressed to the Ask person, ready for the Operator to paste or say. Plain words in Veneer names, citing only the Question's ID so the Answer can be matched. Say the draft is not stored. Then "Nothing is written yet."
+   Then **Draft ask**: the wording of the ask, addressed to the Ask person, ready for the Operator to paste or say. Plain words, citing only the Question's ID so the Answer can be matched. Say the draft is not stored. Then "Nothing is written yet."
 
    Done when: the batch and draft are shown, ending with "Nothing is written yet."
 
-3. **Amend, confirm, write, log, commit** as `AGENTS.md` says. In the Question file, change the `Status:` line and set the three plan lines after `Affects:`, replacing any that exist. Every other line of the file stays byte for byte; the draft lives only in chat.
+3. **Amend, confirm, write, log, commit** as `AGENTS.md` says. In the Question file, change the `Status:` line and set the three plan lines after `Affects:`, replacing any that exist, each as its step 2 template with the value only. Every other line of the file stays byte for byte; the draft and the reasons live only in chat.
 
-   Done when: one commit whose message is the log heading, and `git diff HEAD~1 -- <file>` shows only `Status:`, `Ask:`, `Technique:` and `Chase by:` lines.
+   Done when: one commit whose message is the log heading, and `git diff HEAD~1 -- <file>` shows only `Status:`, `Ask:`, `Technique:` and `Chase by:` lines, each plan line its step 2 template with the value only.
 
 4. **Hand on.** Say that when the ask has gone out, telling Jenny sets the date it was asked. Done when: the Operator has been told.
 

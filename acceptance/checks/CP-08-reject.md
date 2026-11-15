@@ -3,12 +3,16 @@ id: CP-08
 version: 4
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: true
 ---
 
 # CP-08 · A rejected batch leaves no trace
 
 CP-01's typed note, proposed, then rejected. No file changes and no commit, not even the Source or a log line.
+
+Grader: `acceptance/headless/graders/CP-08.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 

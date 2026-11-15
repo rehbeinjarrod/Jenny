@@ -7,7 +7,7 @@ The Jenny skills live in the runtime's skills folder named in `workspace.md`. Th
 
 ## Read first
 
-1. `workspace.md`: Tool version, runtime, settings and the list of Projects. Before anything else on every turn, run the version check, step 1 of the `jenny` skill's `SKILL.md`. Until it passes, its warning is the whole reply, and the rules below wait, Lookup included. The one exception is a request the `setup` skill owns, such as an upgrade: it runs as `setup` says, so the Operator can bring the versions back in line through it. In the Jenny mode, the mode's own step 1 still comes first.
+1. `workspace.md`: Tool version, runtime, settings and the list of Projects. Before anything else on every turn, run the version check, step 1 of the `jenny` skill's `SKILL.md`. Until it passes, its warning is the whole reply, and the rules below wait, Lookup included, except the Veneer scan, which the warning goes through like every reply. The one exception is a request the `setup` skill owns, such as an upgrade: it runs as `setup` says, so the Operator can bring the versions back in line through it. In the Jenny mode, the mode's own step 1 still comes first.
 2. `veneer.md`, if it exists: the Veneer.
 3. The Project's `projects/<slug>/index.md`, then only the files it points to. Work in one Project at a time.
 
@@ -24,7 +24,19 @@ A renamed term's canonical word (either case, singular or plural) belongs to its
 - A record named by its topic: its shown name, its ID, or both ("the <shown name for Question> on deposits", "<shown name for Question> `HAL-Q-014`"). An engineer's ask can also be their `Business question`, in a code span.
 - A shown name stands alone, with no canonical word beside it to explain it. A record's exact stored text, such as a heading or a file path, goes in a code span.
 
-Before sending a reply, read all of it once as the Operator will, offers, next steps and headings included: every Delivery term outside a code span is its shown name, and each renamed term's canonical word appears only inside code spans. Words taken from a skill, a template or a record (a section name, a sentence a file will hold) are either put in a backtick code span, exactly as written, or said again in shown names. Quotation marks are not a code span.
+Words taken from a skill, a template or a record (a section name, a sentence a file will hold) are either put in a backtick code span, exactly as written, or said again in shown names. Quotation marks are not a code span.
+
+**Veneer scan.** When `veneer.md` exists, run every draft reply through the Veneer scan before sending it, the version-mismatch warning included. From the Workspace, with `<skills>` the runtime's skills folder (`.claude/skills` or `.cursor/skills`) and the whole reply between the markers:
+
+```bash
+python3 <skills>/jenny/scripts/veneer_scan.py <<'JENNY_REPLY'
+<the reply>
+JENNY_REPLY
+```
+
+- Exit 0: the reply is clean. Send it.
+- Exit 1: each output line, `<line>: <word>`, is a canonical word outside a code span. Reword each one as the bullets above say, then scan the new draft. Send it once the scan exits 0.
+- Exit 2, or the scan cannot run (no `python3`, no script): send the reply, with one line first saying `veneer.md` could not be read and why, from the scan's message, so the Operator can fix it.
 
 Read what the Operator types in any of the three forms (canonical term, shown name, or alias) and store the canonical term. When a shown name is also another term's canonical name, read the Operator's word in the Veneer's sense. Ask when the reading changes which record something lands in.
 
@@ -38,11 +50,12 @@ Every change to the Workspace is one operation:
 2. **Amend** by number as the Operator asks, and show the batch again in full, under the same heading.
 3. **Confirm**: write only after the Operator says yes. Until then, write no file, not even a draft, and run no command that changes the folder.
 4. **Log**: add one entry to the log, with the heading `## [YYYY-MM-DD] <op> | <title>` and one line per file written. A Project operation logs to `projects/<slug>/log/YYYY-MM.md`; a Workspace-wide one to `log/YYYY-MM.md`. Start a new month's file with `# <CODE> log · YYYY-MM` (or `# Workspace log · YYYY-MM`).
-5. **Commit** everything in the operation as one commit. The message is the log heading with only its leading `## ` taken off, so it starts with the bracketed date: `git add -A && git commit -m "[YYYY-MM-DD] <op> | <title>"`.
+5. **Commit** everything in the operation as one commit. The message is the log heading with only its leading `## ` taken off, so it starts with the bracketed date: `git add -A && git commit -m "[YYYY-MM-DD] <op> | <title>"`. The commit runs the Guard, the Workspace's git pre-commit hook. When it rejects the commit, it names each file and problem: fix each one in the files of this operation, and commit again. Never pass `--no-verify`.
+6. **Report**: one reply after the commit, holding what the skill's own steps say to tell the Operator (such as its record lines or its **Hand on**) and the commit message in a code span. Give any file it names as its full path in a code span (`projects/<slug>/questions/index.md`). It is a draft reply like any other: when `veneer.md` exists, it goes through the Veneer scan before it is sent.
 
 When the Operator's own typed words answer a Question during any skill's operation, that skill's batch may capture them as an Answer: follow **Embedded Capture** in the `capture` skill.
 
-Done when: `git status --porcelain` is empty and the last commit message is the log heading.
+Done when: `git status --porcelain` is empty, the last commit message is the log heading, and the report has been sent, through the Veneer scan when `veneer.md` exists.
 
 ## Records
 

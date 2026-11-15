@@ -1,14 +1,18 @@
 ---
 id: LK-03
-version: 4
+version: 5
 skills: [lookup]
 cursor-bench: false
-repeat-at-gate: true
+routing: true
+inputs: []
+promise: true
 ---
 
 # LK-03 · Leak trap: same words, other Project
 
 The Operator asks about deposits and late cancellation in the court bookings Project, which uses the same words as the hall Project with different rules. Jenny answers from the court records only and pulls in no hall rule.
+
+Grader: `acceptance/headless/graders/LK-03.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -33,7 +37,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Cites the court file. `grep -c 'CRT-FEA-001-book-and-cancel-a-court.md' "$TURNS/1.md"` → 1 or more.
 - No hall IDs. `grep -c 'HAL-' "$TURNS/1.md"` → `0`.
 - No hall rules. `grep -ciE '48[ -]hour|20 ?%|\$50|half' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 

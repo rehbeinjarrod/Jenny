@@ -1,14 +1,18 @@
 ---
 id: SO-03
-version: 3
+version: 4
 skills: [signoff]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # SO-03 · Where an Epic stands: per Stakeholder, and a replaced Answer resets its Sign-off
 
 The hall's book-and-pay Epic has pack v2 with three Decisions. Margaret agreed the deposit (`HAL-SO-001`), then on her view agreed the cleaning-fee Decision and pushed back on the late finish (`HAL-SO-002`, Question `HAL-Q-014`). Tom agreed the deposit in person (`HAL-SO-003`). Since then, the cleaning-fee Decision `HAL-ANS-005` was withdrawn and replaced by `HAL-ANS-007`. The Operator asks where the Epic stands. Jenny reads `signoffs.md` against the pack's Decisions as they are now and reports, per Stakeholder, what they agreed, disputed and have not yet looked at. Margaret's agreement to `HAL-ANS-005` does not carry to `HAL-ANS-007`. Nothing is written, and there is no yes/no "signed off".
+
+Grader: `acceptance/headless/graders/SO-03.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -44,7 +48,6 @@ Graded on `$TURNS/1.md`. `who() { awk -v n="**$1**" 'index($0, n) == 1 {f=1; nex
 - The withdrawn Decision is not reported as standing. `grep -E '^- (Agreed|Disputed):' "$TURNS/1.md" | grep -c 'HAL-ANS-005'` → `0`.
 - No yes/no "signed off", and nothing overdue. `grep -ciE 'signed[ -]off|overdue' "$TURNS/1.md"` → `0`.
 - No court items. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 

@@ -16,7 +16,7 @@ Two operations:
 - **Record** on "hand off <Epic> v<N>, tech face <Jira key or URL>", and on `/handoff` naming a version. A confirm-then-write operation following the rules in the Tool-owned block of `AGENTS.md`.
 - **Drift** on "what's changed since handoff?" and on `/handoff` alone. A report that writes nothing: no file, no log entry, no commit.
 
-Every reply uses Veneer names. Today is `date +%F`.
+Today is `date +%F`.
 
 ## Record
 

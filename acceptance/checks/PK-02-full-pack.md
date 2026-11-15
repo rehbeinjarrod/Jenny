@@ -1,14 +1,18 @@
 ---
 id: PK-02
-version: 5
+version: 7
 skills: [pack]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # PK-02 · The full pack: For-the-agent block, DO NOT DECIDE, Agreed by, appendices last, Handoff line moved
 
 The Operator asks Jenny to write the pack for the hall's book-and-pay Epic, which was handed off with `pack-v1.md` and has one Sign-off. Jenny runs Decision coverage first and proposes the gap Questions and a new `pack-v2.md` in one confirm-then-write batch. After confirm, `pack-v1.md` is untouched, `pack-v2.md` is new, and the `Tech face:` line in `epic.md` now names `pack-v2.md` in the same commit, as does one new link line in the Project's `index.md`. The pack has every section in order with the appendices last, the For-the-agent block with both fixed shapes, every open Question marked `DO NOT DECIDE` (the parked one listed apart), an "Agreed by" line on the signed-off Decision, people by role, no Source IDs, shown names, under 300 lines, in one commit.
+
+Grader: `acceptance/headless/graders/PK-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -40,11 +44,10 @@ Graded after turn 1, on `$TURNS/1.md`. `cats() { for w in rules boundaries unwan
 - The guessed Question is in the proposal. `grep -c 'HAL-Q-007' "$TURNS/1.md"` → 1 or more.
 - A batch. `grep -ci 'nothing is written yet' "$TURNS/1.md"` → 1 or more.
 - No court items. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
-Graded after turn 2. `P="$WS/projects/hall-bookings"`, `PK="$P/epics/HAL-EPC-001-book-and-pay/pack-v2.md"`, `NEWQ=$(git -C "$WS" diff --name-only --diff-filter=A "$BASE" HEAD -- 'projects/hall-bookings/questions/HAL-Q-*.md')`, and `prose() { awk '/^```/{f=!f;next} !f' "$PK" | sed 's/`[^`]*`//g'; }` (the pack outside code blocks and code spans).
+Graded after turn 2. `P="$WS/projects/hall-bookings"`, `PK="$P/epics/HAL-EPC-001-book-and-pay/pack-v2.md"`, `NEWQ=$(git -C "$WS" diff --name-only --diff-filter=A "$BASE" HEAD -- 'projects/hall-bookings/questions/HAL-Q-*.md')`, and `` prose() { awk '/^```/{f=!f;next} !f' "$PK" | sed 's/`[^`]*`//g'; } `` (the pack outside code blocks and code spans).
 
 - One commit. `git -C "$WS" rev-list --count "$BASE"..HEAD` → `1`.
 - Commit message is the log heading. `git -C "$WS" log -1 --format=%s | grep -cE '^\[[0-9]{4}-[0-9]{2}-[0-9]{2}\] pack \| '` → `1`; `cat "$P"/log/*.md | grep -cxF "## $(git -C "$WS" log -1 --format=%s)"` → `1`.
@@ -69,7 +72,6 @@ Graded after turn 2. `P="$WS/projects/hall-bookings"`, `PK="$P/epics/HAL-EPC-001
 - Every new Question is in the index. `for q in $NEWQ; do grep -c "\[$(basename "$q" | cut -c1-9)\]" "$P/questions/index.md"; done | sort -u` → `1`.
 - Court records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/court-bookings veneer.md workspace.md` → empty.
 - Records other than the pack stay canonical. `git -C "$WS" diff "$BASE" HEAD -- . ':(exclude)*/pack-v*.md' | grep '^+' | grep -ciwE 'initiative|open item|spec'` → `0`.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/2.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

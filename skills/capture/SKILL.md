@@ -53,7 +53,7 @@ awk 'function g(s,a,  n,w,i){s=tolower(s);gsub(/[^a-z0-9]+/," ",s);n=split(s,w,"
 EOF
 ```
 
-Show the batch under the heading `Capture: <title of the Source>` (in shown names), with that sentence above it. Order the items so the Operator can amend by number:
+Show the batch under the heading `Capture: <title of the Source>`, with that sentence above it. Order the items so the Operator can amend by number:
 
 - **Item 1, the Source**, as [templates/source.md](templates/source.md) shapes it, with its ID and the exact text it will keep:
   - Own organisation's material (the Operator's notes, colleagues' emails, meeting notes, internal pages): the parts used, word for word. Parts not used stay out of the Source and are listed in one line after the items.

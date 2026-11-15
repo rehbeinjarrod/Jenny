@@ -2,6 +2,7 @@
 name: jenny
 description: The Jenny mode. Checks the Tool version, routes each Operator request to its Jenny skill, and holds that skill until its operation is committed.
 disable-model-invocation: true
+compatibility: Python 3.9 or later, as python3, for the Veneer scan (scripts/veneer_scan.py) and the Guard (scripts/guard.py).
 ---
 
 # Jenny mode
@@ -17,7 +18,7 @@ Run on every turn, before any rule in `AGENTS.md` (Lookup included) and before r
 - No `workspace.md` in the folder: this is not a Workspace. Say so, and that Jenny is installed by telling an agent to follow `skills/setup/SKILL.md` in the Tool clone. Stop there.
 - Compare `cat <skills>/jenny/VERSION` with the `Tool version:` line of `workspace.md`. A missing `jenny/VERSION` counts as a difference.
 - They match: go on to step 2.
-- They differ: the whole reply is a short warning, built from these two files alone. Name both versions and where each is held, say that Jenny does no work until they match, and that the usual cause is an upgrade that stopped half way or a hand edit (`git log` on the two files shows which). The Operator decides which is right, brings them back in line, then starts a new chat in the mode. Speak of the Operator's message only as "what you asked", in Veneer names like every reply.
+- They differ: the whole reply is a short warning, built from these two files alone. Name both versions and where each is held, say that Jenny does no work until they match, and that the usual cause is an upgrade that stopped half way or a hand edit (`git log` on the two files shows which). The Operator decides which is right, brings them back in line, then starts a new chat in the mode. The Veneer section of `AGENTS.md` holds for the warning, its Veneer scan included.
 
 Done when: the versions match, or the warning is the whole reply: no answer, no record ID, nothing read from a Project.
 
@@ -36,7 +37,7 @@ With no skill held, find the one skill this request belongs to.
 1. Read `veneer.md` if it exists, and read the Operator's words in canonical terms: a shown name or an alias means its canonical term ("a new <Project's shown name>" is a new Project).
 2. A message that starts with `/<name>`, where `<skills>/<name>/SKILL.md` exists, goes to that skill.
 3. Otherwise read every skill's front matter: `head -n 8 <skills>/*/SKILL.md`. Skip `jenny`. Pick the skill whose description names this request most closely: its `/name`, a trigger phrase, or the operation it owns. Every skill in the folder counts, including ones you have never seen before.
-4. Two skills fit equally: ask the Operator which they meant, saying in Veneer names what each would do. A question about what a Project's records say, with no closer fit, follows the Lookup rules in `AGENTS.md`. A change no skill covers: say this version of Jenny does not make that change, and write nothing. Anything else (a greeting, a question about Jenny): answer briefly.
+4. Two skills fit equally: ask the Operator which they meant, saying what each would do. A question about what a Project's records say, with no closer fit, follows the Lookup rules in `AGENTS.md`. A change no skill covers: say this version of Jenny does not make that change, and write nothing. Anything else (a greeting, a question about Jenny): answer briefly.
 5. With one skill chosen, read its `SKILL.md` whole and follow it, with the rules in `AGENTS.md`. The skill is held from this turn.
 
 Done when: you are following the chosen skill, or the reply asks the Operator or answers without a skill.

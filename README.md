@@ -22,6 +22,7 @@ Each skill is a folder in [skills/](skills/). You rarely name one: say what you 
 
 - [Claude Code](https://claude.com/claude-code) or [Cursor](https://cursor.com), with access to a Sonnet model. Jenny is tested on Sonnet only.
 - git.
+- Python 3.9 or later, as `python3`. Jenny uses it to check her replies use your organisation's words.
 - For Jira and Confluence: an Atlassian Cloud site you can sign in to. Jenny reaches it through the Atlassian MCP server, which signs in through your browser, so no token is stored in your Workspace. Without Atlassian, Jenny still works on what you type or paste, and writes anything it would post to an `outbox/` folder instead.
 
 ## Install
@@ -83,7 +84,7 @@ Going back is reverting that one upgrade commit in your Workspace. To stay on a 
 
 Every check reads fixtures in place of Jira and Confluence, so a run never touches a real Atlassian site.
 
-A run is made to be cheap: the design target is 0.25% of a 5-hour usage window per check run. A gate run stops early at its first hard failure or third soft failure, so a failing version costs less than one that passes.
+A run is made to be cheap: the design target is 0.25% of a 5-hour usage window per check run. A gate run makes only the check runs whose evidence is missing: a check unchanged since the last Tool version needs none.
 
 ## Support and contributions
 

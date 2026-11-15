@@ -1,14 +1,18 @@
 ---
 id: CP-01
-version: 7
+version: 8
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # CP-01 · A typed note, amended by number, nothing written before confirm
 
 The Operator pastes a note they typed and says to capture it. Jenny names the hall Project and why, then proposes a numbered batch: the Source kept word for word, two Requirements split from one two-need sentence, and a scored Question. The Operator rewords item 2 by number; the batch changes. Nothing is written until the yes, then it is one commit.
+
+Grader: `acceptance/headless/graders/CP-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -33,7 +37,6 @@ Graded after turn 1 (on `$TURNS/1.md`) and again after turn 2 (on `$TURNS/2.md`)
 - Names the hall Project. `grep -ci 'hall' "$TURNS/<n>.md"` → 1 or more; `grep -c 'CRT-' "$TURNS/<n>.md"` → `0`.
 - Proposes both needs and the unknown. Each → 1 or more: `grep -ci 'calendar' "$TURNS/<n>.md"`, `grep -ciw 'map' "$TURNS/<n>.md"`, `grep -ciwE 'drinks?' "$TURNS/<n>.md"`.
 - Proposes scores for the new Question. `grep -ci 'impact' "$TURNS/<n>.md"` → 1 or more; `grep -ci 'uncertainty' "$TURNS/<n>.md"` → 1 or more.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/<n>.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 - After turn 1 only: not yet reworded. `grep -c 'button that adds the booking' "$TURNS/1.md"` → `0`.
 - After turn 2 only: the amend took. `grep -c 'button that adds the booking' "$TURNS/2.md"` → 1 or more.
 
@@ -50,7 +53,6 @@ Graded after turn 3. `H="$WS/projects/hall-bookings"`.
 - The new Question, scored. `ls "$H"/questions/HAL-Q-014-*.md | wc -l` → `1`; `cat "$H"/questions/HAL-Q-014-*.md | grep -cE '^(Impact|Uncertainty|Score|Score reason): .+'` → `4`; `f=$(ls "$H"/questions/HAL-Q-014-*.md); i=$(sed -n 's/^Impact: //p' "$f"); u=$(sed -n 's/^Uncertainty: //p' "$f"); s=$(sed -n 's/^Score: //p' "$f"); [ "$((i*u))" = "$s" ] && echo ok` → `ok`; `cat "$H"/questions/HAL-Q-014-*.md | grep -cE '^Status: (open|parked)$'` → `1`; `cat "$H"/questions/HAL-Q-014-*.md | grep -c '^Raised from: HAL-SRC-006$'` → `1`; `grep -c 'HAL-Q-014' "$H/questions/index.md"` → 1 or more.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
 - Other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/court-bookings veneer.md workspace.md outbox` → empty.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/3.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

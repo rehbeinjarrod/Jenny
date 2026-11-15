@@ -1,14 +1,18 @@
 ---
 id: PK-01
-version: 3
+version: 4
 skills: [pack]
 cursor-bench: false
-repeat-at-gate: true
+routing: false
+inputs: []
+promise: false
 ---
 
 # PK-01 · Decision coverage raises every gap, and N/A is the Operator's call
 
 The Operator asks Jenny to check coverage for the court timetable Epic. Jenny walks all 11 categories and shows each as settled (citing Requirement IDs), open (citing the Question already raised) or a gap, and proposes a scored Question for every gap, as one confirm-then-write batch. Two categories honestly do not apply; Jenny may say they look N/A but marks neither. The Operator marks one of them N/A with a reason and confirms. After confirm, every planted gap is a new Question tagged with its category, only the Operator's N/A is stored, with their reason, and everything lands in one commit.
+
+Grader: `acceptance/headless/graders/PK-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -39,7 +43,6 @@ Graded after turn 1 on `$TURNS/1.md`, and after turn 2 on `$TURNS/2.md` where a 
 - Turn 1, N/A proposed and left to the Operator: data is said to look N/A, and the reply asks for a reason. `grep -iE 'data' "$TURNS/1.md" | grep -ciE 'looks? (like it is )?(n/a|not applicable)'` → 1 or more; `grep -iE 'n/a|not applicable' "$TURNS/1.md" | grep -ci 'reason'` → 1 or more.
 - A batch, after each turn. `grep -ci 'nothing is written yet' "$TURNS/1.md"` → 1 or more; `grep -ci 'nothing is written yet' "$TURNS/2.md"` → 1 or more.
 - No hall items, after each turn. `grep -c 'HAL-' "$TURNS/1.md"` → `0`; `grep -c 'HAL-' "$TURNS/2.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans, after each turn. `sed 's/`[^`]*`//g' "$TURNS/<n>.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -57,7 +60,6 @@ Graded after turn 3. `P="$WS/projects/court-bookings"`, `E="$P/epics/CRT-EPC-001
 - Nothing else in `epic.md` changed: lines only added. `git -C "$WS" diff --numstat "$BASE" HEAD -- projects/court-bookings/epics/CRT-EPC-001-see-which-courts-are-free/epic.md | cut -f2` → `0`.
 - Hall records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/hall-bookings veneer.md workspace.md` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiative|open item|spec'` → `0`.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/3.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

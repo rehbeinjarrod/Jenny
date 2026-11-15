@@ -1,18 +1,22 @@
 ---
 id: UN-01
-version: 4
+version: 6
 skills: [up-next]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # UN-01 · Chase now: overdue first, handed-off nudge, no leak-trap items
 
 The Operator asks what to chase next in the hall Project. Jenny lists the `chasing` Questions with the overdue ones first, each with who was asked and how many days overdue, nudges the handed-off Epic with the date of its last check, and pulls in nothing from the court Project. The list writes nothing and changes no status or score.
 
+Grader: `acceptance/headless/graders/UN-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
+
 ## Start
 
-Sample v7 as it is. No fixtures. The run's date falls after 2026-11-10 and before 2027-06-30, so two chasing Questions are overdue and one is not yet due. `$D_012` and `$D_004` are the days from each Chase by date to the run's date: `D_012=$(( ($(date -ud "$(date +%F)" +%s) - $(date -ud 2026-11-08 +%s)) / 86400 ))`, `D_004=$(( ($(date -ud "$(date +%F)" +%s) - $(date -ud 2026-11-10 +%s)) / 86400 ))`.
+Sample v7 as it is. No fixtures. The run's date falls after 2026-11-10 and before 2027-06-30, so two chasing Questions are overdue and one is not yet due. `$D_012` and `$D_004`, set in **Key at proposal**, are the days from each Chase by date to the run's date.
 
 The key relies on:
 
@@ -30,7 +34,7 @@ The key relies on:
 
 ## Key at proposal
 
-Graded after turn 1, on `$TURNS/1.md`.
+Graded after turn 1, on `$TURNS/1.md`. `D_012=$(( ($(date -ud "$(date +%F)" +%s) - $(date -ud 2026-11-08 +%s)) / 86400 ))`, `D_004=$(( ($(date -ud "$(date +%F)" +%s) - $(date -ud 2026-11-10 +%s)) / 86400 ))`.
 
 - Nothing written. `git -C "$WS" status --porcelain --untracked-files=all` → empty; `git -C "$WS" rev-parse HEAD` → `$BASE`.
 - Lists every chasing Question. Each → 1 or more: `grep -c 'HAL-Q-012' "$TURNS/1.md"`, `grep -c 'HAL-Q-004' "$TURNS/1.md"`, `grep -c 'HAL-Q-013' "$TURNS/1.md"`.
@@ -42,7 +46,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Ends by offering to shape the top one. `tail -n 3 "$TURNS/1.md" | grep -c 'HAL-Q-007'` → 1 or more.
 - No answered, parked or withdrawn Question. `grep -cE 'HAL-Q-00[1256]\b' "$TURNS/1.md"` → `0`.
 - No leak-trap items. `grep -c 'CRT-' "$TURNS/1.md"` → `0`; `grep -c 'Joe Park' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 

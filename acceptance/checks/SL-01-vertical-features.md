@@ -1,14 +1,18 @@
 ---
 id: SL-01
-version: 4
+version: 5
 skills: [slice]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # SL-01 · Vertical Features, one Epic each
 
 The Operator asks Jenny to slice the hall Project. Jenny proposes Features for the unplaced Requirements, each a vertical slice a Stakeholder could see and sign off on its own, and one Epic for every Feature that has none, as one confirm-then-write batch. The phone-screen Requirement runs across every hirer page, so it is not given a Feature of its own: it sits in one Feature, is covered by that Feature's Epic, and the other Epics list it under **Applies here too**. After confirm, Requirement lines move byte for byte, no Requirement is covered by two Epics, and everything lands in one commit.
+
+Grader: `acceptance/headless/graders/SL-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -34,7 +38,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Gives the Feature with no Epic its Epic. `grep -c 'HAL-FEA-002' "$TURNS/1.md"` → 1 or more.
 - A batch. `grep -ci 'nothing is written yet' "$TURNS/1.md"` → 1 or more.
 - No leak-trap items. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -57,7 +60,6 @@ Graded after turn 2. `P="$WS/projects/hall-bookings"`, `NEW=$(git -C "$WS" diff 
 - IDs unique. `ls "$P/features" | grep -oE '^HAL-FEA-[0-9]{3}' | sort | uniq -d` → empty; `ls "$P/epics" | grep -oE '^HAL-EPC-[0-9]{3}' | sort | uniq -d` → empty.
 - Indexes list every Feature and Epic. `for f in "$P"/features/HAL-FEA-*.md; do grep -c "\[$(basename "$f" | cut -c1-11)\]" "$P/features/index.md"; done | sort -u` → `1`; `for e in "$P"/epics/*/epic.md; do grep -c "epics/$(basename "$(dirname "$e")")/epic.md" "$P/index.md"; done | sort -u` → `1`.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiative|open item|spec'` → `0`.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/2.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

@@ -1,6 +1,7 @@
 ---
 name: pack
 description: Run Decision coverage on one Epic, raising a scored Question for every business decision left unsettled, or write the Epic's pack after it. Use for `/pack`, when the Operator says "check coverage for <Epic>" or "write the pack for <Epic>", or asks whether an Epic is ready for its pack.
+compatibility: Python 3.9 or later, as python3, for the pack shape scan (scripts/pack_shape.py).
 ---
 
 # Pack
@@ -12,7 +13,7 @@ Two operations, each a confirm-then-write operation following the rules in the T
 
 Each writes exactly the files its batch lists. Pack's batch carries one Project `index.md` item, adding the new `pack-v<N>.md`'s link line (Pack step 4) and changing no other line. Coverage's batch carries no `index.md` item; its new Questions are listed in `questions/index.md`.
 
-Every reply uses Veneer names. Today is `date +%F`.
+Today is `date +%F`.
 
 ## The 11 categories
 
@@ -83,11 +84,11 @@ Writes `epics/<ID>-<slug>/pack-v<N>.md` from [the pack template](templates/pack.
 
 2. **Walk** as Coverage step 2. Done when: Coverage step 2's criterion holds.
 
-3. **Draft** the pack in your own working, writing no file, as it will read once the batch is written: each gap Question exists with its new ID, and each N/A mark the Operator has given is in place. Fill [the template](templates/pack.md) section by section, by the **Drafting rules** below. Then count it, writing no file: `cat <<'PACK' | wc -l`, the draft, then `PACK`.
+3. **Draft** the pack in your own working, writing no file, as it will read once the batch is written: each gap Question exists with its new ID, and each N/A mark the Operator has given is in place. Fill [the template](templates/pack.md) section by section, by the **Drafting rules** below. Then run the **pack shape scan** on it, writing no file: `python3 <skills>/pack/scripts/pack_shape.py <<'PACK'`, the draft, then `PACK` alone on the last line. It prints `<count> lines` for a good draft. Otherwise it names one problem per line: a section `missing`, `out of order`, `repeated` or `not a pack section`, or the draft `over 300 lines`. Fix the draft's sections and run it again, until it prints `<count> lines` or names only the cap.
 
-   **Over 300 lines**: packs are never split. Write nothing and propose no batch. Say the pack would be <count> lines, over the 300-line cap, and propose a re-slice in shown names: a seam that would cut the Feature into two vertical Features, each small enough for one pack, naming the Requirements on each side, and that `slice` makes it ("re-slice <Feature ID>"). This ends the operation.
+   **Over 300 lines** (the scan names the cap): packs are never split. Write nothing and propose no batch. Say the pack would be <count> lines, over the 300-line cap, and propose a re-slice: a seam that would cut the Feature into two vertical Features, each small enough for one pack, naming the Requirements on each side, and that `slice` makes it ("re-slice <Feature ID>"). This ends the operation.
 
-   Done when: the draft has every template section in order, each covered active Requirement has its section 4 entry, every `open` or `chasing` Question bearing on the Epic is a `DO NOT DECIDE` item in section 5, and its line count is 300 or under (or you stopped).
+   Done when: the draft has every template section in order, each covered active Requirement has its section 4 entry, every `open` or `chasing` Question bearing on the Epic is a `DO NOT DECIDE` item in section 5, and the scan's last run on this draft printed `<count> lines` (or you stopped).
 
 4. **Propose** under the heading "<shown name for Epic pack> v<N>: <shown name for Epic> <ID> <title>": the coverage checklist as Coverage step 3 shows it, then the numbered batch:
    - each gap Question and each N/A mark, as in Coverage step 3;
@@ -102,9 +103,9 @@ Writes `epics/<ID>-<slug>/pack-v<N>.md` from [the pack template](templates/pack.
 
    Done when: the checklist shows all 11 categories, every gap is a batch item, and the pack is an item with its line count.
 
-5. **Amend, confirm, write, log, commit** as Coverage step 4. After each amend, draft and count again, and show the checklist and the batch again in full. On the yes, write the pack exactly as last drafted, its link line in `index.md`, and for a handed-off Epic its new `Tech face:` line.
+5. **Amend, confirm, write, log, commit** as Coverage step 4. After each amend, draft again and run the scan on it as step 3 says, and show the checklist and the batch again in full. On the yes, write the pack exactly as last drafted, its link line in `index.md`, and for a handed-off Epic its new `Tech face:` line.
 
-   Done when: Coverage step 4's criterion holds (for a handed-off Epic, the `Tech face:` line is the one more line replaced in `epic.md`, and `grep -c 'Pack: pack-v<N>.md'` on it prints `1`); `git diff --numstat HEAD~1 -- projects/<slug>/index.md | cut -f1,2` prints `1	0` and the added line names `pack-v<N>.md` (`git diff HEAD~1 -- projects/<slug>/index.md | grep '^+ ' | grep -c 'pack-v<N>.md'` prints `1`); and in that commit `pack-v<N>.md` is the one pack file added and none changed (`git diff --name-status HEAD~1 -- 'projects/<slug>/epics/*/pack-v*.md'` prints one `A` line), `wc -l` on it prints 300 or under, and `grep -c '<CODE>-SRC-'` on it prints `0`.
+   Done when: Coverage step 4's criterion holds (for a handed-off Epic, the `Tech face:` line is the one more line replaced in `epic.md`, and `grep -c 'Pack: pack-v<N>.md'` on it prints `1`); `git diff --numstat HEAD~1 -- projects/<slug>/index.md | cut -f1,2` prints `1	0` and the added line names `pack-v<N>.md` (`git diff HEAD~1 -- projects/<slug>/index.md | grep '^+ ' | grep -c 'pack-v<N>.md'` prints `1`); and in that commit `pack-v<N>.md` is the one pack file added and none changed (`git diff --name-status HEAD~1 -- 'projects/<slug>/epics/*/pack-v*.md'` prints one `A` line), `python3 <skills>/pack/scripts/pack_shape.py <the pack file>` prints `<count> lines`, and `grep -c '<CODE>-SRC-'` on it prints `0`.
 
 6. **Hand on.** Say how many `DO NOT DECIDE` items the pack carries and point at `up-next` for what to chase first. For a handed-off Epic, say the `Tech face:` line now gives the delivery team v<N>, and that they should be told so on that work item. Say each Stakeholder's <shown name for Sign-off view> comes next ("sign-off view for <person>, <shown name for Epic> <ID>"). Done when: the Operator has been told.
 

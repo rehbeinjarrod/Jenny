@@ -1,20 +1,30 @@
 ---
 id: CP-05
-version: 3
+version: 4
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # CP-05 · A re-read of a Confluence page proposes only what changed
 
 The hall hire terms page was captured at version 3 as `HAL-SRC-006`. The committee has since updated it: the guest limit dropped from 120 to 100, a kitchen rule is new, and the part on setting out tables and chairs is gone. The Operator says to re-read it. Jenny finds `HAL-SRC-006` by its URL and proposes only the changes: a new Source naming its previous reading, the limit's Requirement withdrawn and replaced, one new Requirement, and a "withdraw?" item for the Requirement whose text has gone. The Operator says to withdraw that one, then confirms. `HAL-SRC-006` stays exactly as it was.
 
+Grader: `acceptance/headless/graders/CP-05.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
+
 ## Start
 
 Sample v7. MCP stand-in: `https://riverbend-hall.atlassian.net/wiki/spaces/HALL/pages/4521987/Hall+hire+terms` → `confluence/hall-hire-terms-v2.md` (page version 4, last updated 2026-11-12 by Margaret Osei).
 
-After install, lay the first reading over the sample, from the frozen fixture `acceptance/fixtures/confluence/after-v1/` (a first reading as CP-04 makes it, at page version 3, with all four Requirements left in `unplaced.md`): `H="$WS/projects/hall-bookings"; F="$REPO/acceptance/fixtures/confluence/after-v1"; cp "$F/HAL-SRC-006-confluence-hall-hire-terms.md" "$H/sources/" && cat "$F/sources-index-row.md" >> "$H/sources/index.md" && cat "$F/unplaced-lines.md" >> "$H/requirements/unplaced.md" && cat "$F/log-entry.md" >> "$H/log/2026-11.md"`, then commit as `[2026-11-11] capture | HAL-SRC-006 Confluence page: Hall hire terms`. The key relies on:
+After install, lay the first reading over the sample, from the frozen fixture `acceptance/fixtures/confluence/after-v1/` (a first reading as CP-04 makes it, at page version 3, with all four Requirements left in `unplaced.md`), committed as `[2026-11-11] capture | HAL-SRC-006 Confluence page: Hall hire terms`:
+
+```sh
+H="$WS/projects/hall-bookings"; F="$REPO/acceptance/fixtures/confluence/after-v1"; cp "$F/HAL-SRC-006-confluence-hall-hire-terms.md" "$H/sources/" && cat "$F/sources-index-row.md" >> "$H/sources/index.md" && cat "$F/unplaced-lines.md" >> "$H/requirements/unplaced.md" && cat "$F/log-entry.md" >> "$H/log/2026-11.md" && git -C "$WS" add -A && git -C "$WS" commit -qm "[2026-11-11] capture | HAL-SRC-006 Confluence page: Hall hire terms"
+```
+
+The key relies on:
 
 - `projects/hall-bookings/sources/HAL-SRC-006-confluence-hall-hire-terms.md`: the first reading, with the page's URL and `Page version: 3`.
 - `projects/hall-bookings/requirements/unplaced.md`: from `HAL-SRC-006`, `HAL-REQ-014` (guests expected) and `HAL-REQ-016` (terms agreed before the deposit), unchanged on the page; `HAL-REQ-015` (at most 120 guests), changed; `HAL-REQ-017` (tables and chairs for $20), gone.
@@ -39,7 +49,6 @@ Graded after turn 1 (on `$TURNS/1.md`) and again after turn 2 (on `$TURNS/2.md`)
 - Weighs the Requirement whose text has gone. `grep -c 'HAL-REQ-017' "$TURNS/<n>.md"` → 1 or more.
 - After turn 1 only: asks rather than withdraws. `grep -ciF 'withdraw?' "$TURNS/1.md"` → 1 or more.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/<n>.md"` → `0`.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/<n>.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -57,7 +66,6 @@ Graded after turn 3. `H="$WS/projects/hall-bookings"`, `U='https://riverbend-hal
 - No Feature created. `git -C "$WS" diff --name-only --diff-filter=A "$BASE" HEAD -- 'projects/hall-bookings/features'` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
 - Other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/court-bookings veneer.md workspace.md outbox` → empty.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/3.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

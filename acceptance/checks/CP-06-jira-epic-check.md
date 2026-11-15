@@ -1,14 +1,18 @@
 ---
 id: CP-06
-version: 6
+version: 7
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: true
 ---
 
 # CP-06 · A handed-off Epic check: a Business question is answered in the same batch, and its Jira reply goes with it
 
 The hall's book-and-pay Epic was handed off on tech face `HALL-12` and last checked on 2026-11-09. Since then Ravi posted a `Business question` on Story `HALL-13` (one deposit or two when a hirer books twice in one day) and a PR note, and Priya Shah, an engineer not yet in People, posted a `Business call made in build` on `HALL-14` (an unpaid booking holds its slot for 30 minutes). The Operator says "check HALL-12". Jenny proposes one batch: the Jira Source, the Business question as a building-on-a-guess Question, Priya added to People, and her call as a Decision she owns, flagged decided during build, answering a Question raised in the same batch. The Operator gives Margaret's answer to the Business question in an amend: the batch gains a typed-note Source, the Answer and a reply to `HALL-13` quoting the Answer ID. On the yes, the reply is written to `outbox/` in the same commit as the Answer.
+
+Grader: `acceptance/headless/graders/CP-06.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -45,7 +49,6 @@ Both turns:
 - The PR note appears only where it is listed as not used. `grep -i 'PR for the booking form' "$TURNS/<n>.md" | grep -viEc "not used|n't used|unused"` → `0`.
 - The PR note's comment is named (in the not-used line or the log line, which names every comment read). `grep -c '10235' "$TURNS/<n>.md"` → 1 or more.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/<n>.md"` → `0`.
-- (soft) Never says a renamed canonical term outside code spans. `awk '/^ *```/{f=!f;next} !f' "$TURNS/<n>.md" | sed 's/`[^`]*`//g' | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 After turn 1 only:
 
@@ -74,7 +77,6 @@ Graded after turn 3. `H="$WS/projects/hall-bookings"`, `U='https://example.atlas
 - The reply uses Veneer names. `awk '/^ *```/{f=!f;next} !f' "$R" | sed 's/`[^`]*`//g' | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`; `grep -cE 'Open item|Spec' "$R"` → 1 or more.
 - The Epic, its packs and other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/hall-bookings/epics projects/court-bookings veneer.md workspace.md` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD -- projects | grep '^+' | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
-- (soft) Reply after writing never says a renamed canonical term. `awk '/^ *```/{f=!f;next} !f' "$TURNS/3.md" | sed 's/`[^`]*`//g' | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

@@ -3,16 +3,26 @@ id: MD-02
 version: 2
 skills: [jenny]
 cursor-bench: true
-repeat-at-gate: false
+routing: true
+inputs: []
+promise: false
 ---
 
 # MD-02 · A skill added later routes without changing the mode
 
 A skill the mode has never heard of is dropped into the skills folder. The Operator asks for it in plain Veneer words, with no `/name`. The mode finds it from its description and follows it.
 
+Grader: `acceptance/headless/graders/MD-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
+
 ## Start
 
-Sample v7. Fixture: `acceptance/fixtures/skill-headcount/` (a `headcount` skill that counts a Project's People in a fixed shape). After install, before `$BASE`: copy that folder to `$SK/headcount/` and commit it as `Test: add headcount skill`. The key relies on `projects/hall-bookings/project.md` (3 People: Dana Wells, Margaret Osei, Ravi Kumar) and `veneer.md` (Project shown as Initiative).
+Sample v7. Fixture: `acceptance/fixtures/skill-headcount/` (a `headcount` skill that counts a Project's People in a fixed shape). After install, before `$BASE`: copy that folder to `$SK/headcount/` and commit it as `Test: add headcount skill`:
+
+```sh
+cp -r "$REPO/acceptance/fixtures/skill-headcount" "$SK/headcount" && git -C "$WS" add -A && git -C "$WS" commit -qm "Test: add headcount skill"
+```
+
+The key relies on `projects/hall-bookings/project.md` (3 People: Dana Wells, Margaret Osei, Ravi Kumar) and `veneer.md` (Project shown as Initiative).
 
 ## Operator script
 

@@ -1,14 +1,18 @@
 ---
 id: CP-07
-version: 3
+version: 4
 skills: [capture]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # CP-07 · A Sign-off read-back: ticks and pushback give a Sign-off entry and a Question, and the Decision stays in force
 
 Margaret's Sign-off view of the hall's book-and-pay Epic was published to Confluence. On the page she ticked the cleaning-fee Decision, left the late-finish Decision unticked and wrote why she does not agree, and answered one of her calls (cash deposits). The Operator asks Jenny to capture the page. Jenny proposes one batch: a new Source for the reading, a `HAL-SO-002` entry added to `signoffs.md`, a new Question for the pushback with `Affects: HAL-ANS-004`, flagged as building on a guess because the delivery team already builds to midnight, and an Answer to the cash deposits Question. The late-finish Decision stays active.
+
+Grader: `acceptance/headless/graders/CP-07.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -45,7 +49,6 @@ Graded after turn 1 on `$TURNS/1.md`.
 - Names the tick and the pushback. Each → 1 or more: `grep -c 'HAL-ANS-005' "$TURNS/1.md"`, `grep -c 'HAL-ANS-004' "$TURNS/1.md"`, `grep -c 'HAL-Q-014' "$TURNS/1.md"`.
 - Answers her call. `grep -c 'HAL-Q-004' "$TURNS/1.md"` → 1 or more; `grep -c 'HAL-ANS-006' "$TURNS/1.md"` → 1 or more.
 - Stays in one Project. `grep -c 'CRT-' "$TURNS/1.md"` → `0`.
-- (soft) Never says a renamed canonical term outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
@@ -65,7 +68,6 @@ Graded after turn 2. `H="$WS/projects/hall-bookings"`, `E="$H/epics/HAL-EPC-001-
 - The view and the packs stay frozen; the Epic file is untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- 'projects/hall-bookings/epics' | grep -v '/signoffs\.md$'` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
 - Other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/court-bookings veneer.md workspace.md outbox projects/hall-bookings/questions/HAL-Q-013-meeting-room.md` → empty.
-- (soft) Reply after writing never says a renamed canonical term. `sed 's/`[^`]*`//g' "$TURNS/2.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## By eye
 

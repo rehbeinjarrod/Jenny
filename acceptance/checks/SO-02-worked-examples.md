@@ -1,18 +1,28 @@
 ---
 id: SO-02
-version: 1
+version: 2
 skills: [signoff]
 cursor-bench: false
-repeat-at-gate: false
+routing: false
+inputs: []
+promise: false
 ---
 
 # SO-02 · Sign-off view: worked examples cite their ID and add up
 
 The Operator asks for Margaret's Sign-off view of the hall's book-and-pay Epic and confirms it. The view's worked examples are invented, marked as made up, and each cites the ID of the open item or Decision whose gap it shows. Applying the hall's rules to each example's stated inputs gives its stated outcome.
 
+Grader: `acceptance/headless/graders/SO-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
+
 ## Start
 
-As SO-01: Sample v7, then after install the `acceptance/fixtures/signoff/hall-bookings/` overlay, committed as `Overlay: HAL-EPC-001 pack v2 for Sign-off`. The key relies on, in `projects/hall-bookings/` after the overlay:
+As SO-01: Sample v7, then after install the overlay below, committed as `Overlay: HAL-EPC-001 pack v2 for Sign-off`:
+
+```sh
+cp -r "$REPO/acceptance/fixtures/signoff/hall-bookings/." "$WS/projects/hall-bookings/" && git -C "$WS" add -A && git -C "$WS" commit -qm "Overlay: HAL-EPC-001 pack v2 for Sign-off"
+```
+
+The key relies on, in `projects/hall-bookings/` after the overlay:
 
 - `features/HAL-FEA-001-book-and-pay.md`: `HAL-REQ-002` (deposit 20% of the hire fee, minimum $50), `HAL-REQ-003` ($30 an hour for members, $45 for non-members).
 - `questions/`: `HAL-ANS-001` (the deposit rule), `HAL-ANS-004` (a booking runs until midnight, no later), `HAL-ANS-005` (no cleaning fee); `HAL-Q-007` open and being built on a guess (member rate for a non-member's event).
@@ -39,7 +49,7 @@ Graded after turn 2. `V="$WS/projects/hall-bookings/epics/HAL-EPC-001-book-and-p
 - Each is marked as made up. `ex | grep -civ 'made up'` → `0`.
 - Each cites the ID it shows. `ex | grep -cvE 'HAL-(Q|ANS)-[0-9]{3}'` → `0`.
 - Each states its inputs in numbers. `ex | grep -cv '[0-9]'` → `0`.
-- The numbers add up. `ex` → every line's stated outcome follows from its stated inputs by these rules, applied by the grader line by line: hire fee = hours × $30 for a member or × $45 for a non-member, with no cleaning fee (`HAL-REQ-003`, `HAL-ANS-005`); deposit = the larger of $50 and 20% of the hire fee (`HAL-REQ-002`, `HAL-ANS-001`); no booking ends after midnight (`HAL-ANS-004`); a line citing `HAL-Q-007` gives the outcome under each answer (member rate and non-member rate) and calls neither settled. Record each line as it adds up or not.
+- The numbers add up: every line's stated outcome follows from its stated inputs. `ex | python3 "$REPO/acceptance/headless/graders/SO-02/sums.py"` → empty. The script prints each line that doesn't add up, and why, by these rules: hire fee = hours × $30 for a member or × $45 for a non-member, with no cleaning fee (`HAL-REQ-003`, `HAL-ANS-005`); deposit = the larger of $50 and 20% of the hire fee (`HAL-REQ-002`, `HAL-ANS-001`); no booking ends after midnight (`HAL-ANS-004`); a line citing `HAL-Q-007` gives the outcome under each answer (member rate and non-member rate) and calls neither settled.
 
 ## By eye
 

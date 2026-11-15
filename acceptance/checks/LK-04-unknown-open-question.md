@@ -1,14 +1,18 @@
 ---
 id: LK-04
-version: 6
+version: 7
 skills: [lookup]
 cursor-bench: false
-repeat-at-gate: true
+routing: true
+inputs: []
+promise: false
 ---
 
 # LK-04 · Unknown points at the open Question
 
 The Operator asks something the hall records do not settle. Jenny says it is not known, names the open Question that covers it and who it is waiting on, and invents nothing: no guessed answer, and least of all the court Project's rule for the same case.
+
+Grader: `acceptance/headless/graders/LK-04.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -34,7 +38,6 @@ Graded after turn 1, on `$TURNS/1.md`.
 - Nothing invented from the court Project. `grep -ciE '\$20|credit|CRT-' "$TURNS/1.md"` → `0`.
 - No guessed answer in the gap. `sed -n '/Not known yet/,$p' "$TURNS/1.md" | grep -ciE 'probabl|likely|might|could|perhaps|possib|option|for example|such as|e\.g\.|credit|rebook|another date'` → `0`.
 - Says who the gap is waiting on. `sed -n '/Not known yet/,$p' "$TURNS/1.md" | grep -ciE 'waiting on|not (been )?asked|nobody|no one'` → 1 or more.
-- (soft) Never says a renamed canonical term (Project, Epic, Question) outside code spans. `sed 's/`[^`]*`//g' "$TURNS/1.md" | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`.
 
 ## Key at write
 
