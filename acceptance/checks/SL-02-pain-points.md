@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks Jenny to slice the hall Project with two shapes Jenny pushes back on: a Feature holding only the phone-screen Requirement (horizontal: nothing a Stakeholder can see on its own) and a second Epic in Book and pay for the door code email. Jenny flags each as a pain point, suggests a re-slice for each, and asks the Operator's reason before writing either. The Operator gives a reason for the second Epic and drops the horizontal Feature. After confirm, Book and pay has two Epics, the second records the pain point with the Operator's reason, the handed-off Epic is not touched, the phone-screen Requirement sits in a vertical Feature, and everything lands in one commit.
 
-Grader: `acceptance/headless/graders/SL-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on, in `projects/hall-bookings/`:

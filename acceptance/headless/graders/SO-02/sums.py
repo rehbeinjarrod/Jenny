@@ -26,7 +26,16 @@ calls a hire fee, a deposit or 20% must be that one; each product it works
 give must be hours it states; and a time past midnight must be refused. A span
 past midnight that its own clause refuses (`8 pm to 1 am is not allowed`, or a
 bare `one from 7 pm to 1 am is not.`) is no booking, so it states no hours and
-gives none.
+gives none. So is one an example's scenario asks for when the first clause of
+its `Outcome:` refuses it or holds it to midnight (`… from 8 pm to 1 am.
+Inputs: … Outcome: the booking is refused.`, `… Outcome: the latest end is
+midnight`). A span the Outcome itself books past midnight is still graded.
+The Outcome is the shape examples.py joins onto one line.
+
+A figure followed by `higher`, `lower`, `more`, `less`, `cheaper` or `dearer`
+may also be the gap between two fees or deposits the line states (`the hire
+fee is $60 higher`). Any other difference, such as a fee less its deposit, is
+a figure no rule gives.
 """
 
 import re
@@ -42,6 +51,9 @@ REFUSED = re.compile(r"not (?:be )?(?:allowed|accepted|possible)|refused|cannot|
 # "…; one from 7 pm to 1 am is not." refuses only within its own clause.
 BARE_REFUSAL = re.compile(r"\b(?:is|are) not\s*$", re.I)
 CLAUSE_END = re.compile(r"[.;!?,]|:(?!\d)")  # the colon in `1:30 am` ends no clause
+GAP_WORDS = r"\s*(?:higher|lower|more|less|cheaper|dearer)\b"
+GAP_WORD = re.compile(GAP_WORDS, re.I)
+NOT_GAP = r"(?!\d|\.\d|" + GAP_WORDS + ")"
 NEGATION = re.compile(r"\b(?:neither|not|none|nothing|no|isn't|aren't|un\w+)\b", re.I)
 
 
@@ -62,6 +74,22 @@ def refused_here(t, end_at):
     stop = CLAUSE_END.search(t, end_at)
     clause = t[end_at:stop.start() if stop else len(t)]
     return bool(REFUSED.search(clause) or BARE_REFUSAL.search(clause))
+
+
+# An outcome that holds the asked-for span to midnight: `the latest end is midnight`.
+MIDNIGHT = re.compile(r"\bmidnight\b", re.I)
+
+
+def refused_by_outcome(t, end_at):
+    """Whether a span asked for in the example's scenario (before its `Inputs:`)
+    is refused, or held to midnight, by its `Outcome:`: the shape
+    examples.py joins onto one line."""
+    inputs = t.find("Inputs:")
+    outcome = re.search(r"Outcome:\s*", t)
+    if inputs < 0 or end_at > inputs or not outcome:
+        return False
+    said = t[outcome.end():]
+    return bool(REFUSED.search(said) or MIDNIGHT.search(said))
 
 
 def spans(t):
@@ -100,14 +128,14 @@ def wrong(line):
     stated = {int(h) for h in re.findall(r"\b(\d+)[ -]hours?\b", t, re.I)}
     hours = set(stated)
     for start, end, end_at in spans(t):
-        if end > 24 and refused_here(t, end_at):
+        if end > 24 and (refused_here(t, end_at) or refused_by_outcome(t, end_at)):
             continue
         if stated and end - start not in stated:
             problems.append(f"{start}:00 to {end % 24}:00 is {end - start} hours, not {sorted(stated)}")
         hours.add(end - start)
     # An end time in the small hours; 12 am is midnight itself, which a booking may end on.
     past = [m.group(0) for m in re.finditer(r"\b(?:to|until|till) (?:1[01]|[1-9])(?::\d\d)? ?am\b", t, re.I)
-            if not (REFUSED.search(t) or refused_here(t, m.start()))]
+            if not (REFUSED.search(t) or refused_here(t, m.start()) or refused_by_outcome(t, m.start()))]
     if past:
         problems.append(f"ends after midnight ({past[0]}) and is not refused")
 
@@ -118,10 +146,17 @@ def wrong(line):
     shares = {round(f * SHARE) for f in fees}
     deposits = {deposit(f) for f in fees}
     allowed = {cents(r) for r in rate} | {cents(MINIMUM)} | fees | shares | deposits
+    # A gap between two of the line's own fees or deposits: `the hire fee is $60 higher`.
+    said = {cents(x) for x in re.findall(MONEY, t)}
+    gaps = {abs(a - b) for kind in (fees, deposits) for a in said & kind for b in said & kind if a != b}
 
-    for x in re.findall(MONEY, t):
-        if cents(x) not in allowed:
-            problems.append(f"${x} follows from no input")
+    for m in re.finditer(MONEY, t):
+        x = m.group(1)
+        if cents(x) in allowed:
+            continue
+        if GAP_WORD.match(t, m.end()) and cents(x) in gaps:
+            continue
+        problems.append(f"${x} follows from no input")
 
     def claims(patterns, want, what):
         for p in patterns:
@@ -130,8 +165,8 @@ def wrong(line):
                     if cents(x) not in want:
                         problems.append(f"${x} is not {what}")
 
-    claims([r"hire fee (?:is|of) " + MONEY, MONEY + r" hire fee"], fees, "the hire fee")
-    claims([r"deposit (?:is|of|would be|becomes)? ?(?:only |just |still |the )*" + MONEY,
+    claims([r"hire fee (?:is|of) " + MONEY + NOT_GAP, MONEY + r" hire fee"], fees, "the hire fee")
+    claims([r"deposit (?:is|of|would be|becomes)? ?(?:only |just |still |the )*" + MONEY + NOT_GAP,
             MONEY + r" deposit"], deposits, "the deposit")
     claims([r"20% (?:of " + r"\$\d+(?:\.\d+)? )?is (?:only |just )?" + MONEY + r"(?: or " + MONEY + ")?"],
            shares, "20% of the hire fee")

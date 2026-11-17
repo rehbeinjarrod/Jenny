@@ -12,8 +12,6 @@ promise: false
 
 LK-01's question, asked through `/lookup`. Same answer and citations as LK-01, laid out in the fixed answer shape: in short, what it is based on, and what is not known yet.
 
-Grader: `acceptance/headless/graders/LK-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on:

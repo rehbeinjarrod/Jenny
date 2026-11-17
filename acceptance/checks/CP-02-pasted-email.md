@@ -12,8 +12,6 @@ promise: false
 
 The Operator pastes an email from the hall committee chair. One point says again what an active Requirement already says; the other narrows the door-code Requirement. Jenny labels them duplicate and refines. On confirm, the duplicate writes only a log note, the refined Requirement is withdrawn and replaced under a new ID, and the email is kept word for word.
 
-Grader: `acceptance/headless/graders/CP-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. Fixture: `acceptance/fixtures/capture/pasted-email.md` (Margaret Osei, own organisation: the deposit-before-confirmation rule again, and the door code made the side door's code for the booking's month). The key relies on:

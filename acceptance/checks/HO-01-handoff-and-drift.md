@@ -12,8 +12,6 @@ promise: false
 
 The hall's book-and-pay Epic was handed off with `pack-v1.md` on tech face `HALL-12`, and `pack-v2.md` has been written since. The Operator asks what has changed since handoff: Jenny reports the drift against v1 (two Decisions since, one decided during build, three N/A marks, one Sign-off, and v2 written but not handed over) and writes nothing. Then the Operator hands off v2: Jenny proposes the new `Tech face:` line and writes it only after the yes, changing that one line of `epic.md`, in one commit. Asked again, the drift now counts from v2 and finds nothing new.
 
-Grader: `acceptance/headless/graders/HO-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7, then after install the overlay below, committed as `Overlay: HAL-EPC-001 pack v2 for Sign-off`:

@@ -25,13 +25,13 @@ Three operations: **The list**, which writes nothing; **Shape** and **Asked**, e
 
    ```markdown
    **Chase now**
-   - `<ID>` <gist in a few words> · asked <Ask> on <Asked> · <N> days overdue (chase by <Chase by>)
+   - `<ID>` <a short gist in your own words, e.g. "who approves big refunds"> · asked <Ask> on <Asked> · <N> days overdue (chase by <Chase by>)
    - `<ID>` <gist> · <Ask> not asked yet · due <Chase by>, in <N> days
    - `<Epic ID>` <title>, handed off as <tech face link text>: last checked <date>. Worth checking for anything the build has raised.
 
    **Shape next**
-   1. `<ID>` <gist> · building on a guess · Score <n>: <score reason in a few words> · needed by <Needed by>
-   2. `<ID>` <gist> · Score <n>: <score reason in a few words> · needed by <Needed by>
+   1. `<ID>` <gist> · building on a guess · Score <n>: <the score reason, shortened in your own words, e.g. "the build is guessing the refund limit"> · needed by <Needed by>
+   2. `<ID>` <gist> · Score <n>: <the score reason, shortened in your own words, e.g. "the build is guessing the refund limit"> · needed by <Needed by>
 
    Shall I shape `<top ID>`? Or say "shape <n>" for another.
    ```

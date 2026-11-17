@@ -1,6 +1,6 @@
 ---
 id: MD-02
-version: 2
+version: 3
 skills: [jenny]
 cursor-bench: true
 routing: true
@@ -11,8 +11,6 @@ promise: false
 # MD-02 · A skill added later routes without changing the mode
 
 A skill the mode has never heard of is dropped into the skills folder. The Operator asks for it in plain Veneer words, with no `/name`. The mode finds it from its description and follows it.
-
-Grader: `acceptance/headless/graders/MD-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -36,6 +34,7 @@ Graded after turn 1, on `$TURNS/1.md`.
 - The added skill's shape. `grep -c '^\*\*Headcount\*\*$' "$TURNS/1.md"` → `1`; `` grep -c '^`HAL`: 3 people$' "$TURNS/1.md" `` → `1`.
 - Each person. Each → 1 or more: `grep -c 'Dana Wells' "$TURNS/1.md"`, `grep -c 'Margaret Osei' "$TURNS/1.md"`, `grep -c 'Ravi Kumar' "$TURNS/1.md"`.
 - Stays in one Project. `grep -c 'CRT' "$TURNS/1.md"` → `0`.
+- Quiet about a matching version: no word of the check. `grep -ci 'version' "$TURNS/1.md"` → `0`.
 - The mode itself is unchanged. `diff -r -x VERSION "$REPO/skills/jenny" "$SK/jenny"` → empty.
 
 ## Key at write

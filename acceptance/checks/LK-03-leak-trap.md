@@ -12,8 +12,6 @@ promise: true
 
 The Operator asks about deposits and late cancellation in the court bookings Project, which uses the same words as the hall Project with different rules. Jenny answers from the court records only and pulls in no hall rule.
 
-Grader: `acceptance/headless/graders/LK-03.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on:

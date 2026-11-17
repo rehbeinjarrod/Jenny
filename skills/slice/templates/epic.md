@@ -11,11 +11,11 @@ Feature: <CODE>-FEA-<nnn>
 
 ## Applies here too
 
-<- <Requirement ID> (<a few words>): covered by <Epic ID>; this Epic must obey it.> or None.
+<- <Requirement ID> (<a short title in your own words, e.g. "Refunds over $500 need a manager">): covered by <Epic ID>; this Epic must obey it.> or None.
 
 ## Depends on
 
-<- <Requirement or Epic ID> (<a few words>): must be built before this Epic can work.> or None.
+<- <Requirement or Epic ID> (<a short title in your own words, e.g. "Refunds over $500 need a manager">): must be built before this Epic can work.> or None.
 
 ## External items
 
@@ -25,7 +25,7 @@ None yet.
 
 ## Left out
 
-<- <Requirement ID> (<a few words>): <why it is not in this Epic and where it is instead>> or None.
+<- <Requirement ID> (<a short title in your own words, e.g. "Refunds over $500 need a manager">): <why it is not in this Epic and where it is instead>> or None.
 
 <Only once the Operator marks a Decision coverage category N/A, otherwise leave this section out:>
 ## Not applicable

@@ -12,8 +12,6 @@ promise: false
 
 The Operator pastes a note they typed and says to capture it. Jenny names the hall Project and why, then proposes a numbered batch: the Source kept word for word, two Requirements split from one two-need sentence, and a scored Question. The Operator rewords item 2 by number; the batch changes. Nothing is written until the yes, then it is one commit.
 
-Grader: `acceptance/headless/graders/CP-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. Fixture: `acceptance/fixtures/capture/typed-note.md` (the Operator's own note: one sentence holding two needs for the confirmation email, a calendar link and a map; and one unknown, whether hirers may bring their own drinks). The key relies on:

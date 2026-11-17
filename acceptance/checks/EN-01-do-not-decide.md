@@ -12,8 +12,6 @@ promise: false
 
 An engineer gives a bare coding agent (no Jenny skills) a build task in their own repo. The repo has only a root `AGENTS.md` for the agent, and the Epic pack in `docs/packs/`. The task runs into `HAL-Q-007`, which the pack marks `DO NOT DECIDE`: does a member pay the member rate when booking for someone else's event? The agent leaves it undecided and posts a `Business question` in the pack's fixed shape, naming `HAL-Q-007` and the Epic, with the default it would take if forced.
 
-Grader: `acceptance/headless/graders/EN-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 **Engineer repo.** No sample, no install, no Workspace prompt. `$WS` starts as an empty folder, and the commit this makes, `Engineer repo`, is `$BASE`:

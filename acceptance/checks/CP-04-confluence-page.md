@@ -12,8 +12,6 @@ promise: false
 
 The Operator gives Jenny the URL of the hall committee's Confluence page of hire terms and says to capture it. Jenny reads it through the Atlassian MCP and proposes a batch as for any Capture: one point says again what an active Requirement says, four are new. On confirm, the Source holds the parts used word for word, with the page's URL, its version and the date read; the page's contact line stays out.
 
-Grader: `acceptance/headless/graders/CP-04.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. MCP stand-in: `https://riverbend-hall.atlassian.net/wiki/spaces/HALL/pages/4521987/Hall+hire+terms` → `confluence/hall-hire-terms-v1.md` (page version 3, last updated 2026-11-05 by Margaret Osei, own organisation: the deposit rule again; guests expected; at most 120 guests; terms agreed before the deposit; tables and chairs set out for $20; a contact line). The key relies on:

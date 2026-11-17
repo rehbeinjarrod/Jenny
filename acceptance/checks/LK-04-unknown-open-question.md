@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks something the hall records do not settle. Jenny says it is not known, names the open Question that covers it and who it is waiting on, and invents nothing: no guessed answer, and least of all the court Project's rule for the same case.
 
-Grader: `acceptance/headless/graders/LK-04.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on:

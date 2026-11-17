@@ -12,8 +12,6 @@ promise: false
 
 The Operator drops in committee meeting notes. One point contradicts an active Requirement (non-members booking six months ahead, not three): Jenny raises a Question citing both Sources and leaves the Requirement as it is. Another point answers an open Question with a Decision that rests on a third-party code of practice: Jenny asks or confirms its owner, keeps the code's location and its own words, and copies none of the code's text.
 
-Grader: `acceptance/headless/graders/CP-03.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. Fixture: `acceptance/fixtures/capture/meeting-notes.md` (the conflict; a quoted paragraph from an invented third-party code of practice, section 3.4; the committee's call on what a hirer gets back when the committee cancels). The key relies on:

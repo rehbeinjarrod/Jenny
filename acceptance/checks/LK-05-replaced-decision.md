@@ -12,8 +12,6 @@ promise: false
 
 The rule for late cancellation was decided once (the hirer forfeits the deposit) and later replaced (half the deposit comes back). Jenny answers with the current Decision and notes that it replaced the earlier one.
 
-Grader: `acceptance/headless/graders/LK-05.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on:

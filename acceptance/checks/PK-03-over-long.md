@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks for the pack of an Epic covering 55 Requirements. The pack would pass 300 lines, and packs are never split, so Jenny stops before proposing anything, writes nothing, and proposes re-slicing the Feature instead.
 
-Grader: `acceptance/headless/graders/PK-03.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7. Fixture: `acceptance/fixtures/pack/coaching/` (`CRT-FEA-003` Run coaching sessions with 55 Requirements, `CRT-REQ-009` to `CRT-REQ-063`, and its one Epic `CRT-EPC-002`, covering all 55). After install, lay it into the court Project and commit:

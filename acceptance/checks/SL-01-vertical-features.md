@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks Jenny to slice the hall Project. Jenny proposes Features for the unplaced Requirements, each a vertical slice a Stakeholder could see and sign off on its own, and one Epic for every Feature that has none, as one confirm-then-write batch. The phone-screen Requirement runs across every hirer page, so it is not given a Feature of its own: it sits in one Feature, is covered by that Feature's Epic, and the other Epics list it under **Applies here too**. After confirm, Requirement lines move byte for byte, no Requirement is covered by two Epics, and everything lands in one commit.
 
-Grader: `acceptance/headless/graders/SL-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on, in `projects/hall-bookings/`:

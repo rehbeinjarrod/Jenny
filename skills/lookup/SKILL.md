@@ -1,6 +1,6 @@
 ---
 name: lookup
-description: Answer what a Project's records say, citing IDs and files. Use for `/lookup`, or when the Operator asks what the rule is, what was decided, or what we know about something. Not for where an Epic stands or who has agreed its Decisions: that is `signoff`.
+description: Answer what a Project's records say, citing IDs and files. Use for `/lookup`, or when the Operator asks what the rule is, what was decided, or what we know about something. Not for where an Epic stands or who has agreed its Decisions; that is `signoff`.
 ---
 
 # Lookup
@@ -12,7 +12,7 @@ Follow the Lookup rules in the Tool-owned block of `AGENTS.md`, then reply in th
 <the answer in one to three sentences, with working shown when it is worked out from rules>
 
 **Based on**
-- `<ID>` in `<file path from the Workspace root>`: <what it says, in a few words>
+- `<ID>` in `<file path from the Workspace root>`: <what it says, in one short line of your own, e.g. "refunds over $500 need a manager">
 - <one line per cited ID; for a replaced record, the active one first, then "replaced `<old ID>` (<what it said>) on <date>">
 
 **Not known yet**

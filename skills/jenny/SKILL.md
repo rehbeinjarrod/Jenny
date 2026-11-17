@@ -17,18 +17,18 @@ Run on every turn, before any rule in `AGENTS.md` (Lookup included) and before r
 
 - No `workspace.md` in the folder: this is not a Workspace. Say so, and that Jenny is installed by telling an agent to follow `skills/setup/SKILL.md` in the Tool clone. Stop there.
 - Compare `cat <skills>/jenny/VERSION` with the `Tool version:` line of `workspace.md`. A missing `jenny/VERSION` counts as a difference.
-- They match: go on to step 2.
+- They match: go on to step 2. The version check is silent: the reply opens on the Operator's request and says nothing of the check.
 - They differ: the whole reply is a short warning, built from these two files alone. Name both versions and where each is held, say that Jenny does no work until they match, and that the usual cause is an upgrade that stopped half way or a hand edit (`git log` on the two files shows which). The Operator decides which is right, brings them back in line, then starts a new chat in the mode. The Veneer section of `AGENTS.md` holds for the warning, its Veneer scan included.
 
 Done when: the versions match, or the warning is the whole reply: no answer, no record ID, nothing read from a Project.
 
 ## 2. Held skill
 
-A skill is **held** from the turn you start following it until it is released (step 4). While one is held, its earlier reading has faded: read its `SKILL.md` again, whole, before replying, and carry on from the step the chat has reached. Read the Operator's message as the next move in that operation: an answer to what you asked, an amend by number, a yes, or a no.
+A skill is **held** from the turn you start following it until it is released (step 4). While one is held, its earlier reading has faded: read its `SKILL.md` again, whole, before replying, then every reference file it sent you to for this operation (a file it told you to read when a flow started, in its own folder or another skill's), whole, until the skill is released. Carry on from the step the chat has reached. Read the Operator's message as the next move in that operation: an answer to what you asked, an amend by number, a yes, or a no.
 
 When the message plainly asks for something else instead, ask whether to drop the open batch first; nothing has been written. A yes releases the skill and the message is routed in step 3.
 
-Done when: you have replied from the held skill's file as just re-read, or no skill is held.
+Done when: you have replied from the held skill's `SKILL.md` and its reference files in use, as just re-read, or no skill is held.
 
 ## 3. Route
 

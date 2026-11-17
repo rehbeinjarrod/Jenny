@@ -12,8 +12,6 @@ promise: true
 
 The copied `VERSION` and the `Tool version:` line in `workspace.md` disagree. The Operator asks a lookup question at the start of a Jenny mode chat. Jenny stops with a warning that names both versions, answers nothing, and writes nothing.
 
-Grader: `acceptance/headless/graders/MD-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. After install, before `$BASE`: set the `Tool version:` line in `workspace.md` to `Tool version: 0.0.9` and commit it as `Test: version mismatch`:

@@ -23,7 +23,7 @@ This {Epic pack} is the business half of the spec for <CODE>-EPC-<nnn>. Use it a
 Business question
 IDs touched: <{Requirement}, {Question} and {Answer} IDs>, <CODE>-EPC-<nnn>
 Question: <the question, in one sentence>
-Options seen: <each option, in a few words>
+Options seen: <each option, as a short phrase, e.g. "a manager approves; any staff member can">
 Default if forced: <the option you would take, and why>
 Status: blocked | building around it (on a guess: <what>)
 ```
@@ -59,21 +59,21 @@ Made by: agent | engineer
 
 ## 4. Rules and examples
 
-### <CODE>-REQ-<nnn> <a few words>
+### <CODE>-REQ-<nnn> <a short title in your own words, e.g. "Refunds over $500 need a manager">
 
 > <the {Requirement}, word for word>
 
 - From: <a link to the Confluence page or Jira item | <role>, <YYYY-MM-DD> | <CODE>-ANS-<nnn>>
 - <what an active {Answer} adds to this rule, citing its ID>
 - Example: <a worked case with real numbers> <(agreed: <role>, <YYYY-MM-DD>) | (worked from the rules, not yet agreed)>
-- <CODE>-Q-<nnn> <a few words>: see section 5. `DO NOT DECIDE`.
+- <CODE>-Q-<nnn> <a short title in your own words, e.g. "Who approves big refunds">: see section 5. `DO NOT DECIDE`.
 
 ## 5. Still open: DO NOT DECIDE
 
 - **<CODE>-Q-<nnn>** `DO NOT DECIDE` <the {Question}, as stored> · Needed by: <date, ID or "not set">
   Why it matters to the build: <the score reason, in build terms>. <Only when building on a guess:> **Already being built on a guess: <what>.**
 
-Parked (build nothing for these yet): <CODE>-Q-<nnn> <a few words>; … <or> None.
+Parked (build nothing for these yet): <CODE>-Q-<nnn> <a short title in your own words, e.g. "Who approves big refunds">; … <or> None.
 
 ## 6. Constraints
 
@@ -95,7 +95,7 @@ Parked (build nothing for these yet): <CODE>-Q-<nnn> <a few words>; … <or> Non
 
 ## 9. Acceptance criteria (business terms)
 
-- [ ] <one per covered {Requirement} and per settled {Decision}: a plain check a Stakeholder could watch, citing its ID>
+- [ ] <one per covered {Requirement} and per settled {Decision}: a check a Stakeholder could watch happen, in your own words, citing its ID, e.g. "A $600 refund waits for a manager's OK (<CODE>-REQ-<nnn>)">
 
 ---
 

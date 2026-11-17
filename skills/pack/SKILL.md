@@ -24,7 +24,7 @@ Coverage walks all 11, in this order, every run. Each asks what an engineer woul
 3. **Unwanted behaviour**: what goes wrong and what the service does then: a failed payment, two people at once, a mistake, misuse. Probe: if <the unwanted thing> happens, then what?
 4. **States**: the stages a thing passes through, what can happen in each, and how each stage shows to the people looking at it. Probe: while <it is in this state>, what can and cannot happen, and how does it show? What moves it on?
 5. **Variants**: kinds of person, item, channel or time that change a rule. Probe: where <this kind>, what is different?
-6. **Data**: which facts are kept, shown or reported, for how long, and who owns them.
+6. **Data**: which facts are kept, shown or reported, for how long, and who owns them. Settled only by records saying what the service keeps, for how long and who owns it; a Requirement on what a screen shows is not one. Probe: what does it keep, for how long, and who owns it?
 7. **Permissions**: who can see and do what, and who cannot.
 8. **Downstream**: other people, systems and processes that must know or act. Probe: when this happens, who else needs to hear of it, and what do they do?
 9. **Quality**: how well it must work, by the ISO/IEC 25010:2023 names in business words: **performance** (how fast, how many at once), **reliability** (when it must be up, what happens when it is down), **security** (what must be protected, from whom), **interaction capability** (who must be able to use it, on what, with what needs), **compatibility** (what it must work alongside), and **safety** only where harm to a person is possible. Walk each by name.
@@ -53,9 +53,9 @@ Each category takes one **state**:
    Done when: every existing Question bearing on the Epic sits under exactly one category, every one of the 11 categories has a state, and every gap has at least one drafted Question that no existing Question repeats.
 
 3. **Propose** under the heading "Decision coverage: <shown name for Epic> <ID> <title>":
-   1. **The checklist**: a table of all 11 categories in order, with columns `#`, `Category`, `State` and `Cites`. For a gap, `Cites` names the batch items that raise it; for a category that looks N/A, the state says "gap, looks N/A" with the reason in a few words. For Quality, a line under the table gives each characteristic's state.
+   1. **The checklist**: a table of all 11 categories in order, with columns `#`, `Category`, `State` and `Cites`. For a gap, `Cites` names the batch items that raise it; for a category that looks N/A, the state says "gap, looks N/A" with the reason in a short clause of your own, for example "gap, looks N/A: every refund follows the same steps". For Quality, a line under the table gives each characteristic's state.
    2. **The batch**, numbered so the Operator can amend by number:
-      - Each gap Question: its ID, its category, the question, and its proposed scores and reason. It is written as `questions/<ID>-<slug>.md` from the `capture` skill's [question template](../capture/templates/question.md), with `Category: <the category's name as in the list above>`, `Needed by: <Epic ID>`, `Affects: <Epic ID>` plus the Requirement IDs it bears on, `Building on a guess: yes` when the Epic is handed off and `no` otherwise, and `Raised from: Decision coverage of <Epic ID>`.
+      - Each gap Question: its ID, its category, the question, and its proposed scores and reason. It is written as `questions/<ID>-<slug>.md` from the `capture` skill's [question template](../capture/templates/question.md), with `Category: <the category's name exactly as in the list above, and nothing more>` (a Quality Question names its characteristic in the question itself, so its line is `Category: Quality`), `Needed by: <Epic ID>`, `Affects: <Epic ID>` plus the Requirement IDs it bears on, `Building on a guess: yes` when the Epic is handed off and `no` otherwise, and `Raised from: Decision coverage of <Epic ID>`.
       - Each N/A the Operator has given a reason for: the line it adds to `epic.md`, in place of that category's gap Question.
       - `questions/index.md`: each new row in its rank order.
       - Log entry `## [<date>] pack | Decision coverage <Epic ID> <title>`, one line per file written and the IDs raised.
@@ -65,7 +65,7 @@ Each category takes one **state**:
 
    Done when: the checklist shows all 11 categories, and every gap is either a batch item or an N/A mark with the Operator's reason.
 
-4. **Amend, confirm, write, log, commit** as `AGENTS.md` says, showing the checklist and the batch again in full after each amend. Renumber the items and the unwritten Question IDs after each amend, so the new IDs run on with no hole. When the Operator's reply answers a gap, keep its Question and add their words as its Answer by **Embedded Capture** in the `capture` skill.
+4. **Amend, confirm, write, log, commit** as `AGENTS.md` says, showing the checklist and the batch again in full after each amend, numbering the items afresh and holding each proposed ID as `AGENTS.md`'s **Amend** step says. When the Operator's reply answers a gap, keep its Question and add their words as its Answer by **Embedded Capture** in the `capture` skill.
    - An N/A mark is a line under `## Not applicable` in `epic.md`, in the shape [the Epic template](../slice/templates/epic.md) gives. Make the section the first time, after every other section, and add nothing else to `epic.md`. A handed-off Epic's `epic.md` takes N/A marks too, for its next pack version; the rest of it stays byte for byte. Taking a mark back strikes its line through, as the Records rule in `AGENTS.md` says for a withdrawn line, and the category is a gap again.
 
    Done when: one commit whose message is the log heading; `git diff --name-only HEAD~1` lists only files the batch named; every new Question file has a `Category:` line and a row in `questions/index.md`; and `epic.md` lost no line: `git diff --numstat HEAD~1 -- projects/<slug>/epics/ | cut -f2 | sort -u` prints `0` or nothing (a taken-back mark is the one exception: its line is replaced by the struck-through one).
@@ -94,7 +94,7 @@ Writes `epics/<ID>-<slug>/pack-v<N>.md` from [the pack template](templates/pack.
    - each gap Question and each N/A mark, as in Coverage step 3;
    - `epics/<ID>-<slug>/pack-v<N>.md`, <count> lines: one line per section saying what it carries (the IDs, and "Not stated yet" where the records say nothing);
    - for a handed-off Epic, `epic.md`: its `Tech face:` line in the shape the `handoff` skill gives, with the same work item, now naming `pack-v<N>.md` and today, shown in full;
-   - `index.md`: one link line for `pack-v<N>.md`, shown in full, in the shape of the pack link lines already there (`  - [pack-v<N>.md](epics/<ID>-<slug>/pack-v<N>.md): `, then a few words giving the version it replaces, if any, and today). It goes under the Epic's line, after its last pack link line, or first under the Epic's line when there is none. Every earlier pack's link line stays as it is;
+   - `index.md`: one link line for `pack-v<N>.md`, shown in full, in the shape of the pack link lines already there (`  - [pack-v<N>.md](epics/<ID>-<slug>/pack-v<N>.md): `, then a short note in your own words giving the version it replaces, if any, and today, for example `replaces pack-v1.md, written 2026-11-16`). It goes under the Epic's line, after its last pack link line, or first under the Epic's line when there is none. Every earlier pack's link line stays as it is;
    - `questions/index.md`: each new row in its rank order;
    - log entry `## [<date>] pack | <Epic ID> <title> pack v<N>`, one line per file written and the IDs raised;
    - one commit.

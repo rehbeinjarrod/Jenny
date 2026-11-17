@@ -11,7 +11,7 @@ Two confirm-then-write operations, following the rules in the Tool-owned block o
 - **Publish** on "publish it", "publish the view" or `/signoff publish`. It posts a written view to Confluence, or under `Outbound: outbox` writes the exact page body to `outbox/` instead.
 - **Standing** on "where does <Epic> stand?", "who has agreed <Epic>?" or `/signoff standing`. It reports, per Stakeholder, which of the latest pack's Decisions they agreed, dispute or have not yet looked at, and writes nothing.
 
-A Stakeholder's ticks and pushback come back through `capture` (its **Sign-off read-back**), which adds each Sign-off to the Epic's `signoffs.md`.
+A Stakeholder's ticks and pushback come back through `capture` (its [Sign-off read-back](../capture/signoff-readback.md)), which adds each Sign-off to the Epic's `signoffs.md`.
 
 Today is `date +%F`.
 
@@ -47,12 +47,12 @@ The view is the Stakeholder's to-do list, read in this order: 🔴 what is being
 3. **Draft** the view in your own working, writing no file, by the template and these rules:
    - **Checkboxes are for Decisions only.** A `- [ ]` line holds exactly one Decision this Stakeholder has not agreed. Facts, Questions, options and agreed Decisions are plain lines: a Question's options go on one "Reply with one:" line.
    - **Addressed by name.** The header names them in full; the opening line speaks to them by first name, and counts the 🔴 items, the 🟠 table rows and the ✅ checkboxes. Minutes: 2 for each of those items, at least 5. Other people are named by name too.
-   - **Worked examples**, made up and marked as such, each in the one-line shape the template gives, sitting under the item it shows and citing that item's ID: one under each 🔴 item; one under a 🟠 row or a ✅ Decision wherever a case with numbers shows what the answer changes. Take every number from the pack's rules (section 4 and the Decisions), and work each sum through: hours, rate, fee, deposit. For a Question, give the outcome under each answer and call none of them settled.
-   - **Flow diagrams** in Mermaid `flowchart LR`, drawn from the pack's section 4 rules and the Decisions. Each diagram has at most 7 nodes, not counting its start and stop, which are stadium-shaped (`start([…])`, `stop([…])`); a flow that needs more is cut at a natural seam into several diagrams, each under its own `###` heading. Each node is a step in plain words, citing with 🔴, 🟠 or ✅ the IDs that bear on it; `classDef` colours the guessed and open nodes.
-   - **Plain words, shown names.** The view is read outside the Workspace: every Delivery term in it is its Veneer shown name, the template's `{Term}` slots included. IDs, file names and the emoji stay as they are. Write each Question and Decision as a plain sentence a Stakeholder would say, with its ID beside it in a code span.
+   - **Worked examples**, made up and marked as such, sitting under the item each shows and citing that item's ID: one under each 🔴 item; one under a 🟠 row or a ✅ Decision wherever a case with numbers shows what the answer changes. Each takes the template's shape: a scenario in the Stakeholder's world, its **Inputs:**, then the outcome the Stakeholder would see under each answer of a Question, or under the Decision. The **Inputs:** are the case's own facts: who books, the hours, the times. Every rate, fee and deposit comes from a rule in the pack (section 4 and the Decisions), each sum worked through from the inputs. The outcome stops where those rules stop: where the pack gives no figure yet, the outcome says so in words. A Question's answers all stay open.
+   - **Flow diagrams** in Mermaid `flowchart LR`, drawn from the pack's section 4 rules and the Decisions. Each diagram has at most 7 nodes, not counting its start and stop, which are stadium-shaped (`start([…])`, `stop([…])`); a flow that needs more is cut at a natural seam into several diagrams, each under its own `###` heading. Under each heading come the template's three parts: a **lead sentence** tying the diagram to its heading (which part of the flow, and why the Stakeholder is looking at it); the **diagram**, each node a step in about 8 plain words followed by the IDs that bear on it; and a **walkthrough**, one bullet per node in flow order, saying what happens there and why. The walkthrough carries the detail, so the labels stay short. `classDef` colours the guessed and open nodes.
+   - **Plain words, shown names.** The view is read outside the Workspace: every Delivery term in it is its Veneer shown name, the template's `{Term}` slots, lead sentences and walkthroughs included. IDs, file names and the emoji stay as they are. Write each Question and Decision as a plain sentence a Stakeholder would say, with its ID beside it in a code span.
    - **Cite only Requirement, Question and Decision IDs**, so no Source ID leaves the Workspace.
 
-   Done when: the draft follows the template's sections in order, the checkboxes are exactly the ✅ checkbox Decisions, every 🔴 item has an example, every example's numbers come from the pack's rules, and no diagram has more than 7 nodes besides start and stop.
+   Done when: the draft follows the template's sections in order, the checkboxes are exactly the ✅ checkbox Decisions, every 🔴 item has an example, every example has its scenario, **Inputs:** and one outcome per answer (one for a Decision) with numbers from the pack's rules, and every diagram has its lead sentence, at most 7 nodes besides start and stop, each labelled in words with its IDs, and one walkthrough bullet per node.
 
 4. **Propose** under the heading "<shown name for Sign-off view> for <full name>: <shown name for Epic> <ID> <title>", from <shown name for Epic pack> v<N>, as a numbered batch:
    1. `epics/<ID>-<slug>/signoff-view-v<N>-<person>.md`: one line per section saying what it holds, with the IDs (and how many diagrams).
@@ -83,11 +83,11 @@ Puts one written view where the Stakeholder reads it: a Confluence page, with ea
 
 2. **Build the page body**, writing no file: the view as Confluence HTML, a body fragment with no `<html>`, `<head>` or `<body>`, in the markup the MCP's page format guide gives (when the MCP is connected, read it with `executeRead`: `name: getContentFormatGuide`, `inputs: {toolName: createConfluencePage}`):
    - headings as `<h1>`–`<h3>`; the header quote as `<div data-type="panel-info"><p>…</p></div>`; paragraphs, lists and tables as plain HTML; code spans as `<code>`.
-   - each `- [ ]` Decision as a task item: `<ul data-type="task-list"><li data-type="task-item"><input type="checkbox"> …</li></ul>`, its example as a plain list under the task list. Task items are for those Decisions alone.
-   - each Mermaid diagram as its `###` heading, then the whiteboard embed `<a href="<whiteboard URL>" data-card-appearance="embed"></a>`, then its source in an expand: `<details><summary>Diagram source (Mermaid)</summary><pre><code class="language-mermaid">…</code></pre></details>`. Under `outbox`, `<whiteboard URL>` stays as `{whiteboard-<n>}`, numbered in page order.
+   - each `- [ ]` Decision as a task item: `<ul data-type="task-list"><li data-type="task-item"><input type="checkbox"> …</li></ul>`, its example as a plain list under the task list, its sub-bullets a nested list. Task items are for those Decisions alone.
+   - each Mermaid diagram as its `###` heading, its lead sentence as a `<p>`, then the whiteboard embed `<a href="<whiteboard URL>" data-card-appearance="embed"></a>`, then its source in an expand: `<details><summary>Diagram source (Mermaid)</summary><pre><code class="language-mermaid">…</code></pre></details>`, then its walkthrough as a `<ul>`. Under `outbox`, `<whiteboard URL>` stays as `{whiteboard-<n>}`, numbered in page order.
    - the page title: "<Epic title>: <full name>'s calls (<Epic ID>, view v<N>)".
 
-   Done when: the body has one task item per checkbox in the view, and one embed and one expand per diagram.
+   Done when: the body has one task item per checkbox in the view, and per diagram one lead `<p>`, one embed, one expand and one walkthrough list.
 
 3. **Propose** under the heading "Publish <shown name for Sign-off view>: <full name>, <shown name for Epic> <ID>", as a numbered batch:
    - Under `post`: each whiteboard to create under the parent page, drawn from its diagram; the page to create under the parent page, with its title; the `Sign-off pages:` line for `project.md`, when it is new.
@@ -135,9 +135,9 @@ Where an Epic's Sign-off stands, worked out from `signoffs.md` against the Decis
    **<shown name for Epic> <ID> <title>**: <shown name for Epic pack> v<N>, <d> Decisions. <First name> agreed <a> of <d>; <first name> agreed <a> of <d>.
 
    **<Full name>** (<People notes, or Stakeholder>)
-   - Agreed: <a few words> `<ANS ID>` (<D Mon>, `<SO ID>`); …, or none
-   - Disputed: <a few words> `<ANS ID>` → `<Q ID>` (<its status>); …, or none
-   - Not yet looked at: <a few words> `<ANS ID>`; …, or none
+   - Agreed: <a short title in your own words, e.g. "Managers approve big refunds"> `<ANS ID>` (<D Mon>, `<SO ID>`); …, or none
+   - Disputed: <a short title in your own words, e.g. "Managers approve big refunds"> `<ANS ID>` → `<Q ID>` (<its status>); …, or none
+   - Not yet looked at: <a short title in your own words, e.g. "Managers approve big refunds"> `<ANS ID>`; …, or none
 
    <one block per Stakeholder, in People order>
    ```

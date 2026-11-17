@@ -20,7 +20,7 @@ Two operations: **Unplaced**, which writes nothing, and **Slice**, one confirm-t
 
 Runs when the Operator asks what is unplaced, or what has not been sliced yet.
 
-Find the one Project as the Lookup rules say. Read `requirements/unplaced.md` and list each active Requirement on its own line: `` `<ID>` `` and its statement in a few words. Then offer to slice them. An empty list says "Every active Requirement is in a Feature." The list is read-only.
+Find the one Project as the Lookup rules say. Read `requirements/unplaced.md` and list each active Requirement on its own line: `` `<ID>` `` and a short title for it in your own words, for example "Refunds over $500 need a manager". Then offer to slice them. An empty list says "Every active Requirement is in a Feature." The list is read-only.
 
 Done when: every active Requirement in `requirements/unplaced.md` is listed, or the reply says there are none. Nothing is written.
 

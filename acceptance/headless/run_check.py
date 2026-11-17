@@ -6,8 +6,7 @@
     python3 acceptance/headless/run_check.py gate --model <exact model ID> [--published latest|none|<tag>]
 
 The scope is one or more Check IDs or skill names (a skill stands for every
-Check whose `skills` list names it), as a Scoped run; each Check needs a
-grader. Or it is `gate` alone, a Gate run: the gate planner (plan.py), over
+Check whose `skills` list names it), as a Scoped run. Or it is `gate` alone, a Gate run: the gate planner (plan.py), over
 the results files in `--results`, decides which Checks run and how often, and
 a fail asks for 3 more runs of its Check, until the planner needs none for it
 or it blocks. Check runs go in Check-ID order, each Check's repeats back to
@@ -22,11 +21,11 @@ driver in place of the two subagents:
    the clone (so no CLAUDE.md above it is read), and committed.
 2. Install: a headless Claude Code session in the Workspace is told to follow
    the clone's setup, then "Yes, go ahead."; the Install key is graded. The
-   grader's AFTER_INSTALL, the Check's change after install, is made and
+   Check's change after install, its Start's `sh` block, is made and
    committed, and HEAD is `$BASE`. A Check whose Start says **No install**
-   has no install session: its grader's LAY lays the frozen install over the
+   has no install session: its Start's `sh` block lays the frozen install over the
    committed sample instead, and its commit is `$BASE`. One whose Start says
-   **Engineer repo** has no sample either: LAY makes the engineer's repo in
+   **Engineer repo** has no sample either: that block makes the engineer's repo in
    the empty folder.
 3. Jenny: a second, fresh session in the Workspace, so she loads AGENTS.md and
    her skills as an Operator's install does. Turn 1 starts it, word for word

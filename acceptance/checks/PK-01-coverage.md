@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks Jenny to check coverage for the court timetable Epic. Jenny walks all 11 categories and shows each as settled (citing Requirement IDs), open (citing the Question already raised) or a gap, and proposes a scored Question for every gap, as one confirm-then-write batch. Two categories honestly do not apply; Jenny may say they look N/A but marks neither. The Operator marks one of them N/A with a reason and confirms. After confirm, every planted gap is a new Question tagged with its category, only the Operator's N/A is stored, with their reason, and everything lands in one commit.
 
-Grader: `acceptance/headless/graders/PK-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on, in `projects/court-bookings/`:

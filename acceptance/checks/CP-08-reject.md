@@ -12,8 +12,6 @@ promise: true
 
 CP-01's typed note, proposed, then rejected. No file changes and no commit, not even the Source or a log line.
 
-Grader: `acceptance/headless/graders/CP-08.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. Fixture: `acceptance/fixtures/capture/typed-note.md`. The key relies on `veneer.md` (Project shown as Initiative, Epic as Spec, Question as Open item).

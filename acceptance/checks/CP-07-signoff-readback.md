@@ -12,8 +12,6 @@ promise: false
 
 Margaret's Sign-off view of the hall's book-and-pay Epic was published to Confluence. On the page she ticked the cleaning-fee Decision, left the late-finish Decision unticked and wrote why she does not agree, and answered one of her calls (cash deposits). The Operator asks Jenny to capture the page. Jenny proposes one batch: a new Source for the reading, a `HAL-SO-002` entry added to `signoffs.md`, a new Question for the pushback with `Affects: HAL-ANS-004`, flagged as building on a guess because the delivery team already builds to midnight, and an Answer to the cash deposits Question. The late-finish Decision stays active.
 
-Grader: `acceptance/headless/graders/CP-07.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7, then after install the two overlays below, committed as `Overlay: HAL-EPC-001 pack v2, Margaret's view published`:

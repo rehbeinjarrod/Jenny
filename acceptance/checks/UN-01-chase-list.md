@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks what to chase next in the hall Project. Jenny lists the `chasing` Questions with the overdue ones first, each with who was asked and how many days overdue, nudges the handed-off Epic with the date of its last check, and pulls in nothing from the court Project. The list writes nothing and changes no status or score.
 
-Grader: `acceptance/headless/graders/UN-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The run's date falls after 2026-11-10 and before 2027-06-30, so two chasing Questions are overdue and one is not yet due. `$D_012` and `$D_004`, set in **Key at proposal**, are the days from each Chase by date to the run's date.

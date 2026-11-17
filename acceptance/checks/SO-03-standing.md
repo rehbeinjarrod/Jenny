@@ -12,8 +12,6 @@ promise: false
 
 The hall's book-and-pay Epic has pack v2 with three Decisions. Margaret agreed the deposit (`HAL-SO-001`), then on her view agreed the cleaning-fee Decision and pushed back on the late finish (`HAL-SO-002`, Question `HAL-Q-014`). Tom agreed the deposit in person (`HAL-SO-003`). Since then, the cleaning-fee Decision `HAL-ANS-005` was withdrawn and replaced by `HAL-ANS-007`. The Operator asks where the Epic stands. Jenny reads `signoffs.md` against the pack's Decisions as they are now and reports, per Stakeholder, what they agreed, disputed and have not yet looked at. Margaret's agreement to `HAL-ANS-005` does not carry to `HAL-ANS-007`. Nothing is written, and there is no yes/no "signed off".
 
-Grader: `acceptance/headless/graders/SO-03.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7, then after install the three overlays below, committed as `Overlay: HAL-EPC-001 Sign-offs and a replaced Decision`:

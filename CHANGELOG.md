@@ -2,6 +2,28 @@
 
 Each entry says what changed for an Operator's Workspace and how older record shapes are read.
 
+## 0.20.1 · 2026-11-17
+
+Fixes to `capture` and `pack` found by the 0.20.0 Gate run.
+
+- `capture` keeps a Question's `Score reason` in canonical terms, like every other line of a record: a handed-off Epic is an Epic there, whatever your Veneer shows. Before this, a Score reason could carry a Veneer shown name, such as "spec".
+- `capture`'s copy check counts a plural in -s as its singular, so "reasons within its control" now matches a passage's "reason within its control". Capture's write step now opens by saying the staged copy check runs before the commit. Before this, a retelling could copy four words of a third-party passage by changing one to its plural, and the staged check could be skipped.
+- `pack`'s Decision coverage writes a gap Question's `Category` line as the category's name and nothing more, so a Quality Question reads `Category: Quality` and names its characteristic in the question itself. The Data category is settled only by records saying what the service keeps, for how long and who owns it, never by a Requirement on what a screen shows, and has a probe question of its own. Before this, a Quality Question's Category line could carry its characteristic, and Data could be marked settled by what a screen shows.
+- An amend keeps each proposed ID. `AGENTS.md`'s Amend step now says how a record's ID behaves while it is proposed but not yet written: it keeps the ID it was first shown with, a dropped record's gap is closed up by the later IDs of its kind, and only then does a record the amend adds take the next ID of its kind. `capture` and `pack` both point to that step. Before this, `capture` said only to renumber the batch and `pack` to renumber its unwritten Question IDs, and Jenny could move an already-proposed Requirement or Question to a later ID, leaving its first ID never written.
+- Your Workspace: `setup`'s Upgrade copies the new skill files and updates the Jenny block in `AGENTS.md` as usual. Older record shapes: unchanged. Questions and packs already written stay as they are.
+
+## 0.20.0 · 2026-11-17
+
+First-round usability fixes: Sign-off views explain themselves, Jenny keeps quiet about a matching Tool version, placeholders show what to write, and `capture` and `lookup` load cleanly in Cursor.
+
+- A Sign-off view's diagrams explain themselves. Each diagram has a lead sentence saying which part of the flow it shows and why the Stakeholder is looking at it, nodes labelled in about 8 plain words with their IDs, and a walkthrough under it, one bullet per node, saying what happens there and why. A published page carries the lead sentence and walkthrough too. Before this, a diagram stood alone, with all its detail in the node labels.
+- A Sign-off view's worked examples are laid out to follow. Each names a scenario in the Stakeholder's world, then its **Inputs:**, then one outcome per answer of a Question, or one **Outcome:** for a Decision. Its rates, fees and deposits come from the pack's rules, and where the pack gives no figure yet, the outcome says so in words. Before this, an example ran its inputs and outcomes together in one line.
+- In the Jenny mode, a matching Tool version is silent: the reply opens on your request and says nothing of the version check. Before this, the step said only to go on, and Jenny could open a reply by reporting that the versions matched. A mismatch still stops her with the warning, as in 0.15.6.
+- Where a template or skill asks Jenny for a short title, an option or a note in her own words, it now shows an example of one, such as "Who approves big refunds". This covers the Question, Epic, pack and Sign-off view templates, and the replies of `lookup`, `signoff`'s Standing, `slice` and `up-next`. Before this, the placeholder said only "a few words", with nothing to show what those words should be.
+- `capture` keeps its three rare flows in reference files in its own folder: `confluence.md` (reading a Confluence page), `epic-check.md` (a handed-off Epic check and its Jira reply) and `signoff-readback.md` (a Stakeholder's Sign-off read-back). Capture reads one only when its flow starts. While any skill is held, the Jenny mode re-reads each reference file it sent Jenny to, every turn, along with its `SKILL.md`. Captures behave as before. Before this, `capture` held every flow in one long `SKILL.md`, which Cursor followed less reliably, so Captures there came out inconsistent.
+- `capture`'s and `lookup`'s descriptions parse as plain YAML, so Cursor loads both skills. Before this, a colon inside each description broke Cursor's reading of the skill's header.
+- Your Workspace: `setup`'s Upgrade copies the new skill files as usual. Older record shapes: unchanged. Sign-off views already written stay as they are and are not redrawn.
+
 ## 0.19.1 · 2026-11-16
 
 Acceptance check SU-02 grades a Cursor Workspace correctly.

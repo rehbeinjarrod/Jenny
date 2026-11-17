@@ -9,8 +9,8 @@ A Check's Fingerprint is 12 hex digits taken over:
   Engineer repo Check, which has no sample);
 - the runtime, the driver and the exact model ID, and for the headless
   driver its code (`acceptance/headless/*.py` but its tests) and the Check's
-  own grader (`acceptance/headless/graders/<ID>.py`, and any scripts of its
-  own in `acceptance/headless/graders/<ID>/`);
+  own script folder (`acceptance/headless/graders/<ID>/`, the scripts its key
+  lines call, if it has any);
 - for a Check that installs Jenny (every Check but an Engineer repo one), the
   shared parts: the Jenny core, the AGENTS block, install, and the skill set;
 - for a routing Check, the skill set.
@@ -133,13 +133,13 @@ def skill_set(root):
 
 
 def driver_files(root, check, driver):
-    """The headless driver's code, its tests left out, and the Check's grader
-    with its own scripts."""
+    """The headless driver's code, its tests left out, and the Check's own
+    script folder."""
     if driver != "headless":
         return []
     code = sorted(p.relative_to(root).as_posix() for p in (root / HEADLESS).glob("*.py")
                   if not p.name.startswith("test_"))
-    return code + files_under(root, f"{HEADLESS}/graders/{check.id}.py") + files_under(root, f"{HEADLESS}/graders/{check.id}")
+    return code + files_under(root, f"{HEADLESS}/graders/{check.id}")
 
 
 def dependencies(root, check, driver=None):

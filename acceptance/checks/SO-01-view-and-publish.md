@@ -1,6 +1,6 @@
 ---
 id: SO-01
-version: 6
+version: 7
 skills: [signoff]
 cursor-bench: false
 routing: false
@@ -11,8 +11,6 @@ promise: true
 # SO-01 · Sign-off view: the order, addressed by name, checkboxes only on Decisions, published after confirm
 
 The Operator asks for Margaret's Sign-off view of the hall's book-and-pay Epic, whose latest pack is `pack-v2.md`. Jenny proposes a frozen `signoff-view-v1-margaret.md` and writes it only after the yes. Then the Operator says "publish it": under `Outbound: outbox` Jenny proposes the page body in `outbox/` and writes it only after a second yes. The view runs 🔴 being built on a guess → 🟠 your calls → ✅ did we get these right → ⚪ we think these don't matter → flow diagrams → also worth knowing, and only the Decisions Margaret has not yet agreed carry a checkbox.
-
-Grader: `acceptance/headless/graders/SO-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -80,6 +78,7 @@ The view:
 - The three N/A rows. `sec ⚪ | grep -cE '^\s*[-*] '` → `3`.
 - Left out is worth knowing. `sec 'Also worth knowing' | grep -c 'HAL-REQ-008'` → 1 or more.
 - At least one diagram, none over about 7 nodes (8 at most, besides start and stop). `grep -c '^```mermaid' "$V"` → 1 or more; `nodes | awk '$1 > 8' | wc -l` → `0`.
+- Each diagram explains itself: a lead sentence before it, each node labelled in words with its IDs (none a bare ID, none over 12 words besides its IDs), and one walkthrough bullet per node after it, each 🔴 or 🟠 bullet pointing back to its item. `python3 "$REPO/acceptance/headless/graders/SO-01/diagrams.py" view "$V"` → empty. The script prints each diagram that falls short, and why.
 - No Source IDs. `grep -c 'HAL-SRC-' "$V"` → `0`.
 - Shown names, no renamed canonical term outside code. `prose | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`; `prose | grep -ciw 'spec'` → 1 or more.
 
@@ -89,6 +88,7 @@ The outbox page body:
 - Task items only on the two Decisions. `grep -o 'data-type="task-item"' "$O" | wc -l` → `2`; `tr -d '\n' < "$O" | sed 's/<li data-type="task-item"/\n&/g' | grep '^<li data-type="task-item"' | sed 's/<\/li>.*//' | grep -cvE 'HAL-ANS-00[45]'` → `0`.
 - No Markdown checkboxes left. `grep -c '\[ \]' "$O"` → `0`.
 - Each diagram is a whiteboard embed with its Mermaid source in an expand. `[ "$(grep -o 'data-card-appearance="embed"' "$O" | wc -l)" -ge "$(grep -c '^```mermaid' "$V")" ] && echo ok` → `ok`; `[ "$(grep -o '<details' "$O" | wc -l)" -ge "$(grep -c '^```mermaid' "$V")" ] && echo ok` → `ok`; `grep -c 'flowchart' "$O"` → 1 or more.
+- Each whiteboard keeps its explanation: its lead sentence as a `<p>` straight before the embed, and its walkthrough as a `<ul>` after its Mermaid expand. `python3 "$REPO/acceptance/headless/graders/SO-01/diagrams.py" page "$O"` → empty.
 - A body fragment. `grep -ciE '<html|<body|<head' "$O"` → `0`.
 - No Source IDs. `grep -c 'HAL-SRC-' "$O"` → `0`.
 
@@ -103,6 +103,6 @@ Records:
 - 🔴 says the delivery team is already building on a guess for `HAL-Q-007`, and what the guess is.
 - 🟠 names Tom for `HAL-Q-008` in one line, and `HAL-Q-010` as not yet put to anyone.
 - `HAL-ANS-001` reads as already agreed by her, with its date, and carries no box.
-- Each flow diagram is short, uses plain words, and its nodes cite the IDs that bear on each step.
+- Each flow diagram's lead sentence says which part of the flow it is and why Margaret is looking at it; its nodes are short plain-word steps citing the IDs that bear on them; its walkthrough says what happens at each node and why it's there.
 - Turn 3 says this Workspace's outbound is the outbox, so nothing goes to Confluence, and names the file.
 - Turn 4 says the page body is in `outbox/` and what to do with it.

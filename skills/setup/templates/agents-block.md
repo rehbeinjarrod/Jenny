@@ -47,7 +47,10 @@ Operator, Stakeholder, Tool, Workspace and Veneer are never renamed. With no `ve
 Every change to the Workspace is one operation:
 
 1. **Propose** a numbered batch in chat under a heading that names the operation in shown names (for example "New <shown name for Project>: <Name>"): each file to be written or changed and what goes in it, then the words "Nothing is written yet."
-2. **Amend** by number as the Operator asks, and show the batch again in full, under the same heading.
+2. **Amend** by number as the Operator asks, and show the batch again in full, under the same heading. The items are numbered 1, 2, 3… afresh each time. A proposed ID, shown in the batch but not yet written, follows these rules on each amend:
+   - It stays fixed: each proposed record keeps the ID it was first shown with, moving only to close up a gap below it.
+   - Drops first: when the amend drops records, the later proposed IDs of each dropped record's kind move down to fill every gap, so the IDs written run on with no hole. Every line in the batch that cites a moved ID changes with it.
+   - Adds next: each record the amend adds takes the next ID of its kind after the highest proposed one in the batch, or the Project's next free ID of that kind when the batch has none.
 3. **Confirm**: write only after the Operator says yes. Until then, write no file, not even a draft, and run no command that changes the folder.
 4. **Log**: add one entry to the log, with the heading `## [YYYY-MM-DD] <op> | <title>` and one line per file written. A Project operation logs to `projects/<slug>/log/YYYY-MM.md`; a Workspace-wide one to `log/YYYY-MM.md`. Start a new month's file with `# <CODE> log · YYYY-MM` (or `# Workspace log · YYYY-MM`).
 5. **Commit** everything in the operation as one commit. The message is the log heading with only its leading `## ` taken off, so it starts with the bracketed date: `git add -A && git commit -m "[YYYY-MM-DD] <op> | <title>"`. The commit runs the Guard, the Workspace's git pre-commit hook. When it rejects the commit, it names each file and problem: fix each one in the files of this operation, and commit again. Never pass `--no-verify`.
@@ -59,7 +62,7 @@ Done when: `git status --porcelain` is empty, the last commit message is the log
 
 ## Records
 
-- IDs start with the Project code: `<CODE>-SRC-`, `-REQ-`, `-FEA-`, `-EPC-`, `-Q-`, `-ANS-`, `-SO-`, then three digits. An ID is never reused or renumbered, and is written out in full every time.
+- IDs start with the Project code: `<CODE>-SRC-`, `-REQ-`, `-FEA-`, `-EPC-`, `-Q-`, `-ANS-`, `-SO-`, then three digits. A written ID is never reused or renumbered, and is written out in full every time. A proposed ID follows **Amend** above.
 - Every file starts with its ID (or Project code) and title, then `Key: value` header lines.
 - Links are relative Markdown links.
 - A file stays under 300 lines and an index under 150. Past that, split it along a natural seam and update its index in the same operation. An Epic pack is the exception: it is never split, and `pack` refuses one that would pass 300 lines.

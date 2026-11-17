@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks a question in plain words, with no `/lookup`. Jenny works out the answer from two Requirements in one Feature, cites the IDs and the file, stays inside the hall Project, writes nothing, and speaks in Veneer names.
 
-Grader: `acceptance/headless/graders/LK-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on:

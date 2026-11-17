@@ -1,6 +1,6 @@
 ---
 id: CP-06
-version: 7
+version: 8
 skills: [capture]
 cursor-bench: false
 routing: false
@@ -11,8 +11,6 @@ promise: true
 # CP-06 · A handed-off Epic check: a Business question is answered in the same batch, and its Jira reply goes with it
 
 The hall's book-and-pay Epic was handed off on tech face `HALL-12` and last checked on 2026-11-09. Since then Ravi posted a `Business question` on Story `HALL-13` (one deposit or two when a hirer books twice in one day) and a PR note, and Priya Shah, an engineer not yet in People, posted a `Business call made in build` on `HALL-14` (an unpaid booking holds its slot for 30 minutes). The Operator says "check HALL-12". Jenny proposes one batch: the Jira Source, the Business question as a building-on-a-guess Question, Priya added to People, and her call as a Decision she owns, flagged decided during build, answering a Question raised in the same batch. The Operator gives Margaret's answer to the Business question in an amend: the batch gains a typed-note Source, the Answer and a reply to `HALL-13` quoting the Answer ID. On the yes, the reply is written to `outbox/` in the same commit as the Answer.
-
-Grader: `acceptance/headless/graders/CP-06.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
 
 ## Start
 
@@ -74,7 +72,7 @@ Graded after turn 3. `H="$WS/projects/hall-bookings"`, `U='https://example.atlas
 - The reply is in the outbox, with the Answer, and is the only file there. `ls "$WS/outbox" | wc -l` → `1`; `git -C "$WS" diff --name-only "$BASE" HEAD -- outbox` → `outbox/HALL-13-reply-$A.md`.
 - The reply quotes the Answer ID and the Question, and never a Source ID. `grep -c "$A" "$R"` → 1 or more; `grep -c 'HAL-Q-014' "$R"` → 1 or more; `grep -c 'HAL-SRC-' "$R"` → `0`; `grep -ci 'own deposit' "$R"` → 1 or more.
 - The reply names people by role. `grep -cE 'Margaret|Osei|Ravi|Priya' "$R"` → `0`.
-- The reply uses Veneer names. `awk '/^ *```/{f=!f;next} !f' "$R" | sed 's/`[^`]*`//g' | grep -oiwE 'projects?|epics?|questions?' | wc -l` → `0`; `grep -cE 'Open item|Spec' "$R"` → 1 or more.
+- The reply uses Veneer names. `` awk '/^ *```/{f=!f;next} !f' "$R" | sed 's/`[^`]*`//g' | grep -oiwE 'projects?|epics?|questions?' | wc -l `` → `0`; `grep -cE 'Open item|Spec' "$R"` → 1 or more.
 - The Epic, its packs and other records untouched. `git -C "$WS" diff --name-only "$BASE" HEAD -- projects/hall-bookings/epics projects/court-bookings veneer.md workspace.md` → empty.
 - Records stay canonical. `git -C "$WS" diff "$BASE" HEAD -- projects | grep '^+' | grep -ciwE 'initiatives?|programmes?|open items?|specs?'` → `0`.
 

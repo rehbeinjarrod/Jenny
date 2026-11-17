@@ -1,6 +1,6 @@
 ---
 id: SO-02
-version: 2
+version: 3
 skills: [signoff]
 cursor-bench: false
 routing: false
@@ -8,11 +8,9 @@ inputs: []
 promise: false
 ---
 
-# SO-02 · Sign-off view: worked examples cite their ID and add up
+# SO-02 · Sign-off view: worked examples tell a story, cite their ID and add up
 
-The Operator asks for Margaret's Sign-off view of the hall's book-and-pay Epic and confirms it. The view's worked examples are invented, marked as made up, and each cites the ID of the open item or Decision whose gap it shows. Applying the hall's rules to each example's stated inputs gives its stated outcome.
-
-Grader: `acceptance/headless/graders/SO-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
+The Operator asks for Margaret's Sign-off view of the hall's book-and-pay Epic and confirms it. The view's worked examples are invented, marked as made up, and each cites the ID of the Question or Decision whose answer it shows. Each is a scenario saying who does what, its inputs with numbers, and the outcome under each answer (one outcome for a Decision). Applying the hall's rules to each example's stated inputs gives its stated outcome.
 
 ## Start
 
@@ -42,10 +40,11 @@ Graded after turn 1.
 
 ## Key at write
 
-Graded after turn 2. `V="$WS/projects/hall-bookings/epics/HAL-EPC-001-book-and-pay/signoff-view-v1-margaret.md"`, `ex() { grep -E '^\s*[-*] \*\*Example\*\*' "$V"; }` (the worked-example lines), and `sec() { awk -v h="^## $1" '$0 ~ h {f=1; next} /^## /{f=0} f' "$V"; }`.
+Graded after turn 2. `V="$WS/projects/hall-bookings/epics/HAL-EPC-001-book-and-pay/signoff-view-v1-margaret.md"`, `ex() { python3 "$REPO/acceptance/headless/graders/SO-02/examples.py" "$V"; }` (each worked example on one line: its `**Example**` line, then its sub-bullets), and `sec() { awk -v h="^## $1" '$0 ~ h {f=1; next} /^## /{f=0} f' "$V"; }`.
 
 - One commit; the view is new. `git -C "$WS" rev-list --count "$BASE"..HEAD` → `1`; `git -C "$WS" diff --name-status "$BASE" HEAD -- projects/hall-bookings/epics/` → `A	projects/hall-bookings/epics/HAL-EPC-001-book-and-pay/signoff-view-v1-margaret.md`.
 - There are worked examples, one for the guess. `ex | wc -l` → 2 or more; `sec 🔴 | grep -E '^\s*[-*] \*\*Example\*\*' | grep -c 'HAL-Q-007'` → 1 or more.
+- Each is in the template's shape: a scenario after its heading, one `**Inputs:**` sub-bullet with a number, and one `**If …:**` sub-bullet per answer for a Question (two or more) or one `**Outcome:**` sub-bullet for a Decision. `python3 "$REPO/acceptance/headless/graders/SO-02/examples.py" --shape "$V"` → empty. The script prints each example out of shape, and why.
 - Each is marked as made up. `ex | grep -civ 'made up'` → `0`.
 - Each cites the ID it shows. `ex | grep -cvE 'HAL-(Q|ANS)-[0-9]{3}'` → `0`.
 - Each states its inputs in numbers. `ex | grep -cv '[0-9]'` → `0`.
@@ -54,4 +53,5 @@ Graded after turn 2. `V="$WS/projects/hall-bookings/epics/HAL-EPC-001-book-and-p
 ## By eye
 
 - Each example sits under the item it illustrates and shows what changes with the answer, not just restates the rule.
+- Each scenario reads as something that happens in the hall's world (who books, for what), and each outcome is what Margaret would see.
 - No example is presented as agreed or as a real booking.

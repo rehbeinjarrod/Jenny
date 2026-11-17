@@ -14,8 +14,6 @@ A Workspace installed at Tool 0.2.0 holds the Operator's own text outside the `A
 
 Tool 0.2.0 has no upgrade of its own, so the Operator points at the clone's `setup`, as the 0.4.0 CHANGELOG says to.
 
-Grader: `acceptance/headless/graders/SU-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 **No install.** Sample v7, with the frozen fixture `acceptance/fixtures/workspace-0.2.0/` laid over it as the Tool 0.2.0 install, after the sample is committed. The commit this makes, `[2026-11-11] install | Tool 0.2.0 for claude-code`, is `$BASE`:

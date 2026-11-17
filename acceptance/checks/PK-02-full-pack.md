@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks Jenny to write the pack for the hall's book-and-pay Epic, which was handed off with `pack-v1.md` and has one Sign-off. Jenny runs Decision coverage first and proposes the gap Questions and a new `pack-v2.md` in one confirm-then-write batch. After confirm, `pack-v1.md` is untouched, `pack-v2.md` is new, and the `Tech face:` line in `epic.md` now names `pack-v2.md` in the same commit, as does one new link line in the Project's `index.md`. The pack has every section in order with the appendices last, the For-the-agent block with both fixed shapes, every open Question marked `DO NOT DECIDE` (the parked one listed apart), an "Agreed by" line on the signed-off Decision, people by role, no Source IDs, shown names, under 300 lines, in one commit.
 
-Grader: `acceptance/headless/graders/PK-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on, in `projects/hall-bookings/`:

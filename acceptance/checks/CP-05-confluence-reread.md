@@ -12,8 +12,6 @@ promise: false
 
 The hall hire terms page was captured at version 3 as `HAL-SRC-006`. The committee has since updated it: the guest limit dropped from 120 to 100, a kitchen rule is new, and the part on setting out tables and chairs is gone. The Operator says to re-read it. Jenny finds `HAL-SRC-006` by its URL and proposes only the changes: a new Source naming its previous reading, the limit's Requirement withdrawn and replaced, one new Requirement, and a "withdraw?" item for the Requirement whose text has gone. The Operator says to withdraw that one, then confirms. `HAL-SRC-006` stays exactly as it was.
 
-Grader: `acceptance/headless/graders/CP-05.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7. MCP stand-in: `https://riverbend-hall.atlassian.net/wiki/spaces/HALL/pages/4521987/Hall+hire+terms` → `confluence/hall-hire-terms-v2.md` (page version 4, last updated 2026-11-12 by Margaret Osei).

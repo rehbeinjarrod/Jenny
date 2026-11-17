@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks what is up next in the hall Project. Jenny's Shape next list holds the top 5 `open` Questions, building-on-a-guess first, then by Score, ties by soonest Needed by, each with its score, and leaves out the sixth, the parked one and every answered one. The Operator then shapes the top one: Jenny proposes the plan fields from People and drafts the ask in chat, and after confirm writes only the plan fields and status, in one commit.
 
-Grader: `acceptance/headless/graders/UN-02.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on, in `projects/hall-bookings/questions/`:

@@ -12,8 +12,6 @@ promise: false
 
 The Operator asks for a new Project in Veneer words (a shown name, then an alias). Jenny proposes in Veneer names, takes one amend, writes nothing until confirm, then writes canonical records in one commit.
 
-Grader: `acceptance/headless/graders/SU-01.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7 as it is. No fixtures. The key relies on `workspace.md` (Projects HAL and CRT, so the code RAL is free), `veneer.md` (Project shown as Initiative, alias programme) and `projects/hall-bookings/` (untouched).

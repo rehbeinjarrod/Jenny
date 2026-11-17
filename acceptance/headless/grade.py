@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Key lines as code: each Check's grader in `graders/<ID>.py` and the Install
-key every headless Check run shares. Also the Veneer scan line, which is not a
-key line: it records what the scan found on each reply and never grades.
+"""Key lines graded: each Check's own, read from its Markdown by keys.py, and
+the Install key every headless Check run shares, read by keys.py from the
+Claude Code runner doc. Also the Veneer scan line, which is not a key line:
+it records what the scan found on each reply and never grades.
 
 A key line is a label (what it proves, as the Check words it) and one or more
 shell commands, each with the output it expects: exact text (its spaces at
@@ -10,22 +11,20 @@ either end not counted, as the output's are not), empty (""), or at_least(n)
 variables set: $REPO, $WS, $SK, $BASE, $TURNS. `<n>` in a command is the turn
 being graded. A line passes when every command's output meets its expectation.
 
-A grader module holds:
+A Check's key (grader(), a keys.Key) holds:
 
 - PROPOSAL_TURNS: the turns whose replies Key at proposal grades, after each;
 - proposal(turn): the Key at proposal lines for that turn;
 - write(): the Key at write lines, graded after the last turn;
-- PRELUDE (optional): the variables the Check's Key at write sets (`H=…`),
-  run before each of its commands; PROPOSAL_PRELUDE the same for Key at
-  proposal;
-- AFTER_INSTALL (optional): the `sh` block of the Check's Start, the change
-  made and committed after install, before `$BASE`;
+- PRELUDE: the variables and shell functions the Check's Key at write sets
+  (`H=…`), run before each of its commands; PROPOSAL_PRELUDE the same for
+  Key at proposal;
+- AFTER_INSTALL: the `sh` block of the Check's Start, the change made and
+  committed after install, before `$BASE`;
 - LAY, for a Check whose Start says **No install** or **Engineer repo**
   (start()): the `sh` block of its Start, which lays and commits the
   Workspace in place of an install, over the committed sample or in an empty
   folder; its commit is `$BASE`.
-
-test_key_parity.py holds each grader to its Check word for word.
 
 Usage: grade.py <check ID> --stage proposal|write [--turn <n>]
                 --ws <dir> --base <commit> --turns <dir> [--repo <dir>]
@@ -34,7 +33,6 @@ every line passes, 1 otherwise.
 """
 
 import argparse
-import importlib.util
 import os
 import re
 import subprocess
@@ -127,22 +125,22 @@ def run(lines, env, turn=None, prelude=()):
 
 
 def grader(check_id):
-    path = HERE / "graders" / f"{check_id}.py"
-    if not path.is_file():
-        raise NoGrader(f"no grader for {check_id} at {path}")
-    spec = importlib.util.spec_from_file_location(f"grader_{check_id.replace('-', '_')}", path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+    """The Check's key, read from its Markdown; NoGrader when there is no
+    such Check or a key line can't be read."""
+    import keys  # here, not at the top: keys.py builds its Lines from this module
+    try:
+        return keys.load(check_id, REPO)
+    except (keys.KeyLineError, LookupError) as e:  # LookupError: run as a script, keys has its own grade
+        raise NoGrader(str(e)) from e
 
 
 def grade(check_id, stage, env, turn=None):
     """The Results of one stage: `proposal` (with its turn) or `write`."""
     g = grader(check_id)
     if stage == "proposal":
-        return run(g.proposal(turn), env, turn, prelude=getattr(g, "PROPOSAL_PRELUDE", ()))
+        return run(g.proposal(turn), env, turn, prelude=g.PROPOSAL_PRELUDE)
     if stage == "write":
-        return run(g.write(), env, prelude=getattr(g, "PRELUDE", ()))
+        return run(g.write(), env, prelude=g.PRELUDE)
     raise ValueError(f"unknown stage {stage}")
 
 
@@ -170,10 +168,10 @@ class StartFailed(Exception):
 
 
 def run_start_block(check_id, name, what, env):
-    """Run the grader's copy of its Start's `sh` block, `name`, if it has one,
-    in the Workspace;
+    """Run the Check's Start `sh` block, `name` (AFTER_INSTALL or LAY), if it
+    has one, in the Workspace;
     raises StartFailed with the output when it does not run cleanly."""
-    text = getattr(grader(check_id), name, None)
+    text = getattr(grader(check_id), name)
     if not text:
         return
     p = subprocess.run(["bash", "-e", "-c", text], capture_output=True, text=True,
@@ -195,35 +193,11 @@ def lay(check_id, env):
 # ------------------------------------------------------------ shared lines
 
 def install_key():
-    """The Install key (acceptance/runner/claude-code.md), graded after install.
+    """The Install key, graded after install: the lines of its section in the
+    Claude Code runner doc (acceptance/runner/claude-code.md), read by keys.py.
     `$SAMPLE` is the Env's sample commit."""
-    return [
-        Line("Skills copied.", 'diff -r -x VERSION "$REPO/skills" "$SK"', ""),
-        Line("Version copied.", 'cmp "$REPO/VERSION" "$SK/jenny/VERSION"', ""),
-        Line("One runtime folder.", 'test -e "$WS/.cursor" && echo yes', ""),
-        Line("AGENTS.md markers and whole block.", [
-            ("grep -c '^<!-- jenny:begin -->$' \"$WS/AGENTS.md\"", "1"),
-            ("grep -c '^<!-- jenny:end -->$' \"$WS/AGENTS.md\"", "1"),
-            ("diff <(sed -n '/^<!-- jenny:begin -->$/,/^<!-- jenny:end -->$/p' \"$WS/AGENTS.md\") "
-             "\"$REPO/skills/setup/templates/agents-block.md\"", ""),
-            ("grep -cx '@AGENTS.md' \"$WS/CLAUDE.md\"", "1")]),
-        Line("workspace.md settings.", [
-            ('grep -cx "Tool version: $(cat "$REPO/VERSION")" "$WS/workspace.md"', "1"),
-            ("grep -cx 'Runtime: claude-code' \"$WS/workspace.md\"", "1"),
-            ('grep -cx "Clone path: $REPO" "$WS/workspace.md"', "1"),
-            ("grep -cx 'Outbound: outbox' \"$WS/workspace.md\"", "1"),
-            ("grep -cx 'Sample version: .*' \"$WS/workspace.md\"", "1")]),
-        Line("MCP config, no secrets.", [
-            ('jq -e .mcpServers.atlassian "$WS/.mcp.json" >/dev/null && echo ok', "ok"),
-            ("grep -ciE 'token|secret|password|api[_-]?key|bearer|authorization' \"$WS/.mcp.json\"", "0")]),
-        Line("Records untouched.", 'git -C "$WS" diff --name-only "$SAMPLE" HEAD -- projects veneer.md', ""),
-        Line("The Guard is active.", [
-            ('H="$(git -C "$WS" rev-parse --absolute-git-dir)/hooks/pre-commit"; grep -c \'jenny:guard\' "$H"', "1"),
-            ('H="$(git -C "$WS" rev-parse --absolute-git-dir)/hooks/pre-commit"; test -x "$H" && echo ok', "ok")]),
-        Line("One commit, clean tree.", [
-            ('git -C "$WS" rev-list --count "$SAMPLE"..HEAD', "1"),
-            ('git -C "$WS" status --porcelain --untracked-files=all', "")]),
-    ]
+    import keys  # here, not at the top: keys.py builds its Lines from this module
+    return keys.install_key(REPO)
 
 
 def veneer_scan(env, turn):

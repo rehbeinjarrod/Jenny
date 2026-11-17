@@ -12,8 +12,6 @@ promise: false
 
 `HALL-12` was checked on 2026-11-12, as CP-06 leaves it: the log names comments 10231, 10235 and 10238 as read. Since then Priya has posted one new comment on `HALL-14`, the same day: a `Business question` pushing back on the deposit Decision `HAL-ANS-001` ($50 minimum, more than a one-hour member booking's fee). The Operator checks again. Jenny proposes only the new comment: a new Source holding it alone, and a Question with `Affects: HAL-ANS-001`, building on a guess. `HAL-ANS-001` stays in force, and no reply goes out, because nothing was answered.
 
-Grader: `acceptance/headless/graders/CP-09.py`, which runs it headless (`acceptance/runner/claude-code.md`, **Checks, headless**).
-
 ## Start
 
 Sample v7, then after install the first check's records laid over it from the frozen fixture `acceptance/fixtures/jira/after-check/`, committed as `[2026-11-12] capture | HAL-EPC-001 handed-off Epic check`:

@@ -20,9 +20,9 @@ promise: false           # true → a Promise Check
 
 Prefixes: `SU` setup, `CP` capture, `UN` up-next, `SL` slice, `PK` pack, `SO` signoff, `HO` handoff, `LK` lookup, `EN` engineer-side, `MD` the Jenny mode.
 
-## Grader line
+## Headless grading
 
-A check with a headless grader names it on one line between its summary and **Start**: ``Grader: `acceptance/headless/graders/<ID>.py`, …``. The grader holds the check's key lines and its Start's `sh` block as code, word for word (`AFTER_INSTALL`, or `LAY` for a **No install** or **Engineer repo** check); a key line that needs more than a shell line runs a script of the grader's own, in `acceptance/headless/graders/<ID>/`, so no key line is left to a model's judgement; `acceptance/headless/test_key_parity.py` fails when the two drift, so a change to a check's keys or Start is made in its grader in the same change.
+Every check runs headless ([claude-code.md](claude-code.md) **Checks, headless**), graded from its own key lines and its Start's `sh` block as written in the check (`acceptance/headless/keys.py`, **Key lines** below). The check is the one written form of its keys: a change to its keys or Start is a change to the check alone. A key line that needs more than a shell line calls a script of the check's own in `acceptance/headless/graders/<ID>/`, as SO-02's "The numbers add up" line calls `acceptance/headless/graders/SO-02/sums.py`, so no key line is left to a model's judgement.
 
 ## Sections, in this order
 
@@ -42,6 +42,24 @@ Each key line is a bullet: what it proves, then the shell command in a code span
 - `$REPO`: the root of the Jenny clone you're running from.
 - `$SK`: the scratch Workspace's skills folder (`$WS/.claude/skills` or `$WS/.cursor/skills`).
 
+The headless driver reads each bullet as written, so a bullet keeps to this form:
+
+- The label, then each command in a code span followed by ` → ` and what it expects: `` `exact text` ``, `empty`, or `<n> or more`. Commands are separated by `;`.
+- `Each → <expectation>:` gives that expectation to every command listed after it.
+- A command holding a backtick goes in a double-backtick span: ``` `` sed 's/`[^`]*`//g' `` ```.
+- `<n>` in a command is the turn being graded; `$TURNS/<k>.md` names turn k's reply, and a command names at most one such fixed reply.
+- A sentence after the one the commands end in is prose, never graded; it holds no command.
+
+A bullet the driver can't read this way (no command, a command with no expectation, a command after the sentence its commands end in, a command naming two fixed replies) stops the check before it runs: a key line that goes unread is a key line nobody grades. Notes that aren't graded go under **By eye**, never in a key section. The variables and shell functions a section's commands use (`H="…"`, `` f() { …; } ``) are set in code spans in its "Graded …" paragraph. A variable one bullet alone uses may be set in a code span of its own before its first command (`` `H="…"`; `cmd` → `1` ``): it ends the label and is set before each of that bullet's commands.
+
+Which turns a Key at proposal line is graded after:
+
+- a line under an `After turn <n>:` paragraph runs after turn n;
+- otherwise, a line whose commands name exactly one fixed reply, `$TURNS/<k>.md`, runs after turn k only; when its commands name several, each runs after the turn its reply names, with any naming no fixed reply run after each of them;
+- otherwise, the line runs after every proposal turn.
+
+The proposal turns are the turns its "Graded …" paragraph names (`after turn <n>`, `$TURNS/<n>.md`) and its `After turn <n>:` paragraphs.
+
 ### Veneer in chat
 
 Every key line is hard: one failed line fails the check run. A check never keys renamed canonical terms in Jenny's chat replies: the runner records the Veneer scan on every saved reply instead ([claude-code.md](claude-code.md) **Veneer scan line**), so a new check gets it for free. That line is not a key line and never fails a check run. A check may still key that a shown name appears. Veneer in records, IDs, files and `outbox/` text is still the check's to key.
@@ -54,7 +72,7 @@ A check run's Fingerprint is what it tested. `acceptance/gate/fingerprint.py` is
 
 - every file of each skill in `skills`, and each file or folder in `inputs`;
 - the check file, every fixture it names by path (under `acceptance/fixtures/`), and `acceptance/sample/` unless its Start says **Engineer repo**;
-- the runtime, the driver and the exact model ID, and for the headless driver its code (`acceptance/headless/*.py`, tests left out) and the check's own grader (`acceptance/headless/graders/<ID>.py`, with any scripts of its own in `acceptance/headless/graders/<ID>/`);
+- the runtime, the driver and the exact model ID, and for the headless driver its code (`acceptance/headless/*.py`, tests left out) and the check's own script folder (`acceptance/headless/graders/<ID>/`, when its key lines call a script);
 - for a check that installs Jenny (every check but an **Engineer repo** one), the shared parts: the Jenny core (`skills/jenny/`), the AGENTS block (`skills/setup/templates/agents-block.md`), install (`skills/setup/scripts/install.sh`), and the skill set;
 - for a `routing: true` check, the skill set.
 
