@@ -42,7 +42,7 @@ Made by: agent | engineer
 
 **Outcome:** <what changes, for whom, from the {Feature}'s description.>
 
-**Who:** <who uses it, as the records say.>
+**Who:** <who uses it, as the records say, each person by their Role from People.>
 
 ## 2. Words used here
 
@@ -52,7 +52,7 @@ Made by: agent | engineer
 
 ## 3. Settled {Decision}s
 
-- **<CODE>-ANS-<nnn>** <the {Decision}, as stored> · Owner: <role> · <YYYY-MM-DD>
+- **<CODE>-ANS-<nnn>** <the {Decision}, as stored> · Owner: <the owner's Role from People> · <YYYY-MM-DD>
   Agreed by: <role>, <YYYY-MM-DD>
 
 <or> None yet.
@@ -67,6 +67,8 @@ Made by: agent | engineer
 - <what an active {Answer} adds to this rule, citing its ID>
 - Example: <a worked case with real numbers> <(agreed: <role>, <YYYY-MM-DD>) | (worked from the rules, not yet agreed)>
 - <CODE>-Q-<nnn> <a short title in your own words, e.g. "Who approves big refunds">: see section 5. `DO NOT DECIDE`.
+
+<For a Technical Enabler, each entry is an Enabled Requirement in the shape `technical-enabler.md` gives.>
 
 ## 5. Still open: DO NOT DECIDE
 
@@ -83,7 +85,7 @@ Parked (build nothing for these yet): <CODE>-Q-<nnn> <a short title in your own 
 
 ## 7. Depends on
 
-- <each line of `## Depends on` in `epic.md`, in shown names>
+- <each line of `## Depends on` in `epic.md`, in shown names; a Technical Enabler as the Drafting rules say>
 
 <or> None.
 

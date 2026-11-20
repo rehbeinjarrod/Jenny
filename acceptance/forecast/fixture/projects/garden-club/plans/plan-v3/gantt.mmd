@@ -1,0 +1,31 @@
+---
+displayMode: compact
+config:
+  gantt:
+    leftPadding: 230
+    barHeight: 22
+    fontSize: 12
+    sectionFontSize: 12
+---
+gantt
+    dateFormat YYYY-MM-DD
+    axisFormat %d %b
+    tickInterval 2week
+    todayMarker off
+    section Member sign-up
+    likely 11 Dec :GC_EPC_001, 2026-11-27, 2026-12-11
+    by 18 Dec :active, GC_EPC_001_tail, 2026-12-11, 2026-12-18
+    section ◆ Walking skeleton (members)
+    by 18 Dec :milestone, GC_MIL_001_by, 2026-12-18, 0d
+    section Payments platform (groundwork)
+    likely 11 Dec :crit, GC_EPC_004, 2026-11-27, 2026-12-11
+    by 18 Dec :active, crit, GC_EPC_004_tail, 2026-12-11, 2026-12-18
+    section Plot booking
+    likely 1 Jan :crit, GC_EPC_002, 2026-12-18, 2027-01-01
+    by 8 Jan :active, crit, GC_EPC_002_tail, 2027-01-01, 2027-01-08
+    section Plot fees
+    likely 15 Jan :crit, GC_EPC_003, 2027-01-08, 2027-01-15
+    by 29 Jan :active, crit, GC_EPC_003_tail, 2027-01-15, 2027-01-29
+    section ◆ Opening day
+    target 22 Jan :crit, milestone, GC_MIL_002_target, 2027-01-22, 0d
+    by 29 Jan :milestone, GC_MIL_002_by, 2027-01-29, 0d

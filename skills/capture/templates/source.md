@@ -1,6 +1,6 @@
 # <CODE>-SRC-<nnn> · <Title>
 
-Kind: <typed note | pasted email | meeting notes | document | Confluence page | Jira item>
+Kind: <typed note | pasted email | meeting notes | document | story map session | Confluence page | Jira item>
 Owner: <who wrote or said it, from People where they are in it>
 Date: <YYYY-MM-DD the material is dated, or the day it was given>
 Captured: <YYYY-MM-DD; leave this line out for an MCP read>

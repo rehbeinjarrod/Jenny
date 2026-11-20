@@ -1,0 +1,100 @@
+{
+  "seed": 3,
+  "trials": 10000,
+  "start": "2026-11-23",
+  "in_flight": 2,
+  "history": {
+    "from": "Jira: project = GARD AND statusCategory = Done, run 2026-11-17",
+    "weeks": 16,
+    "window": 26,
+    "status": "normal",
+    "finished_epics": 5
+  },
+  "epics": [
+    {
+      "epic": "GC-EPC-001",
+      "title": "Member sign-up",
+      "depends_on": [],
+      "count_source": "stories",
+      "counts_read": "2026-11-17",
+      "likely_start": "2026-11-27",
+      "likely_finish": "2026-12-11",
+      "very_likely_finish": "2026-12-18",
+      "critical_share": 0.0,
+      "early": false,
+      "no_date": null
+    },
+    {
+      "epic": "GC-EPC-004",
+      "title": "Payments platform",
+      "depends_on": [],
+      "count_source": "range",
+      "likely_start": "2026-11-27",
+      "likely_finish": "2026-12-11",
+      "very_likely_finish": "2026-12-18",
+      "critical_share": 1.0,
+      "early": false,
+      "no_date": null
+    },
+    {
+      "epic": "GC-EPC-002",
+      "title": "Plot booking",
+      "depends_on": [
+        "GC-EPC-001",
+        "GC-EPC-004"
+      ],
+      "count_source": "history",
+      "likely_start": "2026-12-18",
+      "likely_finish": "2027-01-01",
+      "very_likely_finish": "2027-01-08",
+      "critical_share": 1.0,
+      "early": false,
+      "no_date": null
+    },
+    {
+      "epic": "GC-EPC-003",
+      "title": "Plot fees",
+      "depends_on": [
+        "GC-EPC-002",
+        "GC-EPC-004"
+      ],
+      "count_source": "history",
+      "likely_start": "2027-01-08",
+      "likely_finish": "2027-01-15",
+      "very_likely_finish": "2027-01-29",
+      "critical_share": 1.0,
+      "early": false,
+      "no_date": null
+    }
+  ],
+  "milestones": [
+    {
+      "milestone": "GC-MIL-001",
+      "name": "Walking skeleton (members)",
+      "members": [
+        "GC-EPC-001"
+      ],
+      "target": null,
+      "target_source": null,
+      "likely_finish": "2026-12-11",
+      "very_likely_finish": "2026-12-18",
+      "target_met_share": null,
+      "no_date": null
+    },
+    {
+      "milestone": "GC-MIL-002",
+      "name": "Opening day",
+      "members": [
+        "GC-EPC-002",
+        "GC-EPC-003",
+        "GC-EPC-004"
+      ],
+      "target": "2027-01-22",
+      "target_source": "set by Ana Ruiz",
+      "likely_finish": "2027-01-15",
+      "very_likely_finish": "2027-01-29",
+      "target_met_share": 0.805,
+      "no_date": null
+    }
+  ]
+}

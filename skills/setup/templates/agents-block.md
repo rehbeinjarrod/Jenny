@@ -13,7 +13,7 @@ The Jenny skills live in the runtime's skills folder named in `workspace.md`. Th
 
 ## Veneer
 
-When `veneer.md` exists, every word the Operator reads uses its shown names: chat replies, proposals, asks and summaries. That holds for every Delivery term spoken in passing too, such as the kind of file being written or the heading of a batch. Records, folder and file names, IDs, log entries and commit messages always use the canonical terms. Show every file path, ID, and piece of text quoted from a record (a heading such as `## Projects`, a header line) in a code span, exactly as stored.
+When `veneer.md` exists, every word the Operator reads uses its shown names: chat replies, proposals, asks and summaries. That holds for every Delivery term spoken in passing too, such as the kind of file being written or the heading of a batch. Records, folder and file names, IDs, log entries and commit messages always use the canonical terms. That covers every line Jenny writes in a record, prose included: a `Score reason:` and each line of a log entry name an Epic as "Epic" and a Question as "Question", never by their shown names, even when the batch said them in shown names. The Guard rejects a shown name in a `Score reason:`. Show every file path, ID, and piece of text quoted from a record (a heading such as `## Projects`, a header line) in a code span, exactly as stored.
 
 A renamed term's canonical word (either case, singular or plural) belongs to its records alone: in a reply it appears only inside code spans, in every sense, ordinary English included. Reword instead:
 
@@ -52,7 +52,7 @@ Every change to the Workspace is one operation:
    - Drops first: when the amend drops records, the later proposed IDs of each dropped record's kind move down to fill every gap, so the IDs written run on with no hole. Every line in the batch that cites a moved ID changes with it.
    - Adds next: each record the amend adds takes the next ID of its kind after the highest proposed one in the batch, or the Project's next free ID of that kind when the batch has none.
 3. **Confirm**: write only after the Operator says yes. Until then, write no file, not even a draft, and run no command that changes the folder.
-4. **Log**: add one entry to the log, with the heading `## [YYYY-MM-DD] <op> | <title>` and one line per file written. A Project operation logs to `projects/<slug>/log/YYYY-MM.md`; a Workspace-wide one to `log/YYYY-MM.md`. Start a new month's file with `# <CODE> log · YYYY-MM` (or `# Workspace log · YYYY-MM`).
+4. **Log**: add one entry to the log, with the heading `## [YYYY-MM-DD] <op> | <title>` and one line per file written, naming each record by its canonical term and ID (`- Question HAL-Q-014 in questions/HAL-Q-014-….md`). A Project operation logs to `projects/<slug>/log/YYYY-MM.md`; a Workspace-wide one to `log/YYYY-MM.md`. Start a new month's file with `# <CODE> log · YYYY-MM` (or `# Workspace log · YYYY-MM`).
 5. **Commit** everything in the operation as one commit. The message is the log heading with only its leading `## ` taken off, so it starts with the bracketed date: `git add -A && git commit -m "[YYYY-MM-DD] <op> | <title>"`. The commit runs the Guard, the Workspace's git pre-commit hook. When it rejects the commit, it names each file and problem: fix each one in the files of this operation, and commit again. Never pass `--no-verify`.
 6. **Report**: one reply after the commit, holding what the skill's own steps say to tell the Operator (such as its record lines or its **Hand on**) and the commit message in a code span. Give any file it names as its full path in a code span (`projects/<slug>/questions/index.md`). It is a draft reply like any other: when `veneer.md` exists, it goes through the Veneer scan before it is sent.
 
@@ -62,11 +62,11 @@ Done when: `git status --porcelain` is empty, the last commit message is the log
 
 ## Records
 
-- IDs start with the Project code: `<CODE>-SRC-`, `-REQ-`, `-FEA-`, `-EPC-`, `-Q-`, `-ANS-`, `-SO-`, then three digits. A written ID is never reused or renumbered, and is written out in full every time. A proposed ID follows **Amend** above.
+- IDs start with the Project code: `<CODE>-SRC-`, `-REQ-`, `-FEA-`, `-EPC-`, `-Q-`, `-ANS-`, `-SO-`, `-MIL-`, then three digits. A written ID is never reused or renumbered, and is written out in full every time. A proposed ID follows **Amend** above.
 - Every file starts with its ID (or Project code) and title, then `Key: value` header lines.
 - Links are relative Markdown links.
 - A file stays under 300 lines and an index under 150. Past that, split it along a natural seam and update its index in the same operation. An Epic pack is the exception: it is never split, and `pack` refuses one that would pass 300 lines.
-- Sources, Epic packs (`pack-v<N>.md`) and Sign-off views are frozen once written: never edited. A change is a new file.
+- Sources, Epic packs (`pack-v<N>.md`), Sign-off views and Plan folders (`plans/plan-v<N>/`) are frozen once written: never edited, but for the `Shown:` line `plan` appends to a Plan's `plan.md`. A change is a new file, or a new Plan version.
 - A withdrawn line stays in place, struck through, with `Withdrawn <date>`, `Reason:` and `Replaced by: <ID>` when it has a replacement.
 
 ## Lookup

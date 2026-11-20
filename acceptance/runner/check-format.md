@@ -18,11 +18,11 @@ promise: false           # true → a Promise Check
 
 `skills`, `inputs` and `routing` decide the check's Fingerprint (below), so a check names every Tool file it depends on through them.
 
-Prefixes: `SU` setup, `CP` capture, `UN` up-next, `SL` slice, `PK` pack, `SO` signoff, `HO` handoff, `LK` lookup, `EN` engineer-side, `MD` the Jenny mode.
+Prefixes: `SU` setup, `CP` capture, `UN` up-next, `SL` slice, `PK` pack, `SO` signoff, `HO` handoff, `PL` plan, `LK` lookup, `EN` engineer-side, `MD` the Jenny mode.
 
 ## Headless grading
 
-Every check runs headless ([claude-code.md](claude-code.md) **Checks, headless**), graded from its own key lines and its Start's `sh` block as written in the check (`acceptance/headless/keys.py`, **Key lines** below). The check is the one written form of its keys: a change to its keys or Start is a change to the check alone. A key line that needs more than a shell line calls a script of the check's own in `acceptance/headless/graders/<ID>/`, as SO-02's "The numbers add up" line calls `acceptance/headless/graders/SO-02/sums.py`, so no key line is left to a model's judgement.
+Every check runs headless ([claude-code.md](claude-code.md) **Checks, headless**), graded from its own key lines and its Start's `sh` block as written in the check. `acceptance/headless/check.py` reads the check once, its frontmatter, Start and Operator turns, for the Fingerprint, the gate planner and the runner alike. It reads the check's key lines (**Key lines** below) only when they are first used. The runner reads them for every check it is about to run, before the first Check run starts. The check is the one written form of its keys: a change to its keys or Start is a change to the check alone. A key line that needs more than a shell line calls a script of the check's own in `acceptance/headless/graders/<ID>/`, as SO-02's "The numbers add up" line calls `acceptance/headless/graders/SO-02/sums.py`, so no key line is left to a model's judgement.
 
 ## Sections, in this order
 
@@ -101,7 +101,7 @@ The Model is the exact ID the runtime reports, never an alias such as `sonnet`. 
 
 - every `pass` or `fail` row at the check's current Fingerprint counts, from any run; `void` and `not run` rows never do;
 - a check needs 3 counted runs, or none when its Fingerprint is unchanged since the last published Tool version (the newest `v*` tag; `--published none` turns carry-over off);
-- each fail asks for 3 more runs after it;
+- a check with a fail needs 3 more runs after its first 3: 6 counted runs;
 - 2 or more fails `block`; a Promise Check (`promise: true`) blocks on a fail confirmed by another in its 3 more runs;
 - with runs still needed the verdict is `needs runs`; otherwise 1 fail is a `flake` and none a `pass`.
 

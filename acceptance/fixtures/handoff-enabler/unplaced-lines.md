@@ -1,0 +1,4 @@
+- ~~**HAL-REQ-014** A hirer pays the deposit by card online. · Source: HAL-SRC-006 · Status: withdrawn~~ · Withdrawn 2026-11-14 · Reason: Margaret widened it to phone wallets · Replaced by: HAL-REQ-016
+- ~~**HAL-REQ-015** A refund goes back to the card the hirer paid with. · Source: HAL-SRC-006 · Status: withdrawn~~ · Withdrawn 2026-11-14 · Reason: the treasurer pays refunds by bank transfer, outside the booking service
+- **HAL-REQ-016** A hirer pays the deposit online by card or phone wallet. · Source: HAL-SRC-007 · Status: active
+- **HAL-REQ-017** The treasurer can download each month's card payments as a spreadsheet. · Source: HAL-SRC-007 · Status: active

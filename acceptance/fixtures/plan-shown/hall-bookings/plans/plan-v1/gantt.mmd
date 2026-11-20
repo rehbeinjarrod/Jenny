@@ -1,0 +1,25 @@
+---
+displayMode: compact
+config:
+  gantt:
+    leftPadding: 230
+    barHeight: 22
+    fontSize: 12
+    sectionFontSize: 12
+---
+gantt
+    dateFormat YYYY-MM-DD
+    axisFormat %d %b
+    tickInterval 2week
+    todayMarker off
+    section Book and pay
+    likely 11 Dec :crit, HAL_EPC_001, 2026-11-27, 2026-12-11
+    by 18 Dec :active, crit, HAL_EPC_001_tail, 2026-12-11, 2026-12-18
+    section ◆ Walking skeleton (hirers)
+    by 18 Dec :milestone, HAL_MIL_001_by, 2026-12-18, 0d
+    section Cancel a booking
+    likely 1 Jan :crit, HAL_EPC_002, 2026-12-18, 2027-01-01
+    by 15 Jan :active, crit, HAL_EPC_002_tail, 2027-01-01, 2027-01-15
+    section ◆ First online bookings
+    target 1 Mar :crit, milestone, HAL_MIL_002_target, 2027-03-01, 0d
+    by 15 Jan :milestone, HAL_MIL_002_by, 2027-01-15, 0d

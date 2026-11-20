@@ -1,0 +1,1 @@
+- [epics/CRT-EPC-002-card-payment-account/epic.md](epics/CRT-EPC-002-card-payment-account/epic.md): CRT-EPC-002 Card payment account, a Technical Enabler for CRT-FEA-001

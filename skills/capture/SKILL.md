@@ -1,20 +1,21 @@
 ---
 name: capture
-description: Turn incoming material into Requirements, Questions and Answers. Use for `/capture`, when the Operator types, pastes or drops in material (a note, an email, meeting notes) or gives a Confluence page URL and says to capture it, says "re-read <URL>", says "check <Jira key or Epic>" for a handed-off Epic, gives an answer to an open Question, or brings back a Stakeholder's Sign-off (their ticked Sign-off page, or what they agreed when they read their view with the Operator).
+description: Turn incoming material into Requirements, Questions and Answers. Use for `/capture`, when the Operator types, pastes or drops in material (a note, an email, meeting notes), pastes a story mapping session or a Miro card list, asks for the story map paste template, or gives a Confluence page URL and says to capture it, says "re-read <URL>", says "check <Jira key or Epic>" for a handed-off Epic, gives an answer to an open Question, or brings back a Stakeholder's Sign-off (their ticked Sign-off page, or what they agreed when they read their view with the Operator).
 ---
 
 # Capture
 
 One Capture is one operation under **Every write: confirm, then write** in the Tool-owned block of `AGENTS.md`. The record shapes are in [templates/](templates/).
 
-A Capture writes Sources, Requirements (on an existing Feature or in `requirements/unplaced.md`), Questions, Answers, withdrawals and their replacements, re-scores, new People in `project.md`, Sign-off entries in an Epic's `signoffs.md`, the folder indexes and the log, and sends the Jira reply to an in-build Question it answers. Features and Decision coverage belong to other skills: a Requirement with no fitting Feature goes to `unplaced.md`.
+A Capture writes Sources, Requirements (on an existing Feature or in `requirements/unplaced.md`), the story map and Milestones, Questions, Answers, withdrawals and their replacements, re-scores, new People in `project.md`, Sign-off entries in an Epic's `signoffs.md`, the folder indexes and the log, and sends the Jira reply to an in-build Question it answers. Features and Decision coverage belong to other skills: a Requirement with no fitting Feature goes to `unplaced.md`.
 
 ## Rare flows
 
-Three flows live in their own files beside this one. Read a file when its flow starts, and follow it alongside these steps:
+Four flows live in their own files beside this one. Read a file when its flow starts, and follow it alongside these steps:
 
 - [confluence.md](confluence.md): a Confluence page URL, captured or re-read.
 - [signoff-readback.md](signoff-readback.md): material that brings back a Stakeholder's Sign-off.
+- [story-map.md](story-map.md): a story mapping session pasted in, a Miro card list (a CSV export or copied board text), or a request for its paste template.
 - [epic-check.md](epic-check.md): "check <Jira key or Epic>" for a handed-off Epic (the whole file); an Answer to a Question raised from an engineer's `Business question` (its **Jira reply** section alone).
 
 ## 1. Find the Project
@@ -25,7 +26,7 @@ Above the batch, say in one plain sentence which Project you think the material 
 
 Material that plainly bears on several Projects becomes one Source per Project, each holding only the parts that Project uses, with an `Also in:` line naming the others. Each Project's records go in that Project's own batch items, and each Project's log gets the entry.
 
-Then read each Project's `index.md`, `project.md`, every active Requirement (each Feature file and `requirements/unplaced.md`) and `questions/index.md` with the files of its `open` and `chasing` Questions. Next IDs: one above the highest in use for each kind, found with `grep -rhoE '<CODE>-(SRC|REQ|Q|ANS|SO)-[0-9]{3}' projects/<slug>/ | sort -u`.
+Then read each Project's `index.md`, `project.md`, `storymap.md` when it has one, every active Requirement (each Feature file and `requirements/unplaced.md`) and `questions/index.md` with the files of its `open` and `chasing` Questions. Next IDs: one above the highest in use for each kind, found with `grep -rhoE '<CODE>-(SRC|REQ|Q|ANS|SO|MIL)-[0-9]{3}' projects/<slug>/ | sort -u`.
 
 Done when: the Project is named with a reason, and you hold its active Requirements, open Questions, People and next free IDs.
 
@@ -34,7 +35,7 @@ Done when: the Project is named with a reason, and you hold its active Requireme
 Go through the material in order and turn each point into candidates:
 
 - **Requirement**: one testable need or constraint, restated as one plain sentence that carries its own terms: an option with its price or condition, a rule with the details that pin it down (which door, which month), a limit with its number. Two needs become two Requirements only when each still stands as a need with the other gone. Place each on the Feature it belongs to, or in `unplaced.md`.
-- **Question**: something the material says is not known or not settled. Propose `Impact` and `Uncertainty` (1 to 3 each), `Score` (their product, as one number), a one-line `Score reason` in canonical terms, like every line of a record (a handed-off Epic is an Epic there, whatever the Veneer shows), and `Building on a guess`. A Score of 1 or 2 is proposed as `parked`; any other as `open`.
+- **Question**: something the material says is not known or not settled. Propose `Impact` and `Uncertainty` (1 to 3 each), `Score` (their product, as one number), a one-line `Score reason` in canonical terms, as the Veneer section of `AGENTS.md` says ("the booking Epic", never its shown name), and `Building on a guess`. A Score of 1 or 2 is proposed as `parked`; any other as `open`.
 - **Answer**: a point that answers an open or chasing Question. See **Answers** below.
 - **Person**: someone the records need (an owner, someone to ask) who is not in `project.md`. Ask for their role (`Operator`, `Stakeholder` or `engineer`) rather than guess.
 
@@ -63,13 +64,13 @@ EOF
 
 Show the batch under the heading `Capture: <title of the Source>`, with that sentence above it. Order the items so the Operator can amend by number:
 
-- **Item 1, the Source**, as [templates/source.md](templates/source.md) shapes it, with its ID and the exact text it will keep:
+- **Item 1, the Source**, as [templates/source.md](templates/source.md) shapes it, with its ID and the exact text it will keep, shown in full in this reply, never by pointing back to an earlier one (a filled template is shown again whole):
   - Own organisation's material (the Operator's notes, colleagues' emails, meeting notes, internal pages): the parts used, word for word. Parts not used stay out of the Source and are listed in one line after the items.
   - Third-party material (articles, standards, rulebooks, codes of practice), including a passage quoted inside own material: cut the passage out and mark the cut `[…]`, keeping every own word around it exactly as given, then add its location (title, publisher, year, section, URL if any) and a summary in your own words. Records and the batch carry the passage only as that location and own words. Own words means the point retold plainly, as you would say it to the Operator: short, in your sentence shape and your vocabulary, keeping only names, numbers and section numbers from the original.
 - **For a Sign-off read-back, item 2 is the Sign-off entry**, as [signoff-readback.md](signoff-readback.md) says.
 - **For a Handed-off Epic check**, the items are as [epic-check.md](epic-check.md) says, and each Jira reply sits directly after the Answer it carries.
 - **Then one item per candidate**, in the order the material raises them: its label, the record it will write (ID, statement, where it goes) and, for a Question, the proposed scores and reason.
-- **The last item, indexes and log**: the folder indexes changed (`sources/index.md`, `questions/index.md` re-ranked, `features/index.md` for a placed Requirement) and the log entry's heading.
+- **The last item, indexes and log**: the folder indexes changed (`sources/index.md`, `questions/index.md` re-ranked, `features/index.md` for a placed Requirement), the `storymap.md` lines changed as **Story map** in 4 says, and the log entry's heading.
 
 When everything in the material is a duplicate, the batch is only the log note and no Source is written.
 
@@ -88,8 +89,9 @@ As `AGENTS.md` says, numbering the items afresh after each amend and holding eac
 - **Person**: a row `| <name> | <role> | <what they look after, or blank> |` in the People table of `project.md`.
 - **Sign-off entry**: added at the end of the Epic's `signoffs.md`, as [signoff-readback.md](signoff-readback.md) says.
 - **Indexes**: a row in `sources/index.md`; the Requirement IDs in `features/index.md` when a placed Requirement is added or withdrawn. A folder index that does not exist yet is made from its template in [templates/](templates/) and linked from the Project's `index.md`, with that file's "No … yet" line updated.
+- **Story map**: in a Project with `storymap.md`, each new Requirement a Capture writes outside a story map session, other than a replacement, is added under `## Not on the map` as `- <ID> · from <Source ID>`, replacing "None.". A replacement takes the withdrawn Requirement's place on the map; a Requirement withdrawn with no replacement is taken off it.
 - **Jira reply**: posted or written to `outbox/` as **Jira reply** in [epic-check.md](epic-check.md) says.
-- **Log**: `## [<date>] capture | <Source ID> <Source title>` (`capture | <Epic ID> handed-off Epic check` for a check) (or `capture | duplicate of <ID>, …` when nothing else is written), then one line per file written, the IDs created, withdrawn or answered, one line per Sign-off entry (`Sign-off <SO ID> (<name> agreed <IDs>; not agreed <ID> → <Q ID>) in epics/<ID>-<slug>/signoffs.md`), and one line per duplicate: `Duplicate: <ID> said again in <Source ID>; nothing written`, naming the material by kind, owner and date when no Source is written. Material for several Projects writes the same heading in each Project's log, all in the one commit.
+- **Log**: `## [<date>] capture | <Source ID> <Source title>` (`capture | <Epic ID> handed-off Epic check` for a check) (or `capture | duplicate of <ID>, …` when nothing else is written), then one line per file written in canonical terms, as **Log** in `AGENTS.md` says, the IDs created, withdrawn or answered, one line per Sign-off entry (`Sign-off <SO ID> (<name> agreed <IDs>; not agreed <ID> → <Q ID>) in epics/<ID>-<slug>/signoffs.md`), and one line per duplicate: `Duplicate: <ID> said again in <Source ID>; nothing written`, naming the material by kind, owner and date when no Source is written. Material for several Projects writes the same heading in each Project's log, all in the one commit.
 
 For material quoting a third-party passage, run the copy check again on what is written, after staging and before the commit and any Jira post. Its retellings are every added line of the staged diff except the Source's kept `>` lines:
 

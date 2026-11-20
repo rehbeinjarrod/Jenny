@@ -8,7 +8,7 @@ Score: <Impact × Uncertainty, as one number>
 Score reason: <one plain line, in canonical terms>
 Needed by: <YYYY-MM-DD, an Epic or Milestone ID, or blank>
 Building on a guess: <yes | no>
-Affects: <the Requirement, Feature or Answer IDs it bears on>
+Affects: <the Requirement, Feature, Answer or Milestone IDs it bears on>
 Raised from: <CODE>-SRC-<nnn>, or for a Question raised by Decision coverage: Decision coverage of <CODE>-EPC-<nnn>
 <Only for a Question raised by Decision coverage, otherwise leave this line out:> Category: <the coverage category it fills>
 

@@ -1,0 +1,71 @@
+{
+  "seed": 1,
+  "trials": 10000,
+  "start": "2026-11-23",
+  "in_flight": 2,
+  "history": {
+    "from": "typed by Dana Wells, 2026-11-18",
+    "weeks": 12,
+    "window": 26,
+    "status": "normal",
+    "finished_epics": 0
+  },
+  "epics": [
+    {
+      "epic": "HAL-EPC-001",
+      "title": "Book and pay",
+      "depends_on": [],
+      "count_source": "stories",
+      "counts_read": "2026-11-18",
+      "likely_start": "2026-11-27",
+      "likely_finish": "2026-12-11",
+      "very_likely_finish": "2026-12-18",
+      "critical_share": 1.0,
+      "early": false,
+      "no_date": null
+    },
+    {
+      "epic": "HAL-EPC-002",
+      "title": "Cancel a booking",
+      "depends_on": [
+        "HAL-EPC-001"
+      ],
+      "count_source": "range",
+      "likely_start": "2026-12-18",
+      "likely_finish": "2027-01-01",
+      "very_likely_finish": "2027-01-15",
+      "critical_share": 1.0,
+      "early": false,
+      "no_date": null
+    }
+  ],
+  "milestones": [
+    {
+      "milestone": "HAL-MIL-001",
+      "name": "Walking skeleton (hirers)",
+      "members": [
+        "HAL-EPC-001"
+      ],
+      "target": null,
+      "target_source": null,
+      "likely_finish": "2026-12-11",
+      "very_likely_finish": "2026-12-18",
+      "target_met_share": null,
+      "no_date": null
+    },
+    {
+      "milestone": "HAL-MIL-002",
+      "name": "First online bookings",
+      "members": [
+        "HAL-EPC-001",
+        "HAL-EPC-002"
+      ],
+      "target": "2027-03-01",
+      "target_source": "set by Margaret Osei",
+      "likely_finish": "2027-01-01",
+      "very_likely_finish": "2027-01-15",
+      "target_met_share": 1.0,
+      "no_date": null
+    }
+  ]
+}

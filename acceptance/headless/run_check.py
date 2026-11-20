@@ -8,14 +8,16 @@
 The scope is one or more Check IDs or skill names (a skill stands for every
 Check whose `skills` list names it), as a Scoped run. Or it is `gate` alone, a Gate run: the gate planner (plan.py), over
 the results files in `--results`, decides which Checks run and how often, and
-a fail asks for 3 more runs of its Check, until the planner needs none for it
+a Check with a fail gets 3 more runs after its first 3, until the planner needs none for it
 or it blocks. Check runs go in Check-ID order, each Check's repeats back to
 back, and a fail never stops the run. A Gate run's results file ends its table
 with the gate report: each Check's verdict and pooled pass rate, its flakes,
 and the gate's verdict.
 
 Each Check run, following acceptance/runner/claude-code.md with the headless
-driver in place of the two subagents:
+driver in place of the two subagents (steps 1 and 2, and the prompt and
+stand-ins of step 3, are lay.py's: it lays the Workspace from the Check's
+Start):
 
 1. The sample is copied into a fresh Workspace in a temporary folder outside
    the clone (so no CLAUDE.md above it is read), and committed.
@@ -56,7 +58,6 @@ Exit 0: every Check run passed (a Gate run: the gate passed, flakes and all).
 
 import argparse
 import datetime
-import re
 import shutil
 import subprocess
 import sys
@@ -68,16 +69,16 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(REPO / "acceptance" / "gate"))
 
+from check import CheckError, install_key, load_all  # noqa: E402
 import fingerprint  # noqa: E402
 import grade  # noqa: E402
 import isolation  # noqa: E402
+import lay  # noqa: E402
 import plan  # noqa: E402
 from session import DriverError, Session, auth_present  # noqa: E402
 
 DRIVER = "headless"
 VOIDS = 4  # the fourth Void is a hard stop
-INSTALL_TURNS = ("Follow `{repo}/skills/setup/SKILL.md` to install Jenny in this folder. I use Claude Code.",
-                 "Yes, go ahead.")
 CLONE_STATE = ("{ git rev-parse HEAD; git status --porcelain --untracked-files=all; git diff HEAD --binary; "
                "git ls-files -z -o --exclude-standard | xargs -0r sha1sum; } | sha1sum")
 
@@ -88,84 +89,24 @@ class Void(Exception):
 
 # ------------------------------------------------------------ the Check
 
-def section(text, heading):
-    m = re.search(rf"^## {re.escape(heading)}\n(.*?)(?=^## |\Z)", text, re.M | re.S)
-    return m.group(1) if m else ""
-
-
-def operator_turns(repo, check):
-    """The Operator script's turns, word for word, each `<paste: <file>>` replaced
-    by that fixture's whole text."""
-    text = (Path(repo) / check.path).read_text(encoding="utf-8")
-    turns = []
-    for line in section(text, "Operator script").splitlines():
-        m = re.match(r"^\d+\. (.*)$", line)
-        if m:
-            turns.append(m.group(1))
-        elif turns and line.strip():
-            turns[-1] += "\n" + line
-
-    def paste(m):
-        return (Path(repo) / "acceptance" / "fixtures" / m.group(1)).read_text(encoding="utf-8").rstrip("\n")
-    return [re.sub(r"<paste: ([^>]+)>", paste, t).replace("<REPO>", str(repo)) for t in turns]
-
-
-# The Jenny mode's instructions (skills/jenny/mode.md), pointed at the Claude
-# Code skills folder. A Check whose `skills` list names `jenny` runs in it.
-MODE = "You are Jenny. At the start of every turn, before anything else, read `.claude/skills/jenny/SKILL.md` whole and follow it."
-
-
-def in_mode(check):
-    return "jenny" in check.skills
-
-
-# The Engineer prompt (acceptance/runner/claude-code.md), with `{ws}` the repo:
-# an engineer's own coding agent, whose only instructions are the repo's
-# AGENTS.md. Its relay and end-of-turn sentences, and turn 1, are a subagent's
-# framing; here the engineer's turns go to the session word for word.
-ENGINEER = ("You are a coding agent working for an engineer in the repo folder `{ws}`. Read `{ws}/AGENTS.md` "
-            "now and follow it as your project instructions. Run every shell command from that folder "
-            "(`cd {ws} && …`) and change nothing outside it.")
-
-
-STAND_IN = ("The Atlassian MCP is not connected in this session. When you would read `{url}` through it, "
-            "read `{path}` instead: the MCP returned this file.")
-
-
-def stand_ins(repo, check):
-    """The (URL, fixture) of each `MCP stand-in:` in the Check's Start."""
-    text = (Path(repo) / check.path).read_text(encoding="utf-8")
-    return re.findall(r"MCP stand-in: `([^`]+)` → `([^`]+)`", section(text, "Start"))
-
-
 def scope(repo, words):
     """The Checks a scope names, in Check-ID order: each word a Check ID, or a
     skill standing for every Check whose `skills` list names it. KeyError
     for a word that names none."""
-    checks = fingerprint.load_checks(repo)
+    every = load_all(repo)
     out = set()
     for w in words:
-        found = [c for c in checks.values() if c.id == w or w in c.skills]
+        found = [c for c in every.values() if c.id == w or w in c.skills]
         if not found:
             raise KeyError(w)
         out.update(c.id for c in found)
-    return [checks[i] for i in sorted(out)]
-
-
-def sample_version(repo):
-    m = re.search(r"^Sample version: (.+)$", (Path(repo) / "acceptance/sample/workspace.md").read_text(), re.M)
-    return m.group(1).strip() if m else "?"
+    return [every[i] for i in sorted(out)]
 
 
 # ------------------------------------------------------------ one Check run
 
-def git(ws, *args):
-    return subprocess.run(["git", "-C", str(ws), *args], capture_output=True, text=True, check=True).stdout.strip()
-
-
 def graded(results):
-    bad = [f"fail: {r.label} (got {r.output!r}, want {r.expected})" for r in results if not r.ok]
-    return "; ".join(bad) if bad else "every line pass"
+    return grade.summary(results, "every line pass")
 
 
 class CheckRun:
@@ -200,73 +141,32 @@ class CheckRun:
             shutil.rmtree(tmp, ignore_errors=True)
 
     def in_workspace(self, ws):
-        repo = self.ctx.repo
-        turns_dir = self.d / "turns"
-        turns_dir.mkdir()
-        start = grade.start(self.check.id, repo)
-        sample = ""
-        if start == "engineer repo":
-            ws.mkdir()
-        else:
-            shutil.copytree(repo / "acceptance" / "sample", ws)
-            git(ws, "init", "-q")
-            git(ws, "add", "-A")
-            git(ws, "commit", "-qm", f"Sample v{sample_version(repo)}")
-            sample = git(ws, "rev-parse", "HEAD")
-        env = grade.Env(repo, ws, sample, turns_dir, sample)
-
         try:
-            if start == "install":
-                install = self.session("install", ws, add_dirs=[repo])
-                (self.d / "install").mkdir()
-                for i, text in enumerate(INSTALL_TURNS, 1):
-                    (self.d / "install" / f"{i}.md").write_text(install.send(text.format(repo=repo)), encoding="utf-8")
-                results = grade.run(grade.install_key(), env)
-                self.notes["Install"] = "pass" if all(r.ok for r in results) else graded(results)
-                if not all(r.ok for r in results):
-                    return "fail"
-                grade.after_install(self.check.id, env)
-            else:
-                self.notes["Install"] = f"none ({'No install' if start == 'no install' else 'Engineer repo'})"
-                grade.lay(self.check.id, env)
-        except grade.StartFailed as e:
+            laid = lay.lay(self.check, ws, self.d, self.session)
+        except lay.StartFailed as e:
             raise Void(str(e))
-        env = env._replace(base=git(ws, "rev-parse", "HEAD"))
-        g = grade.grader(self.check.id)
-        system = []
-        if in_mode(self.check):
-            system.append(MODE)
-            self.notes["Prompt"] = "the Jenny mode"
-        if start == "engineer repo":
-            system.append(ENGINEER.format(ws=ws))
-            self.notes["Prompt"] = "the Engineer prompt"
-        for url, rel in stand_ins(repo, self.check):
-            path = self.d / "fixtures" / rel
-            path.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy(repo / "acceptance" / "fixtures" / rel, path)
-            system.append(STAND_IN.format(url=url, path=path))
-            stand = f"{url} → fixtures/{rel}"
-            self.notes["MCP stand-in"] = "; ".join(filter(None, [self.notes.get("MCP stand-in"), stand]))
-        jenny = self.session("jenny", ws, system="\n\n".join(system) or None)
-        turns = operator_turns(repo, self.check)
+        self.notes.update(laid.notes)
+        if laid.install_failed:
+            return "fail"
+        env = laid.env
+        jenny = self.session("jenny", ws, system=laid.system)
+        turns = self.check.turns
         proposal, scans = [], []
         for i, text in enumerate(turns, 1):
-            (turns_dir / f"{i}.md").write_text(jenny.send(text), encoding="utf-8")
+            (env.turns / f"{i}.md").write_text(jenny.send(text), encoding="utf-8")
             if i == 1:
-                # An engineer's repo has no CLAUDE.md: the Engineer prompt has the agent read AGENTS.md.
-                need = () if start == "engineer repo" else ("CLAUDE.md", "AGENTS.md")
-                leaks = isolation.problems(jenny.config_dir, jenny.id, ws, need=need)
+                leaks = isolation.problems(jenny.config_dir, jenny.id, ws, need=laid.need)
                 if leaks:
                     raise Void("Jenny's session was not kept to the Workspace: " + "; ".join(leaks))
                 self.notes["Isolation"] = f"pass (session {jenny.id})"
             scan = grade.veneer_scan(env, i)
             if scan is not None:
                 scans.append(f"turn {i} {scan}")
-            if i in g.PROPOSAL_TURNS:
-                results = grade.grade(self.check.id, "proposal", env, turn=i)
+            if i in self.check.key.proposal_turns:
+                results = grade.grade(self.check, "proposal", env, turn=i)
                 proposal.append(f"turn {i}: {graded(results)}")
                 self.failed |= not all(r.ok for r in results)
-        results = grade.grade(self.check.id, "write", env)
+        results = grade.grade(self.check, "write", env)
         self.failed |= not all(r.ok for r in results)
         self.notes["Key at proposal"] = "; ".join(proposal)
         self.notes["Key at write"] = graded(results)
@@ -290,16 +190,14 @@ class Ctx:
                               text=True, check=True).stdout
 
 
-def prompt(repo, checks):
+def prompt(run_checks):
     """The header's Prompt: none, since turn 1 goes as the Operator typed it,
     with the Checks run in the Jenny mode, and under the Engineer prompt, named."""
     out = "Prompt: none"
-    mode = [c.id for c in checks if in_mode(c)]
-    engineer = [c.id for c in checks if grade.start(c.id, repo) == "engineer repo"]
-    if mode:
-        out += f", the Jenny mode for {' '.join(mode)}"
-    if engineer:
-        out += f", the Engineer prompt for {' '.join(engineer)}"
+    for name in (lay.JENNY_MODE, lay.ENGINEER_PROMPT):
+        ids = [c.id for c in run_checks if name in lay.prompts(c)]
+        if ids:
+            out += f", {name} for {' '.join(ids)}"
     return out
 
 
@@ -337,18 +235,20 @@ def main(argv=None):
         if is_gate:
             gate_plan = {r.check: r for r in plan.plan(ctx.repo, results_dir, model=ctx.model, driver=DRIVER,
                                                         published_root=published)}
-            every = fingerprint.load_checks(ctx.repo)
+            every = load_all(ctx.repo)
             checks = [every[cid] for cid, r in sorted(gate_plan.items()) if r.needed and r.verdict != "block"]
         else:
             try:
                 checks = scope(ctx.repo, a.scope)
             except KeyError as e:
                 ap.exit(2, f"run_check: no Check or skill {e.args[0]}\n")
-        for check in checks:
-            try:
-                grade.grader(check.id)
-            except grade.NoGrader as e:
-                ap.exit(2, f"run_check: {e}\n")
+        try:  # an unreadable key line stops the run before any Check run
+            for check in checks:
+                check.key
+            if any(check.start.installs for check in checks):
+                install_key(ctx.repo)
+        except CheckError as e:
+            ap.exit(2, f"run_check: {e}\n")
         if Path(ctx.run_dir).exists():
             ap.exit(2, f"run_check: {ctx.run_dir} already exists\n")
         code, out = run(ctx, a, checks, gate_plan, now)
@@ -385,8 +285,8 @@ def run(ctx, a, checks, gate_plan, now):
     state = ctx.clone_state()
     (ctx.run_dir / "clone-state").write_text(state)
     header = [f"# Acceptance run {ctx.run_dir.name}", "",
-              f"Date: {now:%Y-%m-%d} · Runtime: claude-code · Driver: {DRIVER} · Model: {ctx.model} · {prompt(ctx.repo, checks)}",
-              f"Tool version: {(ctx.repo / 'VERSION').read_text().strip()} · Sample version: {sample_version(ctx.repo)}"
+              f"Date: {now:%Y-%m-%d} · Runtime: claude-code · Driver: {DRIVER} · Model: {ctx.model} · {prompt(checks)}",
+              f"Tool version: {(ctx.repo / 'VERSION').read_text().strip()} · Sample version: {lay.sample_version(ctx.repo)}"
               f" · Scope: {'gate' if gate_plan else ' '.join(c.id for c in checks)}"]
     sections, voids, stop, results = [], 0, None, []  # sections: (row, body, file name)
     for check in checks:

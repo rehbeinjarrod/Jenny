@@ -42,6 +42,8 @@ The view is the Stakeholder's to-do list, read in this order: 🔴 what is being
    - **⚪** each N/A row of the pack's Appendix A: what the category covers, in plain words ("Who else hears of a booking"), and the Operator's reason.
    - **Also worth knowing** each Appendix B line that is not about a Question or Decision placed above, each `Left out` line from section 8, and each section 7 `Depends on` line.
 
+   **Nothing to check**: with no 🔴 item, no 🟠 table row and no ✅ checkbox, there is no view to write, for any Epic. Reply in plain lines, with no batch: "Nothing for <first name> to check in <shown name for Epic> <ID> <title>", then that <shown name for Epic pack> v<N> builds on no guess, holds no call of theirs and no Decision they have not agreed, and any records moved on as step 1 says. Write nothing and stop.
+
    Done when: every section 5 item (not parked), section 3 Decision, Appendix A N/A row and remaining Appendix B line sits in exactly one place.
 
 3. **Draft** the view in your own working, writing no file, by the template and these rules:

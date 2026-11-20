@@ -16,6 +16,7 @@ Each skill is a folder in [skills/](skills/). You rarely name one: say what you 
 - **pack**: check an Epic for business decisions still unmade, then write the pack the engineers build from.
 - **signoff**: write a stakeholder's view of an Epic's pack, publish it to Confluence, and report who has agreed what.
 - **handoff**: record that a pack went to the delivery team, and report what has changed since.
+- **plan**: forecast when a project's milestones and epics will land, from the stories the team finishes each week, with a Gantt chart to paste into Lucid. Also records when a plan went out, and reports which dates have moved since.
 - **jenny**: the Jenny mode, which routes each request to its skill and checks your Workspace is on the installed Tool version.
 
 ## What you need

@@ -1,0 +1,2376 @@
+{
+ "site": "https://example.atlassian.net",
+ "searches": {
+  "done": "project = HALL AND issuetype in standardIssueTypes() AND statusCategory = Done AND (resolution in (Done, Fixed) OR resolution is EMPTY) AND updated >= -52w ORDER BY key ASC",
+  "never_in_progress": "project = HALL AND issuetype in standardIssueTypes() AND statusCategory = Done AND (resolution in (Done, Fixed) OR resolution is EMPTY) AND updated >= -52w AND status WAS NOT IN (\"In Progress\", \"In Review\")"
+ },
+ "done": [
+  {
+   "key": "HALL-15",
+   "fields": {
+    "summary": "Work item HALL-15",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-05-18T11:45:00.000+1000",
+    "statuscategorychangedate": "2026-05-18T11:45:00.000+1000",
+    "created": "2026-05-08T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-16",
+   "fields": {
+    "summary": "Work item HALL-16",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-05-19T12:52:00.000+1000",
+    "statuscategorychangedate": "2026-05-19T12:52:00.000+1000",
+    "created": "2026-05-09T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-17",
+   "fields": {
+    "summary": "Work item HALL-17",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-05-25T13:59:00.000+1000",
+    "statuscategorychangedate": "2026-05-25T13:59:00.000+1000",
+    "created": "2026-05-15T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-18",
+   "fields": {
+    "summary": "Work item HALL-18",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-05-26T14:06:00.000+1000",
+    "statuscategorychangedate": "2026-05-26T14:06:00.000+1000",
+    "created": "2026-05-16T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-19",
+   "fields": {
+    "summary": "Work item HALL-19",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-05-27T15:13:00.000+1000",
+    "statuscategorychangedate": "2026-05-27T15:13:00.000+1000",
+    "created": "2026-05-17T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-20",
+   "fields": {
+    "summary": "Work item HALL-20",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-06-01T16:20:00.000+1000",
+    "statuscategorychangedate": "2026-06-01T16:20:00.000+1000",
+    "created": "2026-05-22T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-21",
+   "fields": {
+    "summary": "Work item HALL-21",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-06-08T10:27:00.000+1000",
+    "statuscategorychangedate": "2026-06-08T10:27:00.000+1000",
+    "created": "2026-05-29T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-22",
+   "fields": {
+    "summary": "Work item HALL-22",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-06-09T11:34:00.000+1000",
+    "statuscategorychangedate": "2026-06-09T11:34:00.000+1000",
+    "created": "2026-05-30T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-23",
+   "fields": {
+    "summary": "Work item HALL-23",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-06-15T12:41:00.000+1000",
+    "statuscategorychangedate": "2026-06-15T12:41:00.000+1000",
+    "created": "2026-06-05T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-2",
+     "fields": {
+      "summary": "Hall calendar",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-24",
+   "fields": {
+    "summary": "Work item HALL-24",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-06-16T13:48:00.000+1000",
+    "statuscategorychangedate": "2026-06-16T13:48:00.000+1000",
+    "created": "2026-06-06T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-25",
+   "fields": {
+    "summary": "Work item HALL-25",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-06-17T14:55:00.000+1000",
+    "statuscategorychangedate": "2026-06-17T14:55:00.000+1000",
+    "created": "2026-06-07T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-26",
+   "fields": {
+    "summary": "Work item HALL-26",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-06-22T15:02:00.000+1000",
+    "statuscategorychangedate": "2026-06-22T15:02:00.000+1000",
+    "created": "2026-06-12T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-27",
+   "fields": {
+    "summary": "Work item HALL-27",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-06-23T16:09:00.000+1000",
+    "statuscategorychangedate": "2026-06-23T16:09:00.000+1000",
+    "created": "2026-06-13T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-28",
+   "fields": {
+    "summary": "Work item HALL-28",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-06T10:16:00.000+1000",
+    "statuscategorychangedate": "2026-07-06T10:16:00.000+1000",
+    "created": "2026-06-26T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-29",
+   "fields": {
+    "summary": "Work item HALL-29",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-07T11:23:00.000+1000",
+    "statuscategorychangedate": "2026-07-07T11:23:00.000+1000",
+    "created": "2026-06-27T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-30",
+   "fields": {
+    "summary": "Work item HALL-30",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-08T12:30:00.000+1000",
+    "statuscategorychangedate": "2026-07-08T12:30:00.000+1000",
+    "created": "2026-06-28T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-31",
+   "fields": {
+    "summary": "Work item HALL-31",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-13T13:37:00.000+1000",
+    "statuscategorychangedate": "2026-07-13T13:37:00.000+1000",
+    "created": "2026-07-03T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-32",
+   "fields": {
+    "summary": "Work item HALL-32",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-14T14:44:00.000+1000",
+    "statuscategorychangedate": "2026-07-14T14:44:00.000+1000",
+    "created": "2026-07-04T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-33",
+   "fields": {
+    "summary": "Print booking receipts",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Won't Do",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-14T15:51:00.000+1000",
+    "statuscategorychangedate": "2026-07-14T15:51:00.000+1000",
+    "created": "2026-07-04T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-34",
+   "fields": {
+    "summary": "Work item HALL-34",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-20T16:58:00.000+1000",
+    "statuscategorychangedate": "2026-07-20T16:58:00.000+1000",
+    "created": "2026-07-10T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-35",
+   "fields": {
+    "summary": "Work item HALL-35",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-21T10:05:00.000+1000",
+    "statuscategorychangedate": "2026-07-21T10:05:00.000+1000",
+    "created": "2026-07-11T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-5",
+     "fields": {
+      "summary": "Member rates",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-36",
+   "fields": {
+    "summary": "Work item HALL-36",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-22T11:12:00.000+1000",
+    "statuscategorychangedate": "2026-07-22T11:12:00.000+1000",
+    "created": "2026-07-12T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-8",
+     "fields": {
+      "summary": "Booking emails",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-37",
+   "fields": {
+    "summary": "Work item HALL-37",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-23T12:19:00.000+1000",
+    "statuscategorychangedate": "2026-07-23T12:19:00.000+1000",
+    "created": "2026-07-13T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-8",
+     "fields": {
+      "summary": "Booking emails",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-38",
+   "fields": {
+    "summary": "Work item HALL-38",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-07-27T13:26:00.000+1000",
+    "statuscategorychangedate": "2026-07-27T13:26:00.000+1000",
+    "created": "2026-07-17T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-8",
+     "fields": {
+      "summary": "Booking emails",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-39",
+   "fields": {
+    "summary": "Work item HALL-39",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-03T14:33:00.000+1000",
+    "statuscategorychangedate": "2026-08-03T14:33:00.000+1000",
+    "created": "2026-07-24T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-8",
+     "fields": {
+      "summary": "Booking emails",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-40",
+   "fields": {
+    "summary": "Work item HALL-40",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-04T15:40:00.000+1000",
+    "statuscategorychangedate": "2026-08-04T15:40:00.000+1000",
+    "created": "2026-07-25T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-8",
+     "fields": {
+      "summary": "Booking emails",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-41",
+   "fields": {
+    "summary": "Fix the rate shown for members",
+    "issuetype": {
+     "name": "Bug",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-10T16:47:00.000+1000",
+    "statuscategorychangedate": "2026-08-10T16:47:00.000+1000",
+    "created": "2026-08-04T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-8",
+     "fields": {
+      "summary": "Booking emails",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-42",
+   "fields": {
+    "summary": "Work item HALL-42",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-11T10:54:00.000+1000",
+    "statuscategorychangedate": "2026-08-11T10:54:00.000+1000",
+    "created": "2026-08-01T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-8",
+     "fields": {
+      "summary": "Booking emails",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-43",
+   "fields": {
+    "summary": "Work item HALL-43",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-12T11:01:00.000+1000",
+    "statuscategorychangedate": "2026-08-12T11:01:00.000+1000",
+    "created": "2026-08-02T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-8",
+     "fields": {
+      "summary": "Booking emails",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "Done",
+       "statusCategory": {
+        "key": "done"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-44",
+   "fields": {
+    "summary": "Work item HALL-44",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-17T12:08:00.000+1000",
+    "statuscategorychangedate": "2026-08-17T12:08:00.000+1000",
+    "created": "2026-08-07T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-45",
+   "fields": {
+    "summary": "Work item HALL-45",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-18T13:15:00.000+1000",
+    "statuscategorychangedate": "2026-08-18T13:15:00.000+1000",
+    "created": "2026-08-08T09:00:00.000+1000",
+    "labels": []
+   }
+  },
+  {
+   "key": "HALL-46",
+   "fields": {
+    "summary": "Work item HALL-46",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-24T14:22:00.000+1000",
+    "statuscategorychangedate": "2026-08-24T14:22:00.000+1000",
+    "created": "2026-08-14T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-47",
+   "fields": {
+    "summary": "Work item HALL-47",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-25T15:29:00.000+1000",
+    "statuscategorychangedate": "2026-08-25T15:29:00.000+1000",
+    "created": "2026-08-15T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-48",
+   "fields": {
+    "summary": "Hall map on the booking page",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-25T16:36:00.000+1000",
+    "statuscategorychangedate": "2026-08-25T16:36:00.000+1000",
+    "created": "2026-08-15T09:00:00.000+1000",
+    "labels": [
+     "wontdo"
+    ]
+   }
+  },
+  {
+   "key": "HALL-49",
+   "fields": {
+    "summary": "Work item HALL-49",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-26T10:43:00.000+1000",
+    "statuscategorychangedate": "2026-08-26T10:43:00.000+1000",
+    "created": "2026-08-16T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-50",
+   "fields": {
+    "summary": "Work item HALL-50",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-08-31T11:50:00.000+1000",
+    "statuscategorychangedate": "2026-08-31T11:50:00.000+1000",
+    "created": "2026-08-21T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-51",
+   "fields": {
+    "summary": "Work item HALL-51",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-01T12:57:00.000+1000",
+    "statuscategorychangedate": "2026-09-01T12:57:00.000+1000",
+    "created": "2026-08-22T09:00:00.000+1000",
+    "labels": []
+   }
+  },
+  {
+   "key": "HALL-52",
+   "fields": {
+    "summary": "Work item HALL-52",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-02T13:04:00.000+1000",
+    "statuscategorychangedate": "2026-09-02T13:04:00.000+1000",
+    "created": "2026-08-23T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-53",
+   "fields": {
+    "summary": "Work item HALL-53",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-07T14:11:00.000+1000",
+    "statuscategorychangedate": "2026-09-07T14:11:00.000+1000",
+    "created": "2026-08-28T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-54",
+   "fields": {
+    "summary": "Work item HALL-54",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-21T15:18:00.000+1000",
+    "statuscategorychangedate": "2026-09-21T15:18:00.000+1000",
+    "created": "2026-09-11T09:00:00.000+1000",
+    "labels": []
+   }
+  },
+  {
+   "key": "HALL-55",
+   "fields": {
+    "summary": "Work item HALL-55",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-22T16:25:00.000+1000",
+    "statuscategorychangedate": "2026-09-22T16:25:00.000+1000",
+    "created": "2026-09-12T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-56",
+   "fields": {
+    "summary": "Work item HALL-56",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-23T10:32:00.000+1000",
+    "statuscategorychangedate": "2026-09-23T10:32:00.000+1000",
+    "created": "2026-09-13T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-57",
+   "fields": {
+    "summary": "Update the booking terms link",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-24T11:39:00.000+1000",
+    "statuscategorychangedate": "2026-09-24T11:39:00.000+1000",
+    "created": "2026-09-18T09:00:00.000+1000",
+    "labels": []
+   }
+  },
+  {
+   "key": "HALL-58",
+   "fields": {
+    "summary": "Work item HALL-58",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-28T12:46:00.000+1000",
+    "statuscategorychangedate": "2026-09-28T12:46:00.000+1000",
+    "created": "2026-09-18T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-59",
+   "fields": {
+    "summary": "Work item HALL-59",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-09-29T13:53:00.000+1000",
+    "statuscategorychangedate": "2026-09-29T13:53:00.000+1000",
+    "created": "2026-09-19T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-60",
+   "fields": {
+    "summary": "Work item HALL-60",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-05T14:00:00.000+1100",
+    "statuscategorychangedate": "2026-10-05T14:00:00.000+1100",
+    "created": "2026-09-25T09:00:00.000+1000",
+    "labels": []
+   }
+  },
+  {
+   "key": "HALL-61",
+   "fields": {
+    "summary": "Work item HALL-61",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-06T15:07:00.000+1100",
+    "statuscategorychangedate": "2026-10-06T15:07:00.000+1100",
+    "created": "2026-09-26T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-63",
+   "fields": {
+    "summary": "Duplicate of the deposit email story",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-07T10:21:00.000+1100",
+    "statuscategorychangedate": "2026-10-07T10:21:00.000+1100",
+    "created": "2026-10-07T10:01:00.000+1100",
+    "labels": []
+   }
+  },
+  {
+   "key": "HALL-62",
+   "fields": {
+    "summary": "Work item HALL-62",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-07T16:14:00.000+1100",
+    "statuscategorychangedate": "2026-10-07T16:14:00.000+1100",
+    "created": "2026-09-27T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-64",
+   "fields": {
+    "summary": "Work item HALL-64",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-12T11:28:00.000+1100",
+    "statuscategorychangedate": "2026-10-12T11:28:00.000+1100",
+    "created": "2026-10-02T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-65",
+   "fields": {
+    "summary": "Work item HALL-65",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-13T12:35:00.000+1100",
+    "statuscategorychangedate": "2026-10-13T12:35:00.000+1100",
+    "created": "2026-10-03T09:00:00.000+1000",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-66",
+   "fields": {
+    "summary": "Work item HALL-66",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-14T13:42:00.000+1100",
+    "statuscategorychangedate": "2026-10-14T13:42:00.000+1100",
+    "created": "2026-10-04T09:00:00.000+1100",
+    "labels": []
+   }
+  },
+  {
+   "key": "HALL-67",
+   "fields": {
+    "summary": "Work item HALL-67",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-19T14:49:00.000+1100",
+    "statuscategorychangedate": "2026-10-19T14:49:00.000+1100",
+    "created": "2026-10-09T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-68",
+   "fields": {
+    "summary": "Work item HALL-68",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-20T15:56:00.000+1100",
+    "statuscategorychangedate": "2026-10-20T15:56:00.000+1100",
+    "created": "2026-10-10T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-69",
+   "fields": {
+    "summary": "Work item HALL-69",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-21T16:03:00.000+1100",
+    "statuscategorychangedate": "2026-10-21T16:03:00.000+1100",
+    "created": "2026-10-11T09:00:00.000+1100",
+    "labels": []
+   }
+  },
+  {
+   "key": "HALL-13",
+   "fields": {
+    "summary": "Work item HALL-13",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-26T16:31:00.000+1100",
+    "statuscategorychangedate": "2026-10-26T16:31:00.000+1100",
+    "created": "2026-10-16T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-12",
+     "fields": {
+      "summary": "Book and pay",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-14",
+   "fields": {
+    "summary": "Work item HALL-14",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-10-27T10:38:00.000+1100",
+    "statuscategorychangedate": "2026-10-27T10:38:00.000+1100",
+    "created": "2026-10-17T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-12",
+     "fields": {
+      "summary": "Book and pay",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-70",
+   "fields": {
+    "summary": "Work item HALL-70",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-11-02T10:10:00.000+1100",
+    "statuscategorychangedate": "2026-11-02T10:10:00.000+1100",
+    "created": "2026-10-23T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-12",
+     "fields": {
+      "summary": "Book and pay",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-71",
+   "fields": {
+    "summary": "Work item HALL-71",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-11-03T11:17:00.000+1100",
+    "statuscategorychangedate": "2026-11-03T11:17:00.000+1100",
+    "created": "2026-10-24T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-72",
+   "fields": {
+    "summary": "Work item HALL-72",
+    "issuetype": {
+     "name": "Task",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-11-04T12:24:00.000+1100",
+    "statuscategorychangedate": "2026-11-04T12:24:00.000+1100",
+    "created": "2026-10-25T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-12",
+     "fields": {
+      "summary": "Book and pay",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-73",
+   "fields": {
+    "summary": "Work item HALL-73",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-11-09T13:31:00.000+1100",
+    "statuscategorychangedate": "2026-11-09T13:31:00.000+1100",
+    "created": "2026-10-30T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-9",
+     "fields": {
+      "summary": "Admin screens",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-74",
+   "fields": {
+    "summary": "Work item HALL-74",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-11-10T14:38:00.000+1100",
+    "statuscategorychangedate": "2026-11-10T14:38:00.000+1100",
+    "created": "2026-10-31T09:00:00.000+1100",
+    "labels": [],
+    "parent": {
+     "key": "HALL-12",
+     "fields": {
+      "summary": "Book and pay",
+      "issuetype": {
+       "name": "Epic",
+       "hierarchyLevel": 1
+      },
+      "status": {
+       "name": "In Progress",
+       "statusCategory": {
+        "key": "indeterminate"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "key": "HALL-75",
+   "fields": {
+    "summary": "Work item HALL-75",
+    "issuetype": {
+     "name": "Story",
+     "hierarchyLevel": 0
+    },
+    "status": {
+     "name": "Done",
+     "statusCategory": {
+      "key": "done",
+      "name": "Done"
+     }
+    },
+    "resolution": {
+     "name": "Done"
+    },
+    "resolutiondate": "2026-11-11T15:45:00.000+1100",
+    "statuscategorychangedate": "2026-11-11T15:45:00.000+1100",
+    "created": "2026-11-01T09:00:00.000+1100",
+    "labels": []
+   }
+  }
+ ],
+ "never_in_progress": [
+  "HALL-41",
+  "HALL-57",
+  "HALL-63"
+ ]
+}

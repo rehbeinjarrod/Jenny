@@ -13,6 +13,8 @@ Two operations, each a confirm-then-write operation following the rules in the T
 
 Each writes exactly the files its batch lists. Pack's batch carries one Project `index.md` item, adding the new `pack-v<N>.md`'s link line (Pack step 4) and changing no other line. Coverage's batch carries no `index.md` item; its new Questions are listed in `questions/index.md`.
 
+**A Technical Enabler** (`Technical Enabler: yes` in its `epic.md`): read [technical-enabler.md](technical-enabler.md) before step 1 of either operation. It changes Gather, the Walk, N/A marks and sections 4 and 9.
+
 Today is `date +%F`.
 
 ## The 11 categories
@@ -44,13 +46,13 @@ Each category takes one **state**:
 
 ## Coverage
 
-1. **Gather.** Find the one Project and Epic as the Lookup rules say: the Epic by ID, title or the words used, asking when two could fit. Work in that Project's folder only. Read its `index.md`, `project.md`, the Epic's `epic.md`, its Feature file, every Requirement under **Covers** and **Applies here too** (in its Feature file), `questions/index.md`, and every Question file whose `Affects:` or `Needed by:` names the Epic, its Feature, one of those Requirements, or an Answer to one of them. Read the Sources those Requirements and Answers cite. Note the highest `-Q-` number in the Project (`grep -rhoE '<CODE>-Q-[0-9]{3}' projects/<slug>/ | sort -u`); new IDs follow on from it.
+1. **Gather.** Find the one Project and Epic as the Lookup rules say: the Epic by ID, title or the words used, asking when two could fit. Work in that Project's folder only. Read its `index.md`, `project.md`, the Epic's `epic.md`, its Feature file, every Requirement under **Covers** and **Applies here too** (in its Feature file), `questions/index.md`, and every Question file whose `Affects:` or `Needed by:` names the Epic, its Feature, one of those Requirements, or an Answer to one of them; a Question naming a Technical Enabler other than this Epic bears on that Technical Enabler alone. Read the Sources those Requirements and Answers cite. Note the highest `-Q-` number in the Project (`grep -rhoE '<CODE>-Q-[0-9]{3}' projects/<slug>/ | sort -u`); new IDs follow on from it.
 
    Done when: you hold the Epic's active Requirements, the active Answers and the Questions bearing on it, any N/A marks already in `epic.md`, whether the Epic is handed off (a `Tech face:` line under `## External items`), and the next free Question ID.
 
-2. **Walk.** File each existing Question under its one category, as **The 11 categories** says. Then take the 11 categories in order and give each its state, with what it cites. For each gap, draft the Questions that would settle it, one decision each, and score them as `capture` does: `Impact` and `Uncertainty` 1 to 3, `Score` their product, a one-line `Score reason` in canonical terms, like every line of a record; a Score of 1 or 2 is `parked`, any other `open`. A Question that an existing one already asks is no gap: cite the existing one.
+2. **Walk.** File each existing Question under its one category, as **The 11 categories** says. Then take the 11 categories in order and give each its state, with what it cites. For each gap, draft the Questions that would settle it, one decision each. Each question names people as the **People by role** drafting rule says, never by name, so a pack can quote it word for word. Score them as `capture` does: `Impact` and `Uncertainty` 1 to 3, `Score` their product, a one-line `Score reason` in canonical terms, as the Veneer section of `AGENTS.md` says ("the enabled Epics", never their shown name); a Score of 1 or 2 is `parked`, any other `open`. A Question that an existing one already asks is no gap: cite the existing one.
 
-   Done when: every existing Question bearing on the Epic sits under exactly one category, every one of the 11 categories has a state, and every gap has at least one drafted Question that no existing Question repeats.
+   Done when: every existing Question bearing on the Epic sits under exactly one category, every one of the 11 categories has a state, and every gap has at least one drafted Question that no existing Question repeats and that names no person by name.
 
 3. **Propose** under the heading "Decision coverage: <shown name for Epic> <ID> <title>":
    1. **The checklist**: a table of all 11 categories in order, with columns `#`, `Category`, `State` and `Cites`. For a gap, `Cites` names the batch items that raise it; for a category that looks N/A, the state says "gap, looks N/A" with the reason in a short clause of your own, for example "gap, looks N/A: every refund follows the same steps". For Quality, a line under the table gives each characteristic's state.
@@ -58,7 +60,7 @@ Each category takes one **state**:
       - Each gap Question: its ID, its category, the question, and its proposed scores and reason. It is written as `questions/<ID>-<slug>.md` from the `capture` skill's [question template](../capture/templates/question.md), with `Category: <the category's name exactly as in the list above, and nothing more>` (a Quality Question names its characteristic in the question itself, so its line is `Category: Quality`), `Needed by: <Epic ID>`, `Affects: <Epic ID>` plus the Requirement IDs it bears on, `Building on a guess: yes` when the Epic is handed off and `no` otherwise, and `Raised from: Decision coverage of <Epic ID>`.
       - Each N/A the Operator has given a reason for: the line it adds to `epic.md`, in place of that category's gap Question.
       - `questions/index.md`: each new row in its rank order.
-      - Log entry `## [<date>] pack | Decision coverage <Epic ID> <title>`, one line per file written and the IDs raised.
+      - Log entry `## [<date>] pack | Decision coverage <Epic ID> <title>`, one line per file written and the IDs raised, in canonical terms as **Log** in `AGENTS.md` says.
       - One commit.
 
    When nothing is a gap, there is no batch: show the checklist, say coverage is complete, and write nothing. Otherwise end with the ask for a reason for each category that looks N/A, then "Nothing is written yet."
@@ -76,7 +78,7 @@ Each category takes one **state**:
 
 Writes `epics/<ID>-<slug>/pack-v<N>.md` from [the pack template](templates/pack.md): the Epic's business half of the engineers' spec. A pack is **frozen**: once written it is never edited, and a new version is a new file, N one more than the highest `pack-v*.md` in the Epic's folder (1 when there is none). A new version is written only when the Operator asks for it. For a handed-off Epic, writing one is also its next Handoff: the same commit moves the `Tech face:` line to the new version, as the `handoff` skill's Record does.
 
-1. **Gather** as Coverage step 1, and also: the People table in `project.md`; the Epic's `signoffs.md`, if it exists; the `pack-v*.md` names in its folder; any `Pain point:` line in `epic.md`; other Epics in the same Feature (`grep -lx 'Feature: <Feature ID>' projects/<slug>/epics/*/epic.md`); and each cited Source's `Kind:`, `URL:`, `Owner:` and `Date:`.
+1. **Gather** as Coverage step 1, and also: the People table in `project.md`; the Epic's `signoffs.md`, if it exists; the `pack-v*.md` names in its folder; any `Pain point:` line in `epic.md`; other Epics in the same Feature (`grep -lx 'Feature: <Feature ID>' projects/<slug>/epics/*/epic.md`); the title of each Technical Enabler under `## Depends on`; and each cited Source's `Kind:`, `URL:`, `Owner:` and `Date:`.
 
    **Too big**: an Epic covering more than 50 Requirements is certain to give a pack over 300 lines, with no need to draft it. Stop here, as step 3 says for a draft over 300 lines, giving the number of Requirements in place of a line count.
 
@@ -88,15 +90,19 @@ Writes `epics/<ID>-<slug>/pack-v<N>.md` from [the pack template](templates/pack.
 
    **Over 300 lines** (the scan names the cap): packs are never split. Write nothing and propose no batch. Say the pack would be <count> lines, over the 300-line cap, and propose a re-slice: a seam that would cut the Feature into two vertical Features, each small enough for one pack, naming the Requirements on each side, and that `slice` makes it ("re-slice <Feature ID>"). This ends the operation.
 
-   Done when: the draft has every template section in order, each covered active Requirement has its section 4 entry, every `open` or `chasing` Question bearing on the Epic is a `DO NOT DECIDE` item in section 5, and the scan's last run on this draft printed `<count> lines` (or you stopped).
+   Done when: the draft has every template section in order, each covered active Requirement has its section 4 entry, every `open` or `chasing` Question bearing on the Epic is a `DO NOT DECIDE` item in section 5, the scan's last run on this draft printed `<count> lines` (or you stopped), and the **Enabler Stories** trace check, run on the draft the same way (`<<'PACK'`), prints `0`.
 
 4. **Propose** under the heading "<shown name for Epic pack> v<N>: <shown name for Epic> <ID> <title>": the coverage checklist as Coverage step 3 shows it, then the numbered batch:
    - each gap Question and each N/A mark, as in Coverage step 3;
    - `epics/<ID>-<slug>/pack-v<N>.md`, <count> lines: one line per section saying what it carries (the IDs, and "Not stated yet" where the records say nothing);
    - for a handed-off Epic, `epic.md`: its `Tech face:` line in the shape the `handoff` skill gives, with the same work item, now naming `pack-v<N>.md` and today, shown in full;
-   - `index.md`: one link line for `pack-v<N>.md`, shown in full, in the shape of the pack link lines already there (`  - [pack-v<N>.md](epics/<ID>-<slug>/pack-v<N>.md): `, then a short note in your own words giving the version it replaces, if any, and today, for example `replaces pack-v1.md, written 2026-11-16`). It goes under the Epic's line, after its last pack link line, or first under the Epic's line when there is none. Every earlier pack's link line stays as it is;
+   - `index.md`: one link line for `pack-v<N>.md`, shown in full. It is a record line, so it keeps this exact canonical wording whatever shown names the rest of the proposal uses:
+     - v1: `  - [pack-v1.md](epics/<ID>-<slug>/pack-v1.md): first pack, written <today>`
+     - a later version: `  - [pack-v<N>.md](epics/<ID>-<slug>/pack-v<N>.md): replaces pack-v<N-1>.md, written <today>`
+
+     It goes under the Epic's line, after its last pack link line, or first under the Epic's line when there is none. Every earlier pack's link line stays as it is;
    - `questions/index.md`: each new row in its rank order;
-   - log entry `## [<date>] pack | <Epic ID> <title> pack v<N>`, one line per file written and the IDs raised;
+   - log entry `## [<date>] pack | <Epic ID> <title> pack v<N>`, one line per file written and the IDs raised, in canonical terms as **Log** in `AGENTS.md` says;
    - one commit.
 
    End with the ask for a reason for each category that looks N/A, then "Nothing is written yet."
@@ -105,18 +111,20 @@ Writes `epics/<ID>-<slug>/pack-v<N>.md` from [the pack template](templates/pack.
 
 5. **Amend, confirm, write, log, commit** as Coverage step 4. After each amend, draft again and run the scan on it as step 3 says, and show the checklist and the batch again in full. On the yes, write the pack exactly as last drafted, its link line in `index.md`, and for a handed-off Epic its new `Tech face:` line.
 
-   Done when: Coverage step 4's criterion holds (for a handed-off Epic, the `Tech face:` line is the one more line replaced in `epic.md`, and `grep -c 'Pack: pack-v<N>.md'` on it prints `1`); `git diff --numstat HEAD~1 -- projects/<slug>/index.md | cut -f1,2` prints `1	0` and the added line names `pack-v<N>.md` (`git diff HEAD~1 -- projects/<slug>/index.md | grep '^+ ' | grep -c 'pack-v<N>.md'` prints `1`); and in that commit `pack-v<N>.md` is the one pack file added and none changed (`git diff --name-status HEAD~1 -- 'projects/<slug>/epics/*/pack-v*.md'` prints one `A` line), `python3 <skills>/pack/scripts/pack_shape.py <the pack file>` prints `<count> lines`, and `grep -c '<CODE>-SRC-'` on it prints `0`.
+   Done when: Coverage step 4's criterion holds (for a handed-off Epic, the `Tech face:` line is the one more line replaced in `epic.md`, and `grep -c 'Pack: pack-v<N>.md'` on it prints `1`); `git diff --numstat HEAD~1 -- projects/<slug>/index.md | cut -f1,2` prints `1	0` and the added line names `pack-v<N>.md` (`git diff HEAD~1 -- projects/<slug>/index.md | grep '^+ ' | grep -c 'pack-v<N>.md'` prints `1`); and in that commit `pack-v<N>.md` is the one pack file added and none changed (`git diff --name-status HEAD~1 -- 'projects/<slug>/epics/*/pack-v*.md'` prints one `A` line), `python3 <skills>/pack/scripts/pack_shape.py <the pack file>` prints `<count> lines`, `grep -c '<CODE>-SRC-'` on it prints `0`, and the **Enabler Stories** trace check on it prints `0`.
 
 6. **Hand on.** Say how many `DO NOT DECIDE` items the pack carries and point at `up-next` for what to chase first. For a handed-off Epic, say the `Tech face:` line now gives the delivery team v<N>, and that they should be told so on that work item. Say each Stakeholder's <shown name for Sign-off view> comes next ("sign-off view for <person>, <shown name for Epic> <ID>"). Done when: the Operator has been told.
 
 ### Drafting rules
 
 - **IDs in full**, every one, everywhere in the pack: no ranges.
-- **Shown names.** The pack is read outside the Workspace: every Delivery term in it is its Veneer shown name, the template's `{Term}` slots included. Epic pack shows as its own shown name, or else as "<shown name for Epic> pack". IDs, file names, `DO NOT DECIDE` and the shape labels inside the code blocks stay exactly as the template writes them.
+- **Shown names.** The pack is read outside the Workspace: every Delivery term in it is its Veneer shown name, the template's `{Term}` slots included. A term the Veneer gives no shown name shows as its canonical term, never as another term's shown name. Epic pack shows as its own shown name, or else as "<shown name for Epic> pack". IDs, file names, `DO NOT DECIDE` and the shape labels inside the code blocks stay exactly as the template writes them.
 - **Records only.** Every line says what the records say. Where they say nothing (a non-goal, an outcome), write "Not stated yet." A worked example uses the rules' own numbers and is marked "worked from the rules, not yet agreed", unless a Source or Answer holds that case.
 - **People by role**, never by name: their `Role` from People, with its `Notes` when there are any ("Stakeholder, hall committee chair"); the Operator is "the Operator". Someone not in People is named by the role their Source gives them.
 - **No Source IDs.** A Requirement's `From:` is the link to its Confluence page or Jira item (from `URL:`), else its Source's owner by role and date; one created by an Answer cites that Answer's ID.
-- **Settled Decisions** are the active Answers of `Kind: decision` whose Question's `Affects:` names the Epic, its Feature or a covered Requirement, or that created a covered Requirement. Answers of `Kind: fact` go under their Requirement in section 4.
+- **Settled Decisions** are the active Answers of `Kind: decision` whose Question's `Affects:` names the Epic, its Feature or a covered Requirement, or that created a covered Requirement, leaving out a Technical Enabler's own (its Question names a Technical Enabler other than this Epic). Answers of `Kind: fact` go under their Requirement in section 4.
 - **Agreed by**: one line under a Decision for each `signoffs.md` entry whose `Agreed:` line names that Answer ID, giving the Stakeholder's role and the entry's date. A Decision with none has no Agreed by line. The header's Sign-off row counts the Decisions with at least one.
+- **Section 7**: a line naming a Technical Enabler reads `- <shown name for Technical Enabler> <ID> <title>: must be built first.` and says nothing more of it: no Handoff state, none of its Questions. With no shown name for Technical Enabler, it is `- Technical Enabler <ID> <title>: must be built first.`, as **Shown names** says, never the shown name for Epic.
+- **Enabler Stories** stay in `epic.md`, for the engineers. The pack says what the Requirements, Questions and Answers say, so every Enabler Story the Epic holds is **traceless** in it: no `<CODE>-ENS-` ID, no term (canonical or shown name), no title (the plain words after the bold ID on its line, up to ` · `), and nothing of what it does. The **trace check** catches the ID, term and title: `grep -ciF -e '<CODE>-ENS-' -e 'enabler stor'`, plus `-e '<shown name for Enabler Story>'` when the Veneer gives one and `-e '<first five words of its title>'` per Enabler Story, prints `0` on the pack. Catch what it does by reading the draft against those records.
 - **Section 5** lists the `open` and `chasing` Questions bearing on the Epic in `questions/index.md` rank order, building on a guess first. Parked ones go only on its Parked line.
-- **Appendix A** is the checklist as it will stand after the write, each N/A row with the Operator's reason. **Appendix B** lists each pain point: the Questions built on a guess (one line for each guess the records name, then one line listing the rest), the Epic's `Pain point:` line, another Epic in the same Feature, a Decision owned by an engineer ("decided during build"), and a Decision resting on a third-party Source with no URL; or "None."
+- **Appendix A** is the checklist as it will stand after the write, each N/A row with the Operator's reason. **Appendix B** lists each pain point: the Questions built on a guess (one line for each guess the records name, then one line listing the rest), the Epic's `Pain point:` line, another Epic in the same Feature besides a Technical Enabler, a Decision owned by an engineer ("decided during build"), and a Decision resting on a third-party Source with no URL; or "None."

@@ -11,9 +11,13 @@ A Check's Fingerprint is 12 hex digits taken over:
   driver its code (`acceptance/headless/*.py` but its tests) and the Check's
   own script folder (`acceptance/headless/graders/<ID>/`, the scripts its key
   lines call, if it has any);
-- for a Check that installs Jenny (every Check but an Engineer repo one), the
-  shared parts: the Jenny core, the AGENTS block, install, and the skill set;
+- for a Check that has Jenny in its Workspace, installed or laid frozen
+  (every Check whose Start begins from the sample, so every one but an
+  Engineer repo one), the shared parts: the Jenny core,
+  the AGENTS block, install, and the skill set;
 - for a routing Check, the skill set.
+
+Every Check is read through the Check value (acceptance/headless/check.py).
 
 The skill set is which skills exist with each one's `name` and `description`,
 so a body edit to one skill moves only that skill's Checks.
@@ -26,72 +30,20 @@ import argparse
 import hashlib
 import re
 import sys
-from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CHECKS = "acceptance/checks"
-FIXTURES = "acceptance/fixtures"
+sys.path.insert(0, str(ROOT / "acceptance" / "headless"))
+
+from check import CHECKS, FIXTURES, frontmatter, load  # noqa: E402
+
 SAMPLE = "acceptance/sample"
 # The parts every skill shares, besides the skill set. A change to any of them
-# moves every Check that installs Jenny.
+# moves every Check with Jenny in its Workspace: every one whose Start begins from the sample.
 SHARED = ("skills/jenny", "skills/setup/templates/agents-block.md", "skills/setup/scripts/install.sh")
-ENGINEER_REPO = "**Engineer repo.**"
 DRIVER = "headless"
 HEADLESS = "acceptance/headless"
 RUNTIME = "claude-code"
-
-
-@dataclass(frozen=True)
-class Check:
-    id: str
-    version: str
-    path: str  # repo-relative
-    skills: tuple
-    inputs: tuple
-    routing: bool
-    promise: bool
-    installs: bool
-
-
-def frontmatter(text):
-    """The `key: value` lines between the opening `---` lines, values parsed as
-    `[a, b]` lists, `true`/`false`, or plain strings; comments dropped."""
-    lines = text.splitlines()
-    if not lines or lines[0].strip() != "---":
-        return {}
-    out = {}
-    for line in lines[1:]:
-        if line.strip() == "---":
-            break
-        key, sep, value = line.partition(":")
-        if not sep:
-            continue
-        value = value.split(" #", 1)[0].strip()
-        if value.startswith("[") and value.endswith("]"):
-            out[key.strip()] = tuple(v.strip() for v in value[1:-1].split(",") if v.strip())
-        elif value in ("true", "false"):
-            out[key.strip()] = value == "true"
-        else:
-            out[key.strip()] = value
-    return out
-
-
-def load_checks(root=ROOT):
-    """Every Check in `root`, by ID."""
-    root = Path(root)
-    out = {}
-    for p in sorted((root / CHECKS).glob("*.md")):
-        text = p.read_text(encoding="utf-8")
-        fm = frontmatter(text)
-        if "id" not in fm:
-            continue
-        out[fm["id"]] = Check(
-            id=fm["id"], version=str(fm.get("version", "")), path=p.relative_to(root).as_posix(),
-            skills=tuple(fm.get("skills", ())), inputs=tuple(fm.get("inputs", ())),
-            routing=fm.get("routing") is True, promise=fm.get("promise") is True,
-            installs=ENGINEER_REPO not in text)
-    return out
 
 
 def files_under(root, rel):
@@ -150,9 +102,9 @@ def dependencies(root, check, driver=None):
         paths.update(files_under(root, f"skills/{name}"))
     for rel in check.inputs:
         paths.update(files_under(root, rel))
-    for rel in named_fixtures(root, (root / check.path).read_text(encoding="utf-8")):
+    for rel in named_fixtures(root, check.text):
         paths.update(files_under(root, rel))
-    if check.installs:
+    if check.start.sample:
         paths.update(files_under(root, SAMPLE))
         for rel in SHARED:
             paths.update(files_under(root, rel))
@@ -162,12 +114,12 @@ def dependencies(root, check, driver=None):
 def fingerprint(root, check_id, *, model, driver=DRIVER, runtime=RUNTIME):
     """The Check's Fingerprint in `root`: 12 hex digits. KeyError for an unknown ID."""
     root = Path(root)
-    check = load_checks(root)[check_id]
+    check = load(check_id, root)
     h = hashlib.sha256()
     h.update(f"runtime={runtime}\ndriver={driver}\nmodel={model}\n".encode())
     for rel in dependencies(root, check, driver):
         h.update(f"file {rel} {hashlib.sha256((root / rel).read_bytes()).hexdigest()}\n".encode())
-    if check.installs or check.routing:
+    if check.start.sample or check.routing:
         h.update("\n".join(skill_set(root)).encode())
     return h.hexdigest()[:12]
 

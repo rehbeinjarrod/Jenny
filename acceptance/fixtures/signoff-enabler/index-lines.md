@@ -1,0 +1,2 @@
+- [epics/HAL-EPC-002-online-payment-account/epic.md](epics/HAL-EPC-002-online-payment-account/epic.md): HAL-EPC-002 Online payment account, a Technical Enabler for HAL-FEA-001, not handed off
+  - [pack-v1.md](epics/HAL-EPC-002-online-payment-account/pack-v1.md): the pack written on 2026-11-16

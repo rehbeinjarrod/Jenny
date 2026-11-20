@@ -49,7 +49,8 @@ Drift is the difference between the frozen pack the delivery team holds and the 
 
 1. **Gather.** Find the one Project and Epic as the Lookup rules say. Read `epic.md`. With no `Tech face:` line, the Epic is not handed off: say so, say how to record one ("hand off <shown name for Epic> <ID> v<N>, tech face <key>"), and stop. Otherwise read:
    - the **handed-off pack**: the `pack-v<N>.md` its `Tech face:` line names, and the `Handed off:` date;
-   - the Epic's Feature file, `questions/index.md`, and every Question file whose `Affects:` or `Needed by:` names the Epic, its Feature, a Requirement under **Covers** or **Applies here too**, or an Answer to one of them;
+   - for a Technical Enabler (`Technical Enabler: yes`), the Requirements it enables: each one in its `Enables:` line or under a `###` heading in the pack's section 4, read from the file that holds it (a Feature file or `requirements/unplaced.md`);
+   - the Epic's Feature file, `questions/index.md`, and every Question file whose `Affects:` or `Needed by:` names the Epic, its Feature, a Requirement under **Covers** or **Applies here too**, or an Answer to one of them. For a Technical Enabler, every Question file whose `Affects:` or `Needed by:` names the Technical Enabler itself, and no other, as its pack does;
    - `signoffs.md`, if it exists;
    - the other `pack-v*.md` names in the Epic's folder, and the `Version` row of any higher one.
 
@@ -59,7 +60,9 @@ Drift is the difference between the frozen pack the delivery team holds and the 
    - **Decisions**: active `Kind: decision` Answers bearing on the Epic that are not in the pack's section 3; and section 3 Decisions now withdrawn, with what replaced them. A Decision whose owner has the People role `engineer` is a **build Decision**: say "decided during build".
    - **Facts**: active `Kind: fact` Answers bearing on the Epic that the pack does not cite.
    - **Questions**: `open` or `chasing` Questions bearing on the Epic that are not in the pack's section 5, building on a guess first; and section 5 Questions now `answered` or `withdrawn` (one line each, pointing at its Answer above).
-   - **Requirements**: active Requirements under **Covers** or **Applies here too** that the pack does not carry, and ones it carries that are now withdrawn, with what replaced them.
+   - **Requirements**: active Requirements under **Covers** or **Applies here too** that the pack does not carry, and ones it carries that are now withdrawn, with what replaced them. For a Technical Enabler, the Requirements it enables too, in two passes:
+     1. **Withdrawn**: each Requirement section 4 lists that is now withdrawn, saying "replaced by <ID>" from its `Replaced by:`, or "withdrawn, nothing replaces it". Note each replacement ID.
+     2. **Newly enabled**: the IDs in `Enables:`, less those section 4 lists, less the replacement IDs noted in pass 1. Each one left says "newly enabled". A replacement already has its line in pass 1, and that is its only line.
    - **N/A marks**: lines under `## Not applicable` in `epic.md` that are not N/A rows in the pack's Appendix A, and marks since struck through.
    - **Sign-offs**: `signoffs.md` entries dated on or after the `Handed off:` date, with the Decisions each agreed, less any agreement the pack already shows as an Agreed by line.
    - **Newer pack**: each `pack-v*.md` above the handed-off version, by version and written date only.

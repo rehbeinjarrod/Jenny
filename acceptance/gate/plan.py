@@ -11,7 +11,7 @@ results files, in file-name order:
   history.
 - A Check needs 3 counted runs, or none if its Fingerprint is unchanged since
   the last published Tool version (carry-over).
-- Each fail asks for 3 more runs after it.
+- A Check with a fail needs 3 more after its first 3: 6 counted runs.
 - 2 or more fails block. A Promise Check blocks on a confirmed fail: one more
   fail in the 3 runs after a fail, which the 2-fail rule already covers.
 - With runs still needed, the verdict is `needs runs`; otherwise 1 fail is a
@@ -45,9 +45,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import fingerprint  # noqa: E402
+from check import load_all  # noqa: E402  (fingerprint puts the headless driver on the path)
 
 RUNS = 3      # counted runs a Check needs at a new Fingerprint
-CONFIRM = 3   # more runs a fail asks for
+CONFIRM = 3   # more runs, after the first RUNS, that a fail asks for
 BLOCK = 2     # fails that block
 
 
@@ -151,7 +152,7 @@ def rate(row):
 def weigh(results, base, promise):
     """(needed, verdict) for one Check's counted results, oldest first."""
     fails = [i for i, r in enumerate(results) if r == "fail"]
-    required = max([base] + [i + 1 + CONFIRM for i in fails])
+    required = RUNS + CONFIRM if fails else base
     needed = max(0, required - len(results))
     confirmed = any(0 < j - i <= CONFIRM for i in fails for j in fails)
     if len(fails) >= BLOCK or (promise and confirmed):
@@ -167,10 +168,10 @@ def plan(root, results_dir, *, model, driver=fingerprint.DRIVER, runtime=fingerp
     the `extra` results files hold the evidence. `published_root` is the tree
     of the last published Tool version, or None for no carry-over."""
     run = dict(model=model, driver=driver, runtime=runtime)
-    published = fingerprint.load_checks(published_root) if published_root else {}
+    published = load_all(published_root) if published_root else {}
     found = evidence(results_dir, *extra)
     rows = []
-    for cid, check in sorted(fingerprint.load_checks(root).items()):
+    for cid, check in sorted(load_all(root).items()):
         fp = fingerprint.fingerprint(root, cid, **run)
         carried = cid in published and fingerprint.fingerprint(published_root, cid, **run) == fp
         here = [e for e in found if e.check == cid and e.fingerprint == fp]
